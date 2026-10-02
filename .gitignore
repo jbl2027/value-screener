@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local EDGAR response cache
+data/cache/
+data/test_facts.csv
