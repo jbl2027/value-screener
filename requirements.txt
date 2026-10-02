@@ -2,3 +2,4 @@ requests>=2.32
 pandas>=2.2
 lxml>=5.0
 python-dotenv>=1.0
+pypdf>=5.0

@@ -16,43 +16,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from screener.config import DATA_DIR  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
+from screener.sectors import sector_model, sic_division  # noqa: E402
 
 WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
 OUT_PATH = DATA_DIR / "universe.csv"
-
-BANK_SICS = {6021, 6022, 6029, 6035, 6036}
-REIT_SICS = {6798}
-
-SIC_DIVISIONS = [
-    (100, 999, "Agriculture, Forestry & Fishing"),
-    (1000, 1499, "Mining"),
-    (1500, 1799, "Construction"),
-    (2000, 3999, "Manufacturing"),
-    (4000, 4999, "Transportation, Communications & Utilities"),
-    (5000, 5199, "Wholesale Trade"),
-    (5200, 5999, "Retail Trade"),
-    (6000, 6799, "Finance, Insurance & Real Estate"),
-    (6800, 6999, "Finance, Insurance & Real Estate"),
-    (7000, 8999, "Services"),
-    (9100, 9999, "Public Administration"),
-]
-
-
-def sic_division(sic: int | None) -> str | None:
-    if sic is None:
-        return None
-    for lo, hi, name in SIC_DIVISIONS:
-        if lo <= sic <= hi:
-            return name
-    return None
-
-
-def sector_model(sic: int | None) -> str:
-    if sic in BANK_SICS:
-        return "bank"
-    if sic in REIT_SICS:
-        return "reit"
-    return "standard"
 
 
 def normalize_ticker(ticker: str) -> str:
@@ -107,8 +74,11 @@ def add_sic(df: pd.DataFrame, sec: SECClient) -> pd.DataFrame:
     sic_df.index.name = "cik"
     df = df.merge(sic_df.reset_index(), on="cik", how="left")
     df["sic"] = df["sic"].astype("Int64")
-    df["sic_division"] = df["sic"].map(lambda s: sic_division(None if pd.isna(s) else int(s)))
-    df["sector_model"] = df["sic"].map(lambda s: sector_model(None if pd.isna(s) else int(s)))
+    sics = [None if pd.isna(s) else int(s) for s in df["sic"]]
+    df["sic_division"] = [sic_division(s) for s in sics]
+    models = [sector_model(t, s) for t, s in zip(df["ticker"], sics)]
+    df["sector_model"] = [m for m, _ in models]
+    df["sector_model_source"] = [src for _, src in models]
     return df
 
 
@@ -125,7 +95,7 @@ def main() -> None:
     df = add_sic(df, sec)
 
     cols = ["ticker", "cik", "name", "sec_name", "sic", "sic_description", "sic_division",
-            "sector_model", "gics_sector", "gics_sub_industry", "fiscal_year_end",
+            "sector_model", "sector_model_source", "gics_sector", "gics_sub_industry", "fiscal_year_end",
             "cik_source", "cik_mismatch", "submissions_error"]
     df = df[cols].sort_values("ticker").reset_index(drop=True)
 
@@ -140,6 +110,12 @@ def main() -> None:
     print(f"CIK mismatches (SEC vs Wikipedia): {int(df['cik_mismatch'].sum())}")
     print(f"Missing SIC:           {int(df['sic'].isna().sum())}")
     print(f"Sector model:          {df['sector_model'].value_counts().to_dict()}")
+    print("\nNon-standard sector models:")
+    for model in ["bank", "reit", "insurer"]:
+        sub = df[df["sector_model"] == model]
+        tickers = [t + ("*" if s == "override" else "") for t, s in zip(sub["ticker"], sub["sector_model_source"])]
+        print(f"  {model:8s} ({len(sub)}): {' '.join(tickers)}")
+    print("  (* = manual override)")
     print("\nSIC division counts:")
     print(df["sic_division"].value_counts(dropna=False).to_string())
 

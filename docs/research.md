@@ -1,0 +1,840 @@
+# Value Investing Screener Research
+
+_Text extracted from `Value Investing Screener Research.pdf` with pypdf. Formatting and tables may be imperfect._
+
+
+<!-- page 1 -->
+
+Architecting a Proprietary Value
+Investing Screening Tool: Quantitative
+Factors, LLM Textual Analysis, and
+Technical Implementation
+Executive Summary
+The development of a proprietary, automated value investing screening tool targeting the
+United States equities market requires a multidisciplinary synthesis of quantitative accounting
+analytics, natural language processing, and robust data engineering. Built upon a modern stack
+utilizing a React-based Lovable frontend and a Supabase PostgreSQL backend, the proposed
+architecture fuses traditional, empirically validated value factors with advanced qualitative
+textual analysis of SEC filings. The integration of large language model (LLM) APIs, specifically
+leveraging the cost-efficiency of Gemini 2.0 Flash, enables the algorithmic extraction of
+semantic signals from unstructured corporate disclosures.
+The ensuing analysis reveals several critical findings that must dictate the system's underlying
+logic. First, gross profitability serves as a necessary quality overlay to traditional value metrics,
+rivaling the predictive power of the book-to-market ratio and acting as a primary defense
+against value traps. Second, the Enterprise Multiple (EV/EBIT) consistently outperforms
+equity-based multiples like the Price-to-Earnings (P/E) ratio by normalizing disparate corporate
+capital structures. Third, the capitalization of internally generated intangible assets, specifically
+Research and Development (R&D), is mandatory to accurately assess the intrinsic value and
+Return on Invested Capital (ROIC) of modern technology and pharmaceutical firms. Fourth,
+textual analysis of 10-K filings—specifically focusing on year-over-year semantic shifts in
+Management's Discussion and Analysis (MD&A) and the identification of Critical Audit Matters
+(CAMs)—provides highly predictive leading indicators of future stock price deterioration and
+earnings restatements. Fifth, the technical execution of this pipeline within a serverless Edge
+Function environment requires specific database connection pooling protocols via Supavisor
+utilizing transaction mode on port 6543 to prevent connection exhaustion. Finally, the database
+schema must rigorously separate filing dates from period-end dates to eliminate look-ahead
+bias during historical backtesting. The resulting framework proposes a unified Forensic Value
+Score (FVS) that dynamically weights these quantitative and qualitative inputs across
+sector-neutral boundaries.
+1. Historically Validated Value Factors and the
+Evolution of the Value Premium
+The theoretical underpinning of value investing originated with Benjamin Graham's strict,
+asset-based margin of safety. Graham’s methodology centered on acquiring equities at a
+discount to their liquidation value, famously targeting "net-net" stocks where the market
+
+
+<!-- page 2 -->
+
+capitalization traded below the firm's Net Current Asset Value (NCAV). While conceptually
+elegant, purely asset-based net-nets have been largely arbitraged away in highly liquid,
+modern financial markets, often leaving only distressed or fraudulent firms in this category.
+Graham also devised a defensive investor framework encapsulated by the "Graham Number," a
+maximum price bound calculated as the square root of 22.5 multiplied by earnings per share
+and book value per share. However, this deterministic formula struggles in a contemporary
+market dominated by asset-light business models.
+Warren Buffett, heavily influenced by Charlie Munger, evolved Graham’s framework by
+introducing the concept of the economic moat and shifting the focus from discounted assets
+to discounted cash flows. Buffett popularized the metric of "owner earnings," which adjusts
+standard net income by adding back non-cash depreciation and amortization, and subtracting
+the maintenance capital expenditures required to sustain the business's competitive position.
+Furthermore, Buffett championed the Return on Invested Capital (ROIC) as the ultimate arbiter
+of corporate quality. High, sustainable ROIC indicates a durable competitive advantage,
+allowing a firm to reinvest internally generated capital at rates of return that significantly
+exceed its cost of capital.
+Joel Greenblatt subsequently quantified this quality-value nexus through his "Magic Formula."
+Greenblatt's methodology ranks a universe of equities on just two metrics: Earnings Yield (EBIT
+divided by Enterprise Value) to measure absolute cheapness, and Return on Capital (EBIT
+divided by Net Fixed Assets plus Working Capital) to measure capital efficiency. Historical
+backtesting of the Magic Formula from 1988 to 2004 demonstrated annualized returns
+exceeding 30%, drastically outperforming the S&P 5001. While subsequent out-of-sample
+empirical tests have shown that the alpha generated by the Magic Formula has compressed as
+institutional capital chased the anomaly, it remains a highly effective baseline for isolating
+high-quality, undervalued firms, particularly within the small and mid-cap equity tranches1.
+Aswath Damodaran advocates for rigorous intrinsic valuation via Discounted Cash Flow (DCF)
+modeling. This approach values a firm based on the present value of its expected free cash
+flows, discounted by a weighted average cost of capital (WACC) that reflects the riskiness of
+those cash flows. While DCF represents the purest theoretical form of valuation, automating
+deterministic DCF models across a universe of 500 equities introduces severe fragility. DCF
+models are hyper-sensitive to terminal growth rate assumptions and discount rate inputs; a
+minor algorithmic miscalculation can result in wildly divergent fair value outputs. Consequently,
+systematic value screens generally rely on relative valuation multiples combined with quality
+factors rather than absolute DCF targets.
+1.1 Evaluating the Quantitative Factor Zoo
+Academic finance has codified these practitioner methodologies into systematic, testable
+factors. The traditional Fama-French High Minus Low (HML) factor relied heavily on the
+Book-to-Market (P/B) ratio. However, P/B has suffered significant degradation in predictive
+power over the past two decades. In response, contemporary quantitative researchers have
+identified superior metrics with robust empirical backing.
+Robert Novy-Marx demonstrated that gross profitability—measured as Gross Profits scaled by
+Total Assets (GP/A)—possesses cross-sectional return predictive power roughly equal to the
+
+
+<!-- page 3 -->
+
+traditional book-to-market ratio3. By measuring profitability near the top of the income
+statement, GP/A provides the cleanest accounting measure of true economic productivity,
+unpolluted by managerial discretion over below-the-line expenses, leverage, or tax strategies5.
+Profitable firms systematically generate higher returns despite trading at premium valuation
+multiples. Furthermore, because gross profitability is effectively a growth factor, it exhibits
+negative correlation with traditional value factors, making it a nearly perfect hedge in a
+composite portfolio5. AQR Capital Management incorporated this insight into their Quality
+Minus Junk (QMJ) framework, proving that investors can generate alpha by purchasing highly
+profitable firms at average prices, or average profitability firms at low prices8.
+Loughran and Wellman extended valuation research by proving that the Enterprise Multiple
+(Enterprise Value divided by EBITDA or EBIT) is a far stronger determinant of future stock
+returns than equity-based multiples like P/E or P/B9. The Enterprise Multiple normalizes the
+capital structure by including debt, preferred stock, and cash in the numerator, while evaluating
+unlevered operating earnings in the denominator. This prevents a heavily indebted firm from
+appearing artificially cheap on a P/E basis. Firms in the lowest decile of EV/EBITDA multiples
+historically generate a return premium of over 5% annually, a phenomenon driven primarily by
+predictable investor expectation errors and mispricing rather than increased systematic risk10.
+Richard Sloan's seminal 1996 research on the "Accrual Anomaly" identified a persistent
+inefficiency in how markets price earnings quality13. Sloan proved that the cash flow
+component of earnings is significantly more persistent than the accrual component. However,
+investors display a behavioral bias, naively fixating on the bottom-line net income figure without
+distinguishing its composition. Consequently, firms reporting high earnings driven by non-cash
+accruals typically experience future earnings reversals and negative abnormal stock returns.
+Incorporating a negative screen for high accruals (calculated as Net Income less Operating
+Cash Flow less Investing Cash Flow, scaled by Total Assets) systematically protects a portfolio
+from aggressive accounting assumptions13.
+Finally, Meb Faber introduced the concept of "Shareholder Yield" as a modern evolution of the
+dividend yield strategy. Because tax policy and executive compensation structures have shifted
+corporate capital return preferences from dividends to share repurchases, looking solely at
+dividend yield misses the majority of capital being returned to shareholders. Shareholder Yield
+combines dividend payments, net share repurchases, and net debt reduction. Empirical
+evidence confirms that portfolios sorted on high shareholder yield outperform both broad
+market indices and pure high-dividend strategies across varying market regimes17.
+1.2 The Value Winter, Intangible Assets, and Macroeconomic Shifts
+From approximately 2007 to 2021, systematic value investing strategies—particularly those
+reliant on the Fama-French HML factor—experienced a prolonged period of severe
+underperformance, colloquially termed the "Value Winter"20. Several structural explanations
+exist for this phenomenon.
+The primary driver is the transition from an industrial, capital-heavy economy to a digital,
+knowledge-based economy. Global Generally Accepted Accounting Principles (GAAP)
+mandate that internally generated intangible assets, specifically Research and Development
+
+
+<!-- page 4 -->
+
+(R&D) and Customer Acquisition Costs (CAC), must be expensed immediately on the income
+statement rather than capitalized on the balance sheet21. For a modern software or
+pharmaceutical company, R&D is the economic equivalent of building a factory; it is an
+investment in future cash flows. By forcing firms to expense R&D, current accounting standards
+artificially depress reported earnings (inflating P/E ratios) and systematically understate the
+book value of equity (inflating P/B ratios)21. Quantitative practitioners have adapted by
+programmatically capitalizing R&D over an assumed useful life (e.g., amortizing software R&D
+over five years). This adjustment restores the relevance of the book value metric, corrects
+distorted ROIC calculations, and significantly improves the efficacy of the value factor21.
+A secondary driver of the Value Winter was the protracted period of zero-interest-rate policy
+(ZIRP) instituted by global central banks. As articulated by McKinsey & Company, historically
+low interest rates lower the cost of capital, artificially inflating the present value of
+long-duration growth assets24. In a low-rate environment, distant future cash flows are
+penalized less by the discount rate, leading markets to assign premium valuations to
+high-growth technology equities at the expense of cash-flowing value equities. The
+macroeconomic regime shift toward higher structural inflation and normalized interest rates
+theoretically restores the time value of money, serving as a tailwind for traditional value factors.
+1.3 Avoiding Value Traps via Financial Quality Scorers
+A "value trap" occurs when a stock screens as quantitatively cheap, but its underlying business
+is in permanent, terminal decline. To separate genuinely mispriced assets from structurally
+doomed businesses, professionals utilize fundamental momentum and fraud detection
+algorithms.
+The Piotroski F-Score, developed by Joseph Piotroski, is a nine-point binary model that
+evaluates a firm's trajectory across profitability, leverage, liquidity, and operating efficiency
+based exclusively on year-over-year directional improvement25. A firm receives one point for
+satisfying criteria such as positive return on assets, operating cash flow exceeding net income,
+decreasing long-term debt ratios, and expanding gross margins. The F-Score does not
+measure absolute quality, but rather fundamental momentum. Piotroski’s empirical backtests
+demonstrated that purchasing companies in the lowest price-to-book quintile that also
+possessed an F-Score of 8 or 9 generated massive outperformance, effectively filtering out
+deteriorating firms before they succumb to bankruptcy25.
+The Beneish M-Score, formulated by Messod Beneish, operates as a probabilistic fraud
+detection mechanism30. Utilizing eight financial ratios—including the Days Sales in Receivables
+Index (DSRI), Gross Margin Index (GMI), Asset Quality Index (AQI), and Total Accruals to Total
+Assets (TATA)—the model flags aggressive revenue recognition and expense capitalization30.
+An M-Score greater than the critical threshold of -1.78 indicates a high statistical probability of
+earnings manipulation16. Deploying the M-Score as a negative filter protects the screening tool
+from algorithmic blindness to fraudulent accounting16.
+
+  Value Factor /          Primary                 Evidence                Mechanism of           Blind Spots &
+  Metric                  Academic                Strength                Action                 Limitations
+
+
+<!-- page 5 -->
+
+Champion
+
+
+Gross                  Robert                 Very Strong             Unpolluted             Can
+Profitability          Novy-Marx                                      top-line               inadvertently
+(GP/A)                                                                productivity           favor
+                                                                      measure. Acts          asset-light
+                                                                      as a quality           tech over
+                                                                      hedge to value.        capital-intensiv
+                                                                                             e industrials.
+
+Enterprise             Loughran &             Very Strong             Normalizes             Incompatible
+Multiple               Wellman                                        capital                with Financials
+(EV/EBIT)                                                             structures and         (Banks,
+                                                                      eliminates debt        Insurers, Asset
+                                                                      distortion.            Managers).
+
+
+Price-to-Book          Fama & French          Weakening               Acquiring net          Destroyed by
+(P/B)                                                                 assets below           unrecorded
+                                                                      replacement            intangible
+                                                                      cost.                  assets and
+                                                                                             stock
+                                                                                             buybacks.
+
+
+Accruals               Richard Sloan          Strong                  Identifies             Highly volatile
+(Sloan Ratio)                                                         low-quality            for
+                                                                      earnings driven        capital-intensiv
+                                                                      by accounting          e cyclicals with
+                                                                      adjustments,           lumpy CapEx.
+                                                                      not cash.
+
+
+Piotroski              Joseph                 Strong                  Eliminates             Purely
+F-Score                Piotroski                                      value traps via        backward-look
+                                                                      YoY                    ing; fails to
+                                                                      fundamental            anticipate
+                                                                      momentum               sudden
+                                                                      and liquidity          macroeconomi
+                                                                      checks.                c shocks.
+
+Beneish                Messod                 Strong                  Detects                High
+M-Score                Beneish                                        aggressive             false-positive
+
+
+<!-- page 6 -->
+
+revenue                 rate for
+                                                                        recognition             aggressive but
+                                                                        and expense             legitimate
+                                                                        deflation.              growth
+                                                                                                companies.
+
+
+  Shareholder            Meb Faber               Moderate/Stro          Holistic view of        Share
+  Yield                                          ng                     management's            buybacks
+                                                                        capital return          executed at
+                                                                        to                      market peaks
+                                                                        shareholders.           destroy
+                                                                                                long-term
+                                                                                                shareholder
+                                                                                                value.
+
+
+2. Scoring Model Design and Sector-Specific
+Adjustments
+Building a proprietary screening tool requires synthesizing these disparate metrics into a
+cohesive, algorithmic ranking system. A naive approach of simply summing the absolute values
+of these ratios will result in severe sector concentration. For example, comparing the
+EV/EBITDA of a high-margin software firm to a capital-intensive utility company provides zero
+analytical value.
+To resolve this, quantitative value funds rely on sector-neutral Z-scoring. Every fundamental
+metric is calculated for a specific equity, and that value is then normalized against the mean
+and standard deviation of its specific Global Industry Classification Standard (GICS) sector. A
+Z-score indicates how many standard deviations a company's specific metric sits from its
+industry average. These individual Z-scores are then transformed into percentile ranks. A firm in
+the 95th percentile for EV/EBIT within the Industrials sector is deeply undervalued relative to its
+peers, allowing the screening tool to surface the cheapest, highest-quality names across all
+sectors uniformly.
+2.1 Adjusting Valuation Metrics by Industry
+The architectural logic of the screening tool must dynamically swap valuation metrics based on
+the target company's industry classification. Applying industrial metrics to specialized sectors
+will result in systemic misclassification.
+  ●    Financials (Banks and Insurers): The Enterprise Multiple (EV/EBIT) is fundamentally
+       incompatible with banks. For a bank, debt is not a financing vehicle; it is raw material
+       (deposits), and interest is operating revenue, not a financing expense. Therefore, the
+       screening tool must evaluate financials using the Price-to-Tangible Book Value (P/TBV)
+       ratio, while measuring quality via the Return on Tangible Common Equity (ROTCE) and the
+
+
+<!-- page 7 -->
+
+Net Interest Margin (NIM) trajectory.
+  ●    Real Estate Investment Trusts (REITs): REITs are mandated to distribute the vast
+       majority of their taxable income and are burdened by heavy, non-cash depreciation
+       charges that artificially depress net income. Standard P/E ratios are useless. The
+       algorithm must automatically route REITs to a Price-to-Funds From Operations (P/FFO) or
+       Adjusted Funds From Operations (P/AFFO) valuation metric.
+  ●    Utilities: Given their regulated nature and heavy capital expenditures, utilities should be
+       evaluated on Dividend Yield relative to the risk-free rate, and their Regulated Return on
+       Equity.
+  ●    Software/Technology: For high-growth SaaS firms where current profitability is
+       intentionally depressed by customer acquisition costs, the screening tool should utilize
+       Enterprise Value to Recurring Revenue alongside the "Rule of 40" (Revenue Growth Rate
+       plus Free Cash Flow Margin).
+2.2 Constructing the Forensic Value Score (FVS)
+The proposed framework for the screening tool relies on a proprietary "Forensic Value Score"
+(FVS), scaled from 0 to 100, which blends quantitative accounting realities with qualitative
+LLM-driven insights. The recommended baseline weighting is as follows:
+Quantitative Valuation & Financial Quality (60% Total Weight):
+  ●    Relative Valuation (25%): Sector-neutral Z-score of EV/EBIT (or P/TBV for financials).
+  ●    Economic Productivity (15%): Gross Profitability (GP/A) percentile rank within the
+       sector.
+  ●    Earnings Quality (10%): Sloan Accrual Ratio. Extreme negative penalization for firms
+       exhibiting highly positive non-cash accruals.
+  ●    Fundamental Momentum (10%): Piotroski F-Score. Firms scoring between 7 and 9
+       receive a premium; firms scoring below 4 face severe algorithmic penalization.
+Qualitative & Macroeconomic Assessment (40% Total Weight):
+  ●    LLM 10-K Forensic Score (20%): Derived from Gemini 2.0 Flash's semantic analysis of
+       the MD&A, Risk Factors, and Auditor's Opinion.
+  ●    Sustainable Growth Potential (10%): Calculated via the McKinsey Value Driver Formula
+       (ROIC multiplied by Reinvestment Rate) to algorithmically project organic intrinsic
+       growth.
+  ●    Shareholder Yield (10%): The composite sum of dividend yield, net share repurchases,
+       and net debt reduction.
+Finally, the screening tool must implement a rigid Margin of Safety threshold. Respected value
+investors, mirroring the ethos of Seth Klarman, demand a minimum 30% to 40% discount to
+intrinsic value to absorb the inevitable inaccuracies of any forecasting model. The FVS should
+only flag a stock as an actionable "Buy" if its blended valuation implies a margin of safety
+exceeding 30%. Furthermore, any equity that triggers a Beneish M-Score greater than -1.78 is
+immediately disqualified, acting as an automated circuit breaker against potential accounting
+fraud.
+3. Data Sources, APIs, and the Commercial Landscape
+The lifeblood of the screening tool is accurate, historically pristine financial data. While the
+
+
+<!-- page 8 -->
+
+SEC's EDGAR database provides raw XBRL facts and submissions for free, relying on it for daily
+pricing, split-adjustments, and standardized fundamental time-series is an engineering
+anti-pattern. The tool requires commercial APIs for structured data.
+3.1 Commercial API Vendor Analysis
+Navigating the financial data API landscape requires balancing data depth against draconian
+Terms of Service (TOS) that prohibit commercial display.
+
+  API Vendor             Coverage &              Licensing &            Estimated               Reliability &
+                         Data Depth              Commercial             Monthly Cost            Developer
+                                                 Use Terms                                      Experience
+
+
+  EODHD (EOD             30+ years               Exceptional.           ~$59.99                 High reliability
+  Historical             history, global         Clear                  (Fundamentals           for broad
+  Data)                  fundamentals,           separation of          ) to ~$99.99            fundamental
+                         robust pricing.         personal vs.           (All-in-One)34.         screening. Best
+                                                 commercial                                     multi-asset
+                                                 paths without                                  coverage for
+                                                 hidden                                         the price34.
+                                                 enterprise
+                                                 paywalls34.
+
+  Financial              Extensive               Highly                 ~$99.00                 750 calls/min
+  Modeling               fundamentals,           restrictive.           (Premium), but          limit. Frequent,
+  Prep (FMP)             intrinsic value         Public display         commercial              undocumented
+                         models,                 or                     display pushes          endpoint
+                         earnings                redistribution         costs into the          deprecations
+                         transcripts.            strictly               thousands37.            reported by
+                                                 requires a                                     developers.
+                                                 custom Data
+                                                 Display
+                                                 Agreement
+                                                 (Enterprise
+                                                 pricing)37.
+
+  Polygon.io             Institutional-gr        Strict individual      $79 - $199+ for         Best-in-class
+                         ade real-time           vs. business           Developer/Adv           latency and
+                         US equity               use                    anced tiers34.          WebSockets,
+                         pricing, ticks,         segmentation.                                  but overly
+                         and trades.             Not intended                                   narrow focus
+                                                 for broad                                      on pricing over
+                                                 fundamental                                    deep
+
+
+<!-- page 9 -->
+
+display without                                fundamentals3
+                                                 enterprise                                     4.
+                                                 licensing34.
+
+  Tiingo                 US Equities,            Highly                 $50/month               10,000 req/hr
+                         accurate EOD            transparent.           ($499/year) for         limits.
+                         pricing, basic          Internal               commercial              Exceptional
+                         fundamentals.           commercial             tier39.                 data
+                                                 use explicitly                                 cleanliness for
+                                                 permitted on                                   end-of-day
+                                                 base                                           pricing39.
+                                                 commercial
+                                                 tiers39.
+
+  Alpha                  Time series,            Must confirm           ~$49.99 to              Reliable, but
+  Vantage                options, basic          premium                $249.99 based           heavily
+                         economic                entitlement for        on request rate         throttled on
+                         indicators.             commercial             limits34.               lower tiers.
+                                                 display.
+
+
+  Finnhub                Developer-frie          Public pricing         $49.99 -                Excellent
+                         ndly real-time          labeled strictly       $199.99+                modern
+                         data,                   for personal           (Fundamental            documentation
+                         estimates,              use.                   data billed per         , but costs
+                         calendars.              Commercial             market)34.              scale rapidly
+                                                 agreements                                     with data
+                                                 required                                       types.
+                                                 before
+                                                 shipping34.
+
+  Yahoo                  Python                  Strictly               Free (Open              Highly fragile.
+  Finance                scraping                prohibits              Source).                Undocumente
+  (yfinance)             wrapper for             commercial                                     d API changes
+                         Yahoo data.             use. Designed                                  frequently
+                                                 for                                            break scraping
+                                                 personal/acade                                 scripts.
+                                                 mic research
+                                                 only38.
+
+3.2 Macroeconomic Data Integration
+To integrate industry trends and business cycle awareness into the screening tool, developers
+should pull free macroeconomic data from US Government APIs. The Federal Reserve
+
+
+<!-- page 10 -->
+
+Economic Data (FRED) API provides programmatic access to interest rates, inflation metrics,
+and sector-specific industrial production. The Bureau of Labor Statistics (BLS) API offers
+granular employment and wage data, allowing the tool to measure labor cost pressures within
+specific industries. The Census Bureau API supplies data on retail sales, durable goods orders,
+and housing starts. By mapping these macro indicators to specific equity sectors (e.g.,
+correlating Housing Starts with Homebuilder equities), the system can algorithmically identify
+macro headwinds or tailwinds.
+3.3 The Optimal Data Stack Recommendation
+For an independent developer building a commercial-grade, S&P 500 screening tool, the
+optimal, lowest-cost data stack is:
+  1.   Fundamental and Pricing Data: EODHD (Fundamentals Plan at ~$59.99/mo). EODHD
+       provides the clearest path to commercial display without forcing the developer into
+       opaque enterprise sales funnels, while delivering the required 30-year historical depth
+       necessary for valid backtesting34.
+  2.   Textual Filings Data: SEC EDGAR REST API (Free). Utilize the free official SEC API to
+       download raw 10-K text for LLM processing.
+  3.   Macroeconomic Indicators: FRED API (Free).
+       Total Estimated Monthly Data Cost: ~$60.00.
+4. SEC EDGAR XBRL Challenges and Point-in-Time
+Architecture
+If the developer opts to process fundamentals directly from SEC EDGAR rather than an
+aggregator like EODHD, they must navigate the labyrinthine structure of eXtensible Business
+Reporting Language (XBRL).
+4.1 The Frictions of XBRL Normalization
+The primary failure point of XBRL analysis is the proliferation of "Extension Taxonomies." While
+the Financial Accounting Standards Board (FASB) maintains a standardized US-GAAP
+taxonomy, the SEC permits corporations to create custom, bespoke tags if management
+believes standard tags do not accurately reflect their operations. Consequently, an automated
+scraper attempting to query "Revenues" will fail if a company uses a custom tag like
+us-gaap_RevenueFromContractWithCustomerExcludingAssessedTax. Furthermore, a single
+10-K filing frequently contains duplicate facts due to dimensional nodes; a revenue figure might
+be reported once for the consolidated entity, and again broken down by geographic or product
+segments. Fiscal year mismatches also plague automated systems, as companies like Apple
+end their fiscal year in September, misaligning with standard calendar-year queries.
+To solve this, developers rely on open-source normalization libraries. The edgartools Python
+library interfaces directly with the SEC, automatically standardizing XBRL data across
+companies by mapping thousands of disparate custom tags into roughly 95 consistent
+accounting concepts41. Alternative libraries like sec-api or sec-parser perform similar
+JSON-based extractions41.
+4.2 Defeating Look-Ahead Bias via Point-in-Time Data
+
+
+<!-- page 11 -->
+
+The most catastrophic error in quantitative backtesting is the introduction of look-ahead bias,
+which occurs when a database architecture overwrites historical data with subsequently
+restated figures. If a company fraudulently reports earnings in 2022, but issues a restating
+10-K/A in 2024, a naive database will show the corrected 2022 earnings. A backtest running
+through 2022 will therefore make decisions based on the corrected data, which was impossible
+for a real investor to know at the time.
+To maintain temporal integrity, the Supabase Postgres database schema must enforce a
+Point-in-Time (PIT) architecture. Financial data tables must separate the period_end_date
+(when the quarter actually ended) from the filing_date (the timestamp the document was
+legally submitted to the SEC). Furthermore, the schema must include a superseded_date
+column for restatements. When the backtesting engine queries the database for an analysis
+date of "March 15, 2023," the SQL query must include a strict WHERE filing_date <= '2023-03-15'
+AND (superseded_date IS NULL OR superseded_date > '2023-03-15') clause. This ensures the
+algorithm only processes the exact, flawed data available to the market on that specific
+historical day.
+5. Qualitative Textual Analysis via Large Language
+Models (LLMs)
+While quantitative screens reveal historical accounting realities, qualitative textual analysis of
+SEC filings provides a forward-looking leading indicator of management intent and hidden
+operational risks.
+5.1 The Empirical Predictive Power of Text
+Academic finance has proven that the prose within SEC filings contains vast, unpriced alpha.
+The landmark paper "Lazy Prices" by Cohen, Malloy, and Nguyen demonstrated that
+year-over-year semantic changes to the text of a 10-K—specifically within the Management’s
+Discussion and Analysis (MD&A) and Risk Factors sections—are highly predictive of future
+negative stock returns44. When underlying business fundamentals deteriorate, corporate legal
+teams subtly alter the boilerplate language regarding risks and executive structure. Because
+the modern 10-K has ballooned in size, investors suffer from profound "inattention" to these
+subtle edits, resulting in zero immediate price reaction upon the filing's release. A portfolio that
+algorithmically shorts "changers" (firms with heavy text edits) and buys "non-changers"
+generates massive abnormal alpha, exceeding 22% annually44.
+Furthermore, Feng Li’s research utilizing the Fog Index (a computational linguistics metric
+measuring syllable count and sentence length) proved that managers intentionally obfuscate
+bad news by decreasing the readability of their annual reports. Firms producing highly
+complex, lengthy, and unreadable 10-Ks systematically exhibit lower future earnings
+persistence49.
+Most critically, the Public Company Accounting Oversight Board (PCAOB) recently mandated
+the inclusion of Critical Audit Matters (CAMs) within the auditor's opinion section of the 10-K53.
+CAMs force auditors to explicitly disclose areas that required highly complex, subjective
+judgments during the audit, such as goodwill impairment testing or complex revenue
+recognition53. Empirical data indicates that the presence of specific CAMs is a direct leading
+
+
+<!-- page 12 -->
+
+indicator of restatement risk, future SEC comment letters, and subsequent stock price crashes,
+making it an invaluable textual signal to correlate alongside the Beneish M-Score54.
+5.2 Structured Prompting and JSON Output
+To automate this qualitative analysis, the LLM must be constrained by rigid, rubric-based
+prompt engineering to prevent hallucinations and ensure deterministic output. The system
+pipeline should extract the MD&A, Risk Factors, and Auditor's Opinion, pass the text to the LLM,
+and demand a structured JSON response.
+The prompt design should instruct the model to assume the persona of a forensic accountant.
+The model must score the firm from 1 to 10 on:
+  1.   Moat Durability: Analyzing language regarding competitive pressures, supply chain
+       pricing power, and barriers to entry.
+  2.   Management Candor: Identifying obfuscation, passive voice in addressing failures, and
+       the Fog Index readability.
+  3.   The "Lazy Prices" Delta: Comparing the current Risk Factors text to the prior year's text
+       to calculate the semantic divergence score.
+  4.   CAM Risk Flag: A boolean trigger evaluating if the auditor highlighted revenue
+       recognition or goodwill impairment complexities.
+5.3 LLM API Cost Economics: Claude vs. Gemini
+Analyzing 10-K filings is massively token-intensive. A standard 10-K can easily consume
+100,000 tokens. Scanning the 500 companies of the S&P 500 requires processing roughly 50
+million input tokens annually.
+The economics of modern LLM APIs dictate the architecture of this feature. Anthropic's Claude
+3.5 Sonnet is priced at $3.00 per million input tokens and $15.00 per million output tokens58.
+Processing 50 million tokens through Claude would cost approximately $150.00 per run.
+Conversely, Google's Gemini 2.0 Flash is priced at a highly disruptive $0.10 per million input
+tokens and $0.40 per million output tokens58. Gemini boasts a massive 1-million token context
+window, natively capable of ingesting entire 10-K documents without chunking algorithms59.
+Processing the same 50 million tokens through Gemini 2.0 Flash costs approximately $5.00. At
+roughly 30 times cheaper per input token, Gemini 2.0 Flash is the only economically viable
+engine for a high-volume, automated financial document parsing pipeline59.
+6. Backtesting, Validation, and Competitive Landscape
+Before deploying capital or launching the tool commercially, the underlying algorithms must be
+rigorously backtested.
+6.1 Backtesting Best Practices and Pitfalls
+Beyond look-ahead bias, backtesting architectures must account for survivorship bias. If a
+developer runs a backtest on the S&P 500 using only the index's current constituents, the test
+ignores all the companies that went bankrupt, merged, or were delisted over the past decade.
+This artificially inflates historical returns by removing the failures from the sample. High-quality
+historical data providers, such as EODHD or specialized platforms like QuantRocket, provide
+access to delisted ticker data to ensure accurate cross-sectional testing.
+Transaction costs and rebalancing frequency also destroy theoretical alpha. Value strategies
+
+
+<!-- page 13 -->
+
+are typically low-turnover, requiring annual or semi-annual rebalancing1. A backtest must
+algorithmically subtract realistic bid-ask spreads, commission slippage, and capital gains tax
+frictions. Free or low-cost tools like the Python libraries Zipline (maintained by the open-source
+community) or Backtrader allow developers to simulate these precise market frictions locally
+before writing the logic into the Supabase production backend.
+6.2 Competitive Analysis: Filling the Market Gap
+The financial technology landscape is saturated with screening tools, yet a distinct gap exists
+for a platform bridging deep quant accounting with LLM forensics.
+
+  Competitor Platform                    Core Strengths                          Weaknesses & Market
+                                                                                 Gaps to Exploit
+
+
+  GuruFocus                              Incredible depth of                     Overwhelming, outdated UI.
+                                         historical fundamental data;            Lacks modern LLM textual
+                                         built-in Piotroski and                  synthesis. Highly rigid in
+                                         Beneish scoring widgets28.              how factors can be
+                                                                                 weighted.
+
+  Finviz                                 Exceptional speed for                   Purely a point-in-time
+                                         technical analysis and basic,           snapshot. No backtesting
+                                         top-line fundamental                    capability. Cannot perform
+                                         screening.                              deep accounting
+                                                                                 adjustments (e.g.,
+                                                                                 capitalizing R&D).
+
+
+  Simply Wall St                         Beautiful, retail-friendly              Relies on highly
+                                         data visualizations.                    deterministic, rigid DCF
+                                                                                 models. The simplistic
+                                                                                 "snowflake" scoring
+                                                                                 mechanism hides
+                                                                                 underlying accounting
+                                                                                 nuance.
+
+
+  Portfolio123                           Extremely powerful,                     Extremely steep learning
+                                         institutional-grade                     curve. Completely lacks
+                                         quantitative backtesting                modern NLP/LLM
+                                         and custom rule creation.               integration for unstructured
+                                                                                 text analysis.
+
+
+  Koyfin                                 Professional-grade charting             Strong on data visualization,
+
+
+<!-- page 14 -->
+
+and macro data                        but weak on automated,
+                                       dashboards rivaling                   proprietary algorithmic
+                                       Bloomberg.                            scoring and textual
+                                                                             forensics.
+
+The proposed tool fills this gap by offering a programmatic, modern React interface (Lovable)
+that automates the deep accounting adjustments (R&D capitalization) of institutional quant
+funds, while pioneering the automated LLM extraction of "Lazy Prices" semantic deltas and
+CAM risk flags.
+7. Technical Architecture: Supabase and Edge
+Computing
+The infrastructure relies on a Supabase (PostgreSQL) backend to handle the massive
+time-series fundamental data, while Supabase Edge Functions orchestrate the daily scanning
+and LLM API calls. This serverless architecture introduces specific operational bottlenecks that
+must be mitigated.
+7.1 Connection Pooling and Supavisor Configuration
+Serverless Edge Functions are ephemeral; they spin up, execute a task, and die. If an Edge
+Function opens a direct connection to the Postgres database for every single 10-K it
+processes, it will rapidly exhaust the database's maximum connection limit, crashing the
+application.
+To resolve this, database connections from Edge Functions must route through Supavisor,
+Supabase's native connection pooler64. The developer must explicitly configure the connection
+string to utilize Transaction Mode on port 6543, rather than the default Session Mode on port
+543265. Transaction mode allows the pooler to rapidly cycle connections back to the pool
+immediately after a transaction completes, enabling massive concurrency for API traffic66.
+7.2 Overcoming Edge Function Timeouts via pg_cron
+Supabase Edge Functions operate under strict execution time limits (typically invoking a
+timeout after 2 to 5 minutes). A daily script designed to pull pricing, calculate 9 Piotroski
+metrics, normalize 8 Beneish metrics, and query the Gemini API for 500 companies will
+immediately trigger this timeout.
+The architectural solution is to move the heavy, long-running orchestration into the database
+itself using the pg_cron PostgreSQL extension69. Rather than a single Edge Function looping
+through 500 companies, pg_cron can trigger background job queues on a schedule69. The
+system should implement an asynchronous webhook pattern: pg_cron triggers an Edge
+Function for a small batch of 10 companies; the Edge Function fires the payload to the Gemini
+2.0 Flash API and immediately terminates to avoid timeout. Upon completion, the LLM API fires
+a callback webhook to a separate endpoint to insert the structured JSON scores back into the
+database.
+8. Key Risks and Open Architectural Questions
+
+
+<!-- page 15 -->
+
+While the proposed architecture is robust, several systemic risks require ongoing mitigation:
+  1.   LLM Hallucinations in Financial Tables: LLMs struggle with the spatial reasoning
+       required to accurately parse complex, multi-column financial tables embedded within
+       10-Ks. The mitigation strategy is to strictly constrain the LLM prompt to analyze only
+       narrative prose (MD&A, Risk Factors, CAMs), while relying exclusively on the EODHD API
+       for quantitative numerical data.
+  2.   Subjectivity in Capitalizing Intangibles: The algorithmic capitalization of R&D requires
+       the developer to assume a useful life for the asset (e.g., 5 years for software, 10 years for
+       pharmaceuticals). Applying blanket amortization schedules across diverse sectors
+       introduces subjective bias into an otherwise objective quantitative score.
+  3.   XBRL Taxonomy Drift: The SEC and FASB periodically update the US-GAAP taxonomy.
+       The internal logic or open-source libraries used to parse raw EDGAR data will require
+       continuous maintenance to prevent data pipelines from breaking when new tags are
+       introduced.
+  4.   Macroeconomic Regime Shifts: Value factors perform differently across inflationary
+       and deflationary cycles. A fixed weighting in the Forensic Value Score may underperform
+       if the macro regime suddenly shifts back to a zero-interest-rate environment,
+       necessitating dynamic, macro-aware factor weighting in future iterations.
+
+Works cited
+
+  1.   Magic Formula Investing: Greenblatt's Strategy Explained - GeminIQ,
+       https://www.geminiq.com/blog/magic-formula-investing-explained
+  2.   Greenblatt's Magic Formula Strategy: Methodology, Backtest,
+       https://www.quantifiedstrategies.com/the-magic-formula-strategy/
+  3.   Good Growth and the Gross Profitability Premium Robert Novy-Marx,
+       https://www.nber.org/system/files/working_papers/w15940/w15940.pdf
+  4.   The Other Side of Value: The Gross Profitability Premium,
+       https://www.aqr.com/Our-Firm/AQR-Insight-Award/2012/Distinguished-Paper-1
+  5.   The Other Side of Value: The Gross Profitability Premium,
+       https://www.aqr.com/-/media/AQR/Documents/AQR-Insight-Award/2012/The-Ot
+       her-Side-of-Value.pdf
+  6.   The Gross Profitability Premium | Margin of Maybe?,
+       https://marginofmaybe.com/the-gross-profitability-premium/
+  7.   Prof. Novy-Marx on Profitability Factor's Unique Power | - ETF Trends,
+       https://www.etftrends.com/prof-novy-marx-profitability-factors-unique-power/
+  8.   Value and Profitability/Quality: Complementary Factors,
+       https://alphaarchitect.com/value-and-quality-stocks/
+  9.   The Enterprise Multiple and Expected Returns - Advisor Perspectives,
+       https://www.advisorperspectives.com/articles/2020/01/16/the-enterprise-multipl
+       e-and-expected-returns
+  10. New Evidence on the Relation between the Enterprise Multiple,
+       https://ideas.repec.org/a/cup/jfinqa/v46y2012i06p1629-1650_00.html
+  11. New Evidence on the Relation between the Enterprise Multiple and,
+
+
+<!-- page 16 -->
+
+https://www.researchgate.net/publication/410023432_New_Evidence_on_the_Rel
+    ation_between_the_Enterprise_Multiple_and_Average_Stock_Returns
+12. Enterprise Multiples and Expected Stock Returns - Alpha Architect,
+    https://alphaarchitect.com/enterprise-multiples-and-expected-stock-returns/
+13. 1996 Sloan Share Prices Reflects Cash Flow or Accruals PDF - Scribd,
+    https://www.scribd.com/document/439806826/1996-Sloan-Share-prices-reflects
+    -cash-flow-or-accruals-pdf
+14. Do Stock Prices Fully Reflect Information in Accruals and Cash,
+    https://www.cuhk.edu.hk/acy2/workshop/June2009Wasley/1996TAR).pdf
+15. Do Stock Prices Fully Reflect Information in Accruals and Cash flows,
+    https://scispace.com/papers/do-stock-prices-fully-reflect-information-in-accrual
+    s-and-26qpsaucw9
+16. Atlas Global — Equity Intelligence Terminal, https://atlasglobalterminal.com/
+17. Episode #12: “Why 'Shareholder Yield' Beats 'Dividend Yield'”,
+    https://mebfaber.com/2016/08/10/9774/
+18. Shareholder Yield: Does it Work Within Sectors and Industries?,
+    https://mebfaber.com/2022/01/24/shareholder-yield-in-sectors-and-industries/
+19. Shareholder Yield - Meb Faber Research,
+    https://mebfaber.com/wp-content/uploads/2023/05/Shareholder-Yield.pdf
+20. Intangibles and the Performance of the Value Factor,
+    https://www.interactivebrokers.com/campus/ibkr-quant-news/intangibles-and-th
+    e-performance-of-the-value-factor/
+21. Value Investing and the Role of Intangibles - Alpha Architect,
+    https://alphaarchitect.com/value-investing-and-the-role-of-intangibles/
+22. Capitalized R&D: Simple Excel Examples and Full Models,
+    https://breakingintowallstreet.com/kb/financial-statement-analysis/capitalized-rd/
+23. R&D Is an Investment, Not an Expense – How capitalizing R&D,
+    https://www.valens-research.com/rd-investment-not-expense-capitalizing-rd-im
+    pacts-understanding-corporate-profitability/
+24. McKinsey on Finance,
+    https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Strategy%2
+    0and%20Corporate%20Finance/Our%20Insights/Investing%20when%20interest
+    %20rates%20are%20low/Investing%20when%20interest%20rates%20are%20lo
+    w.pdf
+25. Piotroski F-Score - Umbrex,
+    https://umbrex.com/resources/frameworks/finance-frameworks/piotroski-f-score
+    /
+26. Piotroski Score Explained: How It Helps Identify Strong Stocks,
+    https://thetradinganalyst.com/piotroski-score/
+27. Piotroski's F-Score | Accounting Ratio - GMT Research,
+    https://www.gmtresearch.com/en/accounting-ratio/piotroskis-f-score/
+28. S&P GLOBAL Piotroski F-Score: 7 — Near Median - GuruFocus,
+    https://www.gurufocus.com/term/fscore/SPGI
+29. Testing Piotroski's F_SCORE on the U.S. Stock Market,
+    http://arc.hhs.se/download.aspx?MediumId=4214
+
+
+<!-- page 17 -->
+
+30. Beneish M-Score For One Click Group Ltd (1CG) - Finbox,
+    https://finbox.com/ASX:1CG/explorer/beneish_mscore
+31. Messod D. Beneish PhD Professor at Indiana University Bloomington,
+    https://www.researchgate.net/profile/Messod-Beneish
+32. Detecting Earnings Manipulation Using The Beneish M - IOSR Journal,
+    http://iosrjournals.org/iosr-jef/papers/Vol14-Issue6/Ser-3/I1406035765.pdf
+33. application of beneish m-score on selected financial statements,
+    https://www.researchgate.net/publication/311733912_APPLICATION_OF_BENEISH_
+    M-SCORE_ON_SELECTED_FINANCIAL_STATEMENTS
+34. The 2026 Market Data API Scorecard: Comparing 6 Leading Providers,
+    https://eodhd.com/financial-academy/financial-faq/the-2026-market-data-api-sc
+    orecard-comparing-6-leading-providers
+35. Commercial vs Personal license use | EODHD APIs Documentation,
+    https://eodhd.com/financial-apis/commercial-vs-personal-license-use
+36. Best Real-Time Stock Market APIs for Financial Products in 2026,
+    https://eodhd.com/financial-academy/financial-faq/tips-insights/best-real-time-s
+    tock-market-apis-for-financial-products-in-2026
+37. Pricing Plans - Affordable Financial Data API - FMP,
+    https://site.financialmodelingprep.com/developer/docs/pricing
+38. Best Stock Market and Financial Data APIs in 2026 - APIScout,
+    https://apiscout.dev/guides/best-stock-market-financial-apis-2026
+39. Tiingo API Pricing, https://www.tiingo.com/about/pricing
+40. General API Documentation Overview - Tiingo,
+    https://www.tiingo.com/documentation/general/overview
+41. dgunning/edgartools: Read and analyze SEC EDGAR filings in,
+    https://github.com/dgunning/edgartools
+42. Extract Financial Statements - Python Library for SEC Data Analysis,
+    https://edgartools.readthedocs.io/en/latest/guides/extract-statements/
+43. SEC EDGAR Analyzer - Filings & XBRL Financials - Apify,
+    https://apify.com/ryanclinton/sec-edgar-filing-analyzer
+44. Lazy Prices - IDEAS/RePEc, https://ideas.repec.org/p/nbr/nberwo/25084.html
+45. NBER WORKING PAPER SERIES LAZY PRICES Lauren Cohen,
+    https://www.nber.org/system/files/working_papers/w25084/revisions/w25084.rev
+    0.pdf
+46. Lazy Prices | Request PDF - ResearchGate,
+    https://www.researchgate.net/publication/338871006_Lazy_Prices
+47. Lazy Prices - IDEAS/RePEc,
+    https://ideas.repec.org/a/bla/jfinan/v75y2020i3p1371-1415.html
+48. NBER WORKING PAPER SERIES LAZY PRICES Lauren Cohen,
+    https://www.nber.org/system/files/working_papers/w25084/w25084.pdf
+49. Discussion of “Annual report readability, current earnings, and,
+    https://www.researchgate.net/publication/4962390_Discussion_of_Annual_report
+    _readability_current_earnings_and_earnings_persistence
+50. Annual report readability, current earnings, and earnings persistence,
+    https://scispace.com/papers/annual-report-readability-current-earnings-and-ear
+
+
+<!-- page 18 -->
+
+nings-bepby4jx1c
+51. Annual report readability, current earnings, and earnings persistence,
+    https://econpapers.repec.org/RePEc:eee:jaecon:v:45:y:2008:i:2-3:p:221-247
+52. Annual Report Readability, Current Earnings, and ... - ResearchGate,
+    https://www.researchgate.net/publication/222685673_Annual_Report_Readability
+    _Current_Earnings_and_Earnings_Persistence
+53. Final CAM's Report - PCAOB,
+    https://pcaobus.org/EconomicAndRiskAnalysis/pir/PostImplementationReviewAS3
+    101UnqualifiedOpinion/1_Eric-Hirth.pdf
+54. Revenue-Related Critical Audit Matters and Abnormal ... - Aaltodoc,
+    https://aaltodoc.aalto.fi/bitstreams/108aa15a-5e0a-47c2-8783-cffc06fc4b56/dow
+    nload
+55. Critical Audit Matters and SEC Filing Review | Request PDF,
+    https://www.researchgate.net/publication/398679521_Critical_Audit_Matters_and_
+    SEC_Filing_Review
+56. Does CAM Disclosure Relatedness to Restatements Impact the,
+    https://kuscholarworks.ku.edu/server/api/core/bitstreams/7d06efaa-1a4a-4ad5-9f
+    c0-0571a05ae1ec/content
+57. Full article: The art of conversation: the expanded audit report,
+    https://www.tandfonline.com/doi/full/10.1080/00014788.2021.1932264
+58. Claude 3.5 Sonnet vs Gemini 2.0 Flash Pric… | AnotherWrapper,
+    https://anotherwrapper.com/tools/llm-pricing/claude-3-5-sonnet-20241022/gemi
+    ni-2.0-flash
+59. Claude 3.5 Sonnet vs Gemini 2.0 Flash - LLM Stats,
+    https://llm-stats.com/models/compare/claude-3-5-sonnet-20240620-vs-gemini-
+    2.0-flash
+60. Gemini 2.0 Flash vs Claude 3.5 Sonnet: Agentic Benchmarks 2026,
+    https://universeblend.blog/gemini-2-0-flash-vs-claude-35-sonnet/
+61. Gemini API Pricing 2026: Complete Per-1M-Token Cost Guide with,
+    https://www.aifreeapi.com/en/posts/gemini-api-pricing-2026
+62. Claude vs Gemini (2026): Which AI Is Better for Your Work?,
+    https://www.cvinfotech.com/ai-tools/claude-vs-gemini/
+63. How to beat The Little Book That Beats The Market - Greenbackd,
+    https://greenbackd.com/2012/05/07/how-to-beat-the-little-book-that-beats-the
+    -market-an-analysis-of-the-magic-formula/
+64. Supavisor and Connection Terminology Explained - Supabase,
+    https://supabase.com/docs/guides/troubleshooting/supavisor-and-connection-te
+    rminology-explained-9pr_ZO
+65. Supabase Connection String Guide: Ports, Pooling & Errors - WeWeb,
+    https://www.weweb.io/blog/supabase-connection-string-guide-ports-pooling
+66. Troubleshooting prisma errors | Supabase Docs,
+    https://supabase.com/docs/guides/database/prisma/prisma-troubleshooting
+67. Supabase Connection Scaling: The Essential Guide for FastAPI,
+    https://medium.com/@papansarkar101/supabase-connection-scaling-the-essenti
+    al-guide-for-fastapi-developers-2dc5c428b638
+
+
+<!-- page 19 -->
+
+68. Supabase Connection Pooler Deprecating Session Mode on Port,
+   https://supabase.com/changelog/32755-supabase-connection-pooler-deprecati
+   ng-session-mode-on-port-6543-on-february-28-2025
+69. pg_cron: Schedule Recurring Jobs with Cron Syntax in Postgres,
+   https://supabase.com/docs/guides/database/extensions/pg_cron
