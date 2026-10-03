@@ -1,0 +1,670 @@
+cik,ticker,note
+2969,APD,"debt: latest quarter unresolved, used fiscal year end"
+2969,APD,ev_ebit: EBIT <= 0
+4904,AEP,m_score: missing sgai
+4962,AXP,gp_assets: missing gross profit or assets
+4962,AXP,"f_score: missing current_ratio_up,gross_margin_up"
+4962,AXP,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+4962,AXP,"reinvestment: working capital unavailable, change assumed 0"
+4977,AFL,"debt: latest quarter unresolved, used fiscal year end"
+5272,AIG,"debt: latest quarter unresolved, used fiscal year end"
+8670,ADP,reinvestment_rate: missing capex or D&A
+10456,BAX,"debt: latest quarter unresolved, used fiscal year end"
+10456,BAX,ev_ebit: EBIT <= 0
+11544,WRB,shareholder_yield: missing debt_paydown
+12927,BA,m_score: missing sgai
+16918,STZ,market_cap: missing shares
+16918,STZ,f_score: missing no_dilution
+16918,STZ,"shareholder_yield: missing dividends,buybacks,debt_paydown"
+18230,CAT,"debt: latest quarter unresolved, used fiscal year end"
+26172,CMI,m_score: missing dsri
+27419,TGT,m_score: missing dsri
+27904,DAL,gp_assets: missing gross profit or assets
+27904,DAL,f_score: missing gross_margin_up
+27904,DAL,"m_score: missing gmi,sgai"
+29534,DG,m_score: missing dsri
+31791,RVTY,gp_assets: missing gross profit or assets
+31791,RVTY,f_score: missing gross_margin_up
+31791,RVTY,m_score: missing gmi
+34903,FRT,"debt: latest quarter unresolved, used fiscal year end"
+34903,FRT,"f_score: missing current_ratio_up,gross_margin_up"
+34903,FRT,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+34903,FRT,p_ffo: missing gain_on_property_sales
+37996,F,ev_ebit: EBIT <= 0
+37996,F,f_score: missing leverage_down
+37996,F,m_score: missing lvgi
+37996,F,shareholder_yield: missing debt_paydown
+37996,F,"roic: missing EBIT, invested capital, or IC <= 0"
+38777,BEN,gp_assets: missing gross profit or assets
+38777,BEN,"f_score: missing current_ratio_up,gross_margin_up"
+38777,BEN,"m_score: missing dsri,gmi,aqi,lvgi"
+38777,BEN,"reinvestment: working capital unavailable, change assumed 0"
+40533,GD,gp_assets: missing gross profit or assets
+40533,GD,f_score: missing gross_margin_up
+40533,GD,"m_score: missing gmi,sgai"
+40545,GE,gp_assets: missing gross profit or assets
+40545,GE,f_score: missing gross_margin_up
+40545,GE,"m_score: missing gmi,aqi,depi"
+40704,GIS,ev_ebit: EBIT <= 0
+40987,GPC,m_score: missing dsri
+45012,HAL,gp_assets: missing gross profit or assets
+45012,HAL,f_score: missing gross_margin_up
+45012,HAL,"m_score: missing gmi,sgai"
+49071,HUM,gp_assets: missing gross profit or assets
+49071,HUM,f_score: missing gross_margin_up
+49071,HUM,m_score: missing gmi
+49826,ITW,m_score: missing sgai
+50863,INTC,ev_ebit: EBIT <= 0
+51253,IFF,ev_ebit: EBIT <= 0
+51434,IP,ev_ebit: EBIT <= 0
+51434,IP,m_score: missing dsri
+55785,KMB,m_score: missing sgai
+56873,KR,m_score: missing sgai
+59478,LLY,reinvestment_rate: missing capex or D&A
+62709,MRSH,gp_assets: missing gross profit or assets
+62709,MRSH,f_score: missing gross_margin_up
+62709,MRSH,"m_score: missing gmi,sgai"
+63908,MCD,gp_assets: missing gross profit or assets
+63908,MCD,f_score: missing gross_margin_up
+63908,MCD,"m_score: missing dsri,gmi"
+64803,CVS,m_score: missing sgai
+65984,ETR,gp_assets: missing gross profit or assets
+65984,ETR,f_score: missing gross_margin_up
+65984,ETR,"m_score: missing dsri,gmi,sgai"
+72741,ES,gp_assets: missing gross profit or assets
+72741,ES,f_score: missing gross_margin_up
+72741,ES,"m_score: missing gmi,aqi,depi,sgai"
+72903,XEL,gp_assets: missing gross profit or assets
+72903,XEL,"f_score: missing gross_margin_up,asset_turnover_up"
+72903,XEL,"m_score: missing dsri,gmi,sgi,sgai"
+74208,UDR,"f_score: missing current_ratio_up,gross_margin_up"
+74208,UDR,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+75362,PCAR,cash: missing at latest balance sheet
+75362,PCAR,"f_score: missing leverage_down,current_ratio_up"
+75362,PCAR,"m_score: missing dsri,aqi,lvgi"
+75362,PCAR,shareholder_yield: missing debt_paydown
+75362,PCAR,"reinvestment: working capital unavailable, change assumed 0"
+75362,PCAR,"roic: missing EBIT, invested capital, or IC <= 0"
+77360,PNR,m_score: missing dsri
+77476,PEP,m_score: missing dsri
+79282,BRO,gp_assets: missing gross profit or assets
+79282,BRO,f_score: missing gross_margin_up
+79282,BRO,"m_score: missing dsri,gmi,sgai"
+87347,SLB,gp_assets: missing gross profit or assets
+87347,SLB,f_score: missing gross_margin_up
+87347,SLB,"m_score: missing gmi,sgai"
+91440,SNA,gp_assets: missing gross profit or assets
+91440,SNA,f_score: missing gross_margin_up
+91440,SNA,"m_score: missing gmi,sgai"
+92122,SO,gp_assets: missing gross profit or assets
+92122,SO,f_score: missing gross_margin_up
+92122,SO,"m_score: missing dsri,gmi,aqi,depi,sgai"
+92380,LUV,gp_assets: missing gross profit or assets
+92380,LUV,f_score: missing gross_margin_up
+92380,LUV,"m_score: missing gmi,sgai"
+93556,SWK,m_score: missing dsri
+96021,SYY,"m_score: missing dsri,sgai"
+97210,TER,"debt: latest quarter unresolved, used fiscal year end"
+97745,TMO,gp_assets: missing gross profit or assets
+97745,TMO,f_score: missing gross_margin_up
+97745,TMO,m_score: missing gmi
+100517,UAL,gp_assets: missing gross profit or assets
+100517,UAL,f_score: missing gross_margin_up
+100517,UAL,"m_score: missing gmi,sgai"
+100885,UNP,gp_assets: missing gross profit or assets
+100885,UNP,f_score: missing gross_margin_up
+100885,UNP,"m_score: missing gmi,sgai"
+101829,RTX,gp_assets: missing gross profit or assets
+101829,RTX,f_score: missing gross_margin_up
+101829,RTX,m_score: missing gmi
+106535,WY,m_score: missing sgai
+107263,WMB,gp_assets: missing gross profit or assets
+107263,WMB,f_score: missing gross_margin_up
+107263,WMB,"m_score: missing gmi,sgai"
+202058,LHX,gp_assets: missing gross profit or assets
+202058,LHX,"f_score: missing gross_margin_up,asset_turnover_up"
+202058,LHX,"m_score: missing dsri,gmi,sgi,sgai"
+217346,TXT,gp_assets: missing gross profit or assets
+217346,TXT,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+217346,TXT,"m_score: missing dsri,gmi,aqi,depi,lvgi"
+217346,TXT,shareholder_yield: missing debt_paydown
+217346,TXT,"reinvestment: working capital unavailable, change assumed 0"
+217346,TXT,"roic: missing EBIT, invested capital, or IC <= 0"
+277948,CSX,gp_assets: missing gross profit or assets
+277948,CSX,f_score: missing gross_margin_up
+277948,CSX,"m_score: missing gmi,sgai"
+315189,DE,gp_assets: missing gross profit or assets
+315189,DE,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+315189,DE,"m_score: missing dsri,gmi,aqi,depi,lvgi"
+315189,DE,shareholder_yield: missing debt_paydown
+315189,DE,"reinvestment: working capital unavailable, change assumed 0"
+315189,DE,"roic: missing EBIT, invested capital, or IC <= 0"
+315293,AON,gp_assets: missing gross profit or assets
+315293,AON,f_score: missing gross_margin_up
+315293,AON,"m_score: missing gmi,sgai"
+352541,LNT,m_score: missing sgai
+352541,LNT,reinvestment_rate: missing capex or D&A
+352915,UHS,gp_assets: missing gross profit or assets
+352915,UHS,f_score: missing gross_margin_up
+352915,UHS,"m_score: missing gmi,sgai"
+354190,AJG,gp_assets: missing gross profit or assets
+354190,AJG,f_score: missing gross_margin_up
+354190,AJG,"m_score: missing gmi,sgai"
+702165,NSC,gp_assets: missing gross profit or assets
+702165,NSC,f_score: missing gross_margin_up
+702165,NSC,"m_score: missing gmi,sgai"
+715957,D,gp_assets: missing gross profit or assets
+715957,D,f_score: missing gross_margin_up
+715957,D,"m_score: missing gmi,sgai"
+715957,D,reinvestment_rate: missing capex or D&A
+720005,RJF,gp_assets: missing gross profit or assets
+720005,RJF,"f_score: missing current_ratio_up,gross_margin_up"
+720005,RJF,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+720005,RJF,"reinvestment: working capital unavailable, change assumed 0"
+723531,PAYX,m_score: missing dsri
+726728,O,"f_score: missing current_ratio_up,gross_margin_up"
+726728,O,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+726958,CASY,"m_score: missing dsri,sgai"
+728535,JBHT,gp_assets: missing gross profit or assets
+728535,JBHT,f_score: missing gross_margin_up
+728535,JBHT,"m_score: missing gmi,sgai"
+731802,ATO,gp_assets: missing gross profit or assets
+731802,ATO,f_score: missing gross_margin_up
+731802,ATO,"m_score: missing gmi,aqi,depi,sgai"
+732712,VZ,gp_assets: missing gross profit or assets
+732712,VZ,f_score: missing gross_margin_up
+732712,VZ,"m_score: missing dsri,gmi"
+732712,VZ,reinvestment_rate: missing capex or D&A
+732717,T,gp_assets: missing gross profit or assets
+732717,T,f_score: missing gross_margin_up
+732717,T,m_score: missing gmi
+740260,VTR,"f_score: missing current_ratio_up,gross_margin_up"
+740260,VTR,"m_score: missing gmi,aqi,depi,sgai,lvgi"
+740260,VTR,p_ffo: missing gain_on_property_sales
+746515,EXPD,gp_assets: missing gross profit or assets
+746515,EXPD,f_score: missing gross_margin_up
+746515,EXPD,"m_score: missing gmi,sgai"
+753308,NEE,gp_assets: missing gross profit or assets
+753308,NEE,f_score: missing gross_margin_up
+753308,NEE,"m_score: missing gmi,sgai"
+753308,NEE,reinvestment_rate: missing capex or D&A
+764180,MO,m_score: missing sgai
+764622,PNW,"m_score: missing dsri,sgai"
+765880,DOC,"f_score: missing current_ratio_up,gross_margin_up"
+765880,DOC,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+766704,WELL,f_score: missing current_ratio_up
+766704,WELL,"m_score: missing dsri,aqi,depi,lvgi"
+766704,WELL,p_ffo: missing gain_on_property_sales
+783325,WEC,m_score: missing sgai
+783325,WEC,reinvestment_rate: missing capex or D&A
+788784,PEG,"m_score: missing aqi,depi,sgai"
+788784,PEG,reinvestment_rate: missing capex or D&A
+789570,MGM,gp_assets: missing gross profit or assets
+789570,MGM,f_score: missing gross_margin_up
+789570,MGM,m_score: missing gmi
+797468,OXY,gp_assets: missing gross profit or assets
+797468,OXY,f_score: missing gross_margin_up
+797468,OXY,m_score: missing gmi
+798354,FISV,gp_assets: missing gross profit or assets
+798354,FISV,f_score: missing gross_margin_up
+798354,FISV,m_score: missing gmi
+811156,CMS,gp_assets: missing gross profit or assets
+811156,CMS,f_score: missing gross_margin_up
+811156,CMS,"m_score: missing dsri,gmi,sgai"
+811156,CMS,reinvestment_rate: missing capex or D&A
+813672,CDNS,gp_assets: missing gross profit or assets
+813672,CDNS,f_score: missing gross_margin_up
+813672,CDNS,m_score: missing gmi
+815097,CCL,gp_assets: missing gross profit or assets
+815097,CCL,f_score: missing gross_margin_up
+815097,CCL,m_score: missing gmi
+820027,AMP,gp_assets: missing gross profit or assets
+820027,AMP,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+820027,AMP,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+820027,AMP,shareholder_yield: missing debt_paydown
+820027,AMP,"reinvestment: working capital unavailable, change assumed 0"
+820027,AMP,"roic: missing EBIT, invested capital, or IC <= 0"
+821189,EOG,gp_assets: missing gross profit or assets
+821189,EOG,f_score: missing gross_margin_up
+821189,EOG,"m_score: missing gmi,sgai"
+821189,EOG,reinvestment_rate: missing capex or D&A
+822416,PHM,gp_assets: missing gross profit or assets
+822416,PHM,"f_score: missing current_ratio_up,gross_margin_up"
+822416,PHM,"m_score: missing dsri,gmi,aqi,lvgi"
+822416,PHM,"reinvestment: working capital unavailable, change assumed 0"
+827052,EIX,gp_assets: missing gross profit or assets
+827052,EIX,f_score: missing gross_margin_up
+827052,EIX,"m_score: missing gmi,sgai"
+829224,SBUX,gp_assets: missing gross profit or assets
+829224,SBUX,f_score: missing gross_margin_up
+829224,SBUX,"m_score: missing gmi,sgai"
+849395,CRH,m_score: missing dsri
+849399,GEN,m_score: missing sgai
+860730,HCA,gp_assets: missing gross profit or assets
+860730,HCA,f_score: missing gross_margin_up
+860730,HCA,"m_score: missing gmi,sgai"
+865752,MNST,m_score: missing sgai
+872589,REGN,gp_assets: missing gross profit or assets
+872589,REGN,f_score: missing gross_margin_up
+872589,REGN,m_score: missing gmi
+874761,AES,f_score: missing leverage_down
+874761,AES,"m_score: missing sgai,lvgi"
+874761,AES,shareholder_yield: missing debt_paydown
+874761,AES,"roic: missing EBIT, invested capital, or IC <= 0"
+878927,ODFL,gp_assets: missing gross profit or assets
+878927,ODFL,f_score: missing gross_margin_up
+878927,ODFL,"m_score: missing gmi,sgai"
+879101,KIM,"f_score: missing current_ratio_up,gross_margin_up"
+879101,KIM,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+879101,KIM,p_ffo: missing gain_on_property_sales
+879169,INCY,m_score: missing dsri
+879169,INCY,reinvestment_rate: missing capex or D&A
+882095,GILD,ev_ebit: EBIT <= 0
+882184,DHI,f_score: missing current_ratio_up
+882184,DHI,"m_score: missing dsri,aqi,lvgi"
+882184,DHI,"reinvestment: working capital unavailable, change assumed 0"
+882835,ROP,reinvestment_rate: missing capex or D&A
+885725,BSX,m_score: missing dsri
+895126,EXE,gp_assets: missing gross profit or assets
+895126,EXE,f_score: missing gross_margin_up
+895126,EXE,"m_score: missing gmi,sgai"
+896878,INTU,gp_assets: missing gross profit or assets
+896878,INTU,f_score: missing gross_margin_up
+896878,INTU,m_score: missing gmi
+898293,JBL,m_score: missing dsri
+900075,CPRT,gp_assets: missing gross profit or assets
+900075,CPRT,f_score: missing gross_margin_up
+900075,CPRT,"m_score: missing gmi,sgai"
+906107,VMRK,"f_score: missing current_ratio_up,gross_margin_up,asset_turnover_up"
+906107,VMRK,"m_score: missing dsri,gmi,aqi,sgi,depi,sgai,lvgi"
+906163,NVR,gp_assets: missing gross profit or assets
+906163,NVR,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+906163,NVR,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+906163,NVR,shareholder_yield: missing debt_paydown
+906163,NVR,"reinvestment: working capital unavailable, change assumed 0"
+906163,NVR,"roic: missing EBIT, invested capital, or IC <= 0"
+906345,CPT,f_score: missing current_ratio_up
+906345,CPT,"m_score: missing dsri,aqi,depi,sgai,lvgi"
+910606,REG,"f_score: missing current_ratio_up,gross_margin_up"
+910606,REG,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+912595,MAA,"f_score: missing current_ratio_up,gross_margin_up"
+912595,MAA,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+914208,IVZ,ev_ebit: EBIT <= 0
+914208,IVZ,gp_assets: missing gross profit or assets
+914208,IVZ,"f_score: missing current_ratio_up,gross_margin_up"
+914208,IVZ,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+914208,IVZ,"reinvestment: working capital unavailable, change assumed 0"
+916365,TSCO,m_score: missing dsri
+920522,ESS,"f_score: missing leverage_down,current_ratio_up"
+920522,ESS,"m_score: missing dsri,aqi,depi,sgai,lvgi"
+920522,ESS,shareholder_yield: missing debt_paydown
+920760,LEN,gp_assets: missing gross profit or assets
+920760,LEN,"f_score: missing current_ratio_up,gross_margin_up"
+920760,LEN,"m_score: missing dsri,gmi,aqi,lvgi"
+920760,LEN,"reinvestment: working capital unavailable, change assumed 0"
+922224,PPL,gp_assets: missing gross profit or assets
+922224,PPL,f_score: missing gross_margin_up
+922224,PPL,"m_score: missing gmi,sgai"
+922621,ERIE,market_cap: missing shares
+922621,ERIE,gp_assets: missing gross profit or assets
+922621,ERIE,"f_score: missing no_dilution,gross_margin_up"
+922621,ERIE,"m_score: missing gmi,aqi,depi,sgai"
+922621,ERIE,"shareholder_yield: missing dividends,buybacks,debt_paydown"
+927066,DVA,gp_assets: missing gross profit or assets
+927066,DVA,f_score: missing gross_margin_up
+927066,DVA,"m_score: missing gmi,sgai"
+927653,MCK,"roic: missing EBIT, invested capital, or IC <= 0"
+935703,DLTR,m_score: missing dsri
+936340,DTE,gp_assets: missing gross profit or assets
+936340,DTE,"f_score: missing gross_margin_up,asset_turnover_up"
+936340,DTE,"m_score: missing dsri,gmi,sgi,sgai"
+936340,DTE,reinvestment_rate: missing capex or D&A
+936468,LMT,m_score: missing sgai
+940944,DRI,m_score: missing sgai
+946581,TTWO,ev_ebit: EBIT <= 0
+1002910,AEE,gp_assets: missing gross profit or assets
+1002910,AEE,f_score: missing gross_margin_up
+1002910,AEE,"m_score: missing gmi,sgai"
+1004980,PCG,gp_assets: missing gross profit or assets
+1004980,PCG,f_score: missing gross_margin_up
+1004980,PCG,"m_score: missing gmi,depi,sgai"
+1004980,PCG,reinvestment_rate: missing capex or D&A
+1013871,NRG,"m_score: missing aqi,depi"
+1014473,VRSN,"roic: missing EBIT, invested capital, or IC <= 0"
+1018724,AMZN,m_score: missing sgai
+1020569,IRM,p_ffo: missing gain_on_property_sales
+1031296,FE,gp_assets: missing gross profit or assets
+1031296,FE,f_score: missing gross_margin_up
+1031296,FE,"m_score: missing gmi,aqi,depi,sgai"
+1032208,SRE,gp_assets: missing gross profit or assets
+1032208,SRE,f_score: missing gross_margin_up
+1032208,SRE,"m_score: missing gmi,sgai"
+1035002,VLO,m_score: missing sgai
+1035002,VLO,reinvestment_rate: missing capex or D&A
+1035443,ARE,"f_score: missing current_ratio_up,gross_margin_up"
+1035443,ARE,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+1035983,FIX,m_score: missing dsri
+1037038,RL,reinvestment_rate: missing capex or D&A
+1037540,BXP,f_score: missing current_ratio_up
+1037540,BXP,"m_score: missing dsri,aqi,depi,sgai,lvgi"
+1039684,OKE,m_score: missing sgai
+1041061,YUM,"m_score: missing dsri,sgai"
+1043277,CHRW,gp_assets: missing gross profit or assets
+1043277,CHRW,f_score: missing gross_margin_up
+1043277,CHRW,"m_score: missing gmi,sgai"
+1045609,PLD,"f_score: missing current_ratio_up,gross_margin_up"
+1045609,PLD,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+1045609,PLD,p_ffo: missing gain_on_property_sales
+1047862,ED,"debt: latest quarter unresolved, used fiscal year end"
+1047862,ED,gp_assets: missing gross profit or assets
+1047862,ED,f_score: missing gross_margin_up
+1047862,ED,"m_score: missing gmi,sgai"
+1047862,ED,reinvestment_rate: missing capex or D&A
+1048286,MAR,gp_assets: missing gross profit or assets
+1048286,MAR,f_score: missing gross_margin_up
+1048286,MAR,"m_score: missing dsri,gmi,sgai"
+1048286,MAR,"roic: missing EBIT, invested capital, or IC <= 0"
+1048911,FDX,gp_assets: missing gross profit or assets
+1048911,FDX,f_score: missing gross_margin_up
+1048911,FDX,"m_score: missing gmi,sgai"
+1051470,CCI,p_ffo: missing gain_on_property_sales
+1053507,AMT,f_score: missing gross_margin_up
+1053507,AMT,m_score: missing gmi
+1053507,AMT,p_ffo: missing gain_on_property_sales
+1058090,CMG,gp_assets: missing gross profit or assets
+1058090,CMG,f_score: missing gross_margin_up
+1058090,CMG,"m_score: missing gmi,sgai"
+1063761,SPG,"f_score: missing current_ratio_up,gross_margin_up"
+1063761,SPG,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1063761,SPG,p_ffo: missing gain_on_property_sales
+1065280,NFLX,m_score: missing dsri
+1067701,URI,"m_score: missing aqi,depi"
+1067701,URI,reinvestment_rate: missing capex or D&A
+1067983,BRK-B,market_cap: missing shares
+1067983,BRK-B,"shareholder_yield: missing dividends,buybacks,debt_paydown"
+1067983,BRK-B,"insurer: missing equity, book value <= 0, or market cap"
+1069183,AXON,m_score: missing dsri
+1070750,HST,"f_score: missing current_ratio_up,gross_margin_up"
+1070750,HST,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+1071739,CNC,ev_ebit: EBIT <= 0
+1071739,CNC,m_score: missing dsri
+1075531,BKNG,gp_assets: missing gross profit or assets
+1075531,BKNG,f_score: missing gross_margin_up
+1075531,BKNG,"m_score: missing dsri,gmi,sgai"
+1075531,BKNG,"roic: missing EBIT, invested capital, or IC <= 0"
+1090012,DVN,gp_assets: missing gross profit or assets
+1090012,DVN,f_score: missing gross_margin_up
+1090012,DVN,"m_score: missing gmi,sgai"
+1090727,UPS,gp_assets: missing gross profit or assets
+1090727,UPS,f_score: missing gross_margin_up
+1090727,UPS,"m_score: missing gmi,sgai"
+1091667,CHTR,gp_assets: missing gross profit or assets
+1091667,CHTR,f_score: missing gross_margin_up
+1091667,CHTR,"m_score: missing gmi,sgai"
+1100682,CRL,gp_assets: missing gross profit or assets
+1100682,CRL,f_score: missing gross_margin_up
+1100682,CRL,m_score: missing gmi
+1109357,EXC,gp_assets: missing gross profit or assets
+1109357,EXC,f_score: missing gross_margin_up
+1109357,EXC,"m_score: missing gmi,sgai"
+1111711,NI,m_score: missing sgai
+1113169,TROW,gp_assets: missing gross profit or assets
+1113169,TROW,"f_score: missing current_ratio_up,gross_margin_up"
+1113169,TROW,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1113169,TROW,"reinvestment: working capital unavailable, change assumed 0"
+1113169,TROW,reinvestment_rate: missing capex or D&A
+1120193,NDAQ,m_score: missing sgai
+1130310,CNP,m_score: missing sgai
+1133421,NOC,gp_assets: missing gross profit or assets
+1133421,NOC,f_score: missing gross_margin_up
+1133421,NOC,"m_score: missing gmi,sgai"
+1136893,FIS,m_score: missing dsri
+1138118,CBRE,m_score: missing sgai
+1140536,WTW,gp_assets: missing gross profit or assets
+1140536,WTW,f_score: missing gross_margin_up
+1140536,WTW,"m_score: missing gmi,sgai"
+1141391,MA,gp_assets: missing gross profit or assets
+1141391,MA,f_score: missing gross_margin_up
+1141391,MA,"m_score: missing gmi,sgai"
+1145197,PODD,m_score: missing dsri
+1156039,ELV,m_score: missing dsri
+1156375,CME,gp_assets: missing gross profit or assets
+1156375,CME,f_score: missing gross_margin_up
+1156375,CME,"m_score: missing gmi,sgai"
+1156375,CME,"roic: missing EBIT, invested capital, or IC <= 0"
+1163165,COP,m_score: missing dsri
+1163165,COP,reinvestment_rate: missing capex or D&A
+1164727,NEM,m_score: missing sgai
+1166691,CMCSA,gp_assets: missing gross profit or assets
+1166691,CMCSA,f_score: missing gross_margin_up
+1166691,CMCSA,"m_score: missing gmi,sgai"
+1174922,WYNN,gp_assets: missing gross profit or assets
+1174922,WYNN,f_score: missing gross_margin_up
+1174922,WYNN,m_score: missing gmi
+1175454,CPAY,gp_assets: missing gross profit or assets
+1175454,CPAY,f_score: missing gross_margin_up
+1175454,CPAY,"m_score: missing gmi,sgai"
+1176948,ARES,market_cap: missing shares
+1176948,ARES,gp_assets: missing gross profit or assets
+1176948,ARES,"f_score: missing leverage_down,current_ratio_up,no_dilution,gross_margin_up"
+1176948,ARES,"m_score: missing dsri,gmi,aqi,depi,lvgi"
+1176948,ARES,"shareholder_yield: missing dividends,buybacks,debt_paydown"
+1176948,ARES,"reinvestment: working capital unavailable, change assumed 0"
+1176948,ARES,"roic: missing EBIT, invested capital, or IC <= 0"
+1176948,ARES,reinvestment_rate: missing capex or D&A
+1262039,FTNT,"roic: missing EBIT, invested capital, or IC <= 0"
+1267238,AIZ,shareholder_yield: missing debt_paydown
+1283699,TMUS,"debt: latest quarter unresolved, used fiscal year end"
+1283699,TMUS,gp_assets: missing gross profit or assets
+1283699,TMUS,f_score: missing gross_margin_up
+1283699,TMUS,m_score: missing gmi
+1285785,MOS,ev_ebit: EBIT <= 0
+1286681,DPZ,m_score: missing sgai
+1286681,DPZ,"roic: missing EBIT, invested capital, or IC <= 0"
+1289490,EXR,f_score: missing current_ratio_up
+1289490,EXR,"m_score: missing dsri,aqi,sgai,lvgi"
+1289490,EXR,p_ffo: missing gain_on_property_sales
+1297996,DLR,"f_score: missing current_ratio_up,gross_margin_up"
+1297996,DLR,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1300514,LVS,gp_assets: missing gross profit or assets
+1300514,LVS,f_score: missing gross_margin_up
+1300514,LVS,m_score: missing gmi
+1326160,DUK,gp_assets: missing gross profit or assets
+1326160,DUK,f_score: missing gross_margin_up
+1326160,DUK,"m_score: missing gmi,sgai"
+1327811,WDAY,gp_assets: missing gross profit or assets
+1327811,WDAY,f_score: missing gross_margin_up
+1327811,WDAY,m_score: missing gmi
+1335258,LYV,gp_assets: missing gross profit or assets
+1335258,LYV,f_score: missing gross_margin_up
+1335258,LYV,m_score: missing gmi
+1341439,ORCL,"debt: latest quarter unresolved, used fiscal year end"
+1341439,ORCL,gp_assets: missing gross profit or assets
+1341439,ORCL,f_score: missing gross_margin_up
+1341439,ORCL,m_score: missing gmi
+1374310,CBOE,m_score: missing sgai
+1381197,IBKR,gp_assets: missing gross profit or assets
+1381197,IBKR,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+1381197,IBKR,"m_score: missing dsri,gmi,aqi,lvgi"
+1381197,IBKR,shareholder_yield: missing debt_paydown
+1381197,IBKR,"reinvestment: working capital unavailable, change assumed 0"
+1381197,IBKR,"roic: missing EBIT, invested capital, or IC <= 0"
+1381197,IBKR,reinvestment_rate: missing capex or D&A
+1383312,BR,m_score: missing dsri
+1389170,TRGP,m_score: missing sgai
+1393052,VEEV,m_score: missing depi
+1393052,VEEV,reinvestment_rate: missing capex or D&A
+1393311,PSA,"f_score: missing current_ratio_up,gross_margin_up"
+1393311,PSA,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1393818,BX,gp_assets: missing gross profit or assets
+1393818,BX,"f_score: missing current_ratio_up,gross_margin_up"
+1393818,BX,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+1393818,BX,"reinvestment: working capital unavailable, change assumed 0"
+1396009,VMC,m_score: missing dsri
+1403161,V,market_cap: missing shares
+1403161,V,gp_assets: missing gross profit or assets
+1403161,V,"f_score: missing no_dilution,gross_margin_up"
+1403161,V,"m_score: missing gmi,sgai"
+1403161,V,"shareholder_yield: missing dividends,buybacks,debt_paydown"
+1404912,KKR,gp_assets: missing gross profit or assets
+1404912,KKR,"f_score: missing leverage_down,current_ratio_up,gross_margin_up"
+1404912,KKR,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1404912,KKR,shareholder_yield: missing debt_paydown
+1404912,KKR,"reinvestment: working capital unavailable, change assumed 0"
+1404912,KKR,"roic: missing EBIT, invested capital, or IC <= 0"
+1404912,KKR,reinvestment_rate: missing capex or D&A
+1408198,MSCI,m_score: missing dsri
+1410636,AWK,gp_assets: missing gross profit or assets
+1410636,AWK,f_score: missing gross_margin_up
+1410636,AWK,"m_score: missing gmi,sgai"
+1413329,PM,m_score: missing sgai
+1415404,ECHO,ev_ebit: EBIT <= 0
+1437107,WBD,ev_ebit: EBIT <= 0
+1466258,TT,cash: missing at latest balance sheet
+1466258,TT,gp_assets: missing gross profit or assets
+1466258,TT,f_score: missing gross_margin_up
+1466258,TT,m_score: missing gmi
+1467858,GM,"debt: latest quarter unresolved, used fiscal year end"
+1467858,GM,gp_assets: missing gross profit or assets
+1467858,GM,f_score: missing gross_margin_up
+1467858,GM,"m_score: missing gmi,aqi,depi,sgai"
+1489393,LYB,m_score: missing dsri
+1501585,HII,gp_assets: missing gross profit or assets
+1501585,HII,f_score: missing gross_margin_up
+1501585,HII,"m_score: missing gmi,sgai"
+1506307,KMI,"m_score: missing dsri,sgai"
+1534701,PSX,reinvestment_rate: missing capex or D&A
+1535527,CRWD,ev_ebit: EBIT <= 0
+1535527,CRWD,m_score: missing depi
+1535527,CRWD,"roic: missing EBIT, invested capital, or IC <= 0"
+1535527,CRWD,reinvestment_rate: missing capex or D&A
+1539838,FANG,gp_assets: missing gross profit or assets
+1539838,FANG,f_score: missing gross_margin_up
+1539838,FANG,m_score: missing gmi
+1539838,FANG,reinvestment_rate: missing capex or D&A
+1559720,ABNB,m_score: missing dsri
+1559720,ABNB,"roic: missing EBIT, invested capital, or IC <= 0"
+1559720,ABNB,reinvestment_rate: missing capex or D&A
+1564708,NWS,gp_assets: missing gross profit or assets
+1564708,NWS,f_score: missing gross_margin_up
+1564708,NWS,m_score: missing gmi
+1571949,ICE,gp_assets: missing gross profit or assets
+1571949,ICE,f_score: missing gross_margin_up
+1571949,ICE,"m_score: missing gmi,aqi,depi"
+1585689,HLT,gp_assets: missing gross profit or assets
+1585689,HLT,f_score: missing gross_margin_up
+1585689,HLT,"m_score: missing gmi,sgai"
+1601712,SYF,gp_assets: missing gross profit or assets
+1601712,SYF,"f_score: missing current_ratio_up,gross_margin_up,asset_turnover_up"
+1601712,SYF,"m_score: missing dsri,gmi,aqi,sgi,depi,sgai,lvgi"
+1601712,SYF,"reinvestment: working capital unavailable, change assumed 0"
+1601712,SYF,reinvestment_rate: missing capex or D&A
+1609711,GDDY,m_score: missing sgai
+1633917,PYPL,gp_assets: missing gross profit or assets
+1633917,PYPL,f_score: missing gross_margin_up
+1633917,PYPL,m_score: missing gmi
+1633978,LITE,m_score: missing dsri
+1637459,KHC,ev_ebit: EBIT <= 0
+1645590,HPE,gp_assets: missing gross profit or assets
+1645590,HPE,f_score: missing gross_margin_up
+1645590,HPE,m_score: missing gmi
+1679788,COIN,gp_assets: missing gross profit or assets
+1679788,COIN,f_score: missing gross_margin_up
+1679788,COIN,m_score: missing gmi
+1679788,COIN,reinvestment_rate: missing capex or D&A
+1682852,MRNA,ev_ebit: EBIT <= 0
+1682852,MRNA,m_score: missing sgai
+1687229,INVH,"f_score: missing current_ratio_up,gross_margin_up"
+1687229,INVH,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+1690820,CVNA,m_score: missing depi
+1690820,CVNA,reinvestment_rate: missing capex or D&A
+1692819,VST,gp_assets: missing gross profit or assets
+1692819,VST,f_score: missing gross_margin_up
+1692819,VST,m_score: missing gmi
+1701605,BKR,gp_assets: missing gross profit or assets
+1701605,BKR,"f_score: missing no_dilution,gross_margin_up"
+1701605,BKR,m_score: missing gmi
+1705696,VICI,f_score: missing current_ratio_up
+1705696,VICI,"m_score: missing dsri,aqi,sgai,lvgi"
+1705696,VICI,p_ffo: missing gain_on_property_sales
+1711269,EVRG,gp_assets: missing gross profit or assets
+1711269,EVRG,f_score: missing gross_margin_up
+1711269,EVRG,"m_score: missing gmi,sgai"
+1713445,RDDT,rd_capitalized: only 4 of 6 years of R&D
+1739940,CI,reinvestment_rate: missing capex or D&A
+1744489,DIS,gp_assets: missing gross profit or assets
+1744489,DIS,f_score: missing gross_margin_up
+1744489,DIS,m_score: missing gmi
+1751008,APP,reinvestment_rate: missing capex or D&A
+1751788,DOW,ev_ebit: EBIT <= 0
+1754301,FOX,gp_assets: missing gross profit or assets
+1754301,FOX,f_score: missing gross_margin_up
+1754301,FOX,m_score: missing gmi
+1781335,OTIS,gp_assets: missing gross profit or assets
+1781335,OTIS,f_score: missing gross_margin_up
+1781335,OTIS,m_score: missing gmi
+1783180,CARR,gp_assets: missing gross profit or assets
+1783180,CARR,f_score: missing gross_margin_up
+1783180,CARR,m_score: missing gmi
+1783879,HOOD,gp_assets: missing gross profit or assets
+1783879,HOOD,"f_score: missing leverage_down,gross_margin_up"
+1783879,HOOD,"m_score: missing dsri,gmi,sgai,lvgi"
+1783879,HOOD,shareholder_yield: missing debt_paydown
+1783879,HOOD,reinvestment_rate: missing capex or D&A
+1792044,VTRS,ev_ebit: EBIT <= 0
+1792044,VTRS,f_score: missing no_dilution
+1811074,TPL,gp_assets: missing gross profit or assets
+1811074,TPL,f_score: missing gross_margin_up
+1811074,TPL,"m_score: missing dsri,gmi,sgai"
+1811074,TPL,reinvestment_rate: missing capex or D&A
+1841666,APA,gp_assets: missing gross profit or assets
+1841666,APA,"f_score: missing gross_margin_up,asset_turnover_up"
+1841666,APA,"m_score: missing dsri,gmi,sgi,sgai"
+1841666,APA,reinvestment_rate: missing capex or D&A
+1858681,APO,gp_assets: missing gross profit or assets
+1858681,APO,"f_score: missing current_ratio_up,gross_margin_up"
+1858681,APO,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"
+1858681,APO,"reinvestment: working capital unavailable, change assumed 0"
+1858681,APO,reinvestment_rate: missing capex or D&A
+1868275,CEG,gp_assets: missing gross profit or assets
+1868275,CEG,f_score: missing gross_margin_up
+1868275,CEG,"m_score: missing gmi,sgai"
+1932393,GEHC,rd_capitalized: only 5 of 6 years of R&D
+1932393,GEHC,"m_score: missing dsri,aqi,depi"
+1944048,KVUE,rd_capitalized: only 5 of 6 years of R&D
+1964738,SOLV,rd_capitalized: only 4 of 6 years of R&D
+1967680,VLTO,rd_capitalized: only 5 of 6 years of R&D
+1973266,TKO,gp_assets: missing gross profit or assets
+1973266,TKO,f_score: missing gross_margin_up
+1973266,TKO,m_score: missing gmi
+1973266,TKO,reinvestment_rate: missing capex or D&A
+1996810,GEV,rd_capitalized: only 4 of 6 years of R&D
+1996810,GEV,"m_score: missing aqi,depi"
+1996862,BG,rd_capitalized: only 5 of 6 years of R&D
+2012383,BLK,gp_assets: missing gross profit or assets
+2012383,BLK,"f_score: missing current_ratio_up,gross_margin_up"
+2012383,BLK,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
+2012383,BLK,"reinvestment: working capital unavailable, change assumed 0"
+2023554,SNDK,rd_capitalized: only 4 of 6 years of R&D
+2041610,PSKY,ev_ebit: EBIT <= 0
+2041610,PSKY,gp_assets: missing gross profit or assets
+2041610,PSKY,"f_score: missing roa_pos,roa_up,leverage_down,current_ratio_up,gross_margin_up,asset_turnover_up"
+2041610,PSKY,"m_score: missing dsri,gmi,aqi,depi,lvgi"
+2041610,PSKY,shareholder_yield: missing debt_paydown
+2041610,PSKY,"reinvestment: working capital unavailable, change assumed 0"
+2058873,Q,rd_capitalized: only 3 of 6 years of R&D
+2058873,Q,"f_score: missing roa_up,asset_turnover_up"
+2082247,FDXF,gp_assets: missing gross profit or assets
+2082247,FDXF,"f_score: missing roa_up,gross_margin_up,asset_turnover_up"
+2082247,FDXF,"m_score: missing gmi,sgai"
+2089271,HONA,gp_assets: missing gross profit or assets
+2089271,HONA,sloan_accruals: missing input
+2089271,HONA,"f_score: missing roa_pos,cfo_pos,roa_up,cfo_gt_ni,leverage_down,current_ratio_up,no_dilution,gross_margin_up,asset_turnover_up"
+2089271,HONA,"m_score: missing dsri,gmi,aqi,sgi,depi,sgai,lvgi,tata"
+2089271,HONA,shareholder_yield: missing debt_paydown
+2089271,HONA,"reinvestment: working capital unavailable, change assumed 0"
+2089271,HONA,"roic: missing EBIT, invested capital, or IC <= 0"
+2089271,HONA,reinvestment_rate: missing capex or D&A
+2115436,XOM,gp_assets: missing gross profit or assets
+2115436,XOM,f_score: missing gross_margin_up
+2115436,XOM,m_score: missing gmi

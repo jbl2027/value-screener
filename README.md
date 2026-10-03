@@ -12,6 +12,7 @@ Secrets live in `.env` (gitignored).
 - `python scripts/test_fundamentals.py`: point-in-time EDGAR fundamentals for 10 test companies via the tag fallback map in `screener/tag_map.py`. Prints a latest-10-K tie-out table; writes `data/test_comparison.csv` and `data/test_facts.csv`.
 - `python scripts/build_fundamentals.py`: point-in-time fundamentals for the full universe. Writes `data/facts.parquet` (gitignored), `data/fundamentals_summary.csv` (per-company readiness and input bases), and `data/mapping_report.csv` (every missing input, by metric and fair value). Rules live in `screener/rules.py`.
 - `python scripts/update_prices.py [--verify N]`: daily closes for the universe from one Tiingo bulk IEX request (run after the US close). Appends to `data/prices.parquet` (gitignored). `--verify N` spot-checks N closes against the EOD endpoint.
+- `python scripts/compute_metrics.py [--as-of YYYY-MM-DD]`: Milestone 5 metrics for every company, point-in-time as of the latest price date. Writes `data/metrics.csv` and `data/metrics_notes.csv` (why any metric is missing). Definitions are documented at the top of `screener/metrics.py`.
 - `python scripts/explore_tags.py PATTERN TICKER...`: dev helper listing which XBRL tags a company uses.
 - `python scripts/extract_research.py`: regenerates `docs/research.md` from the research PDF.
 

@@ -44,6 +44,19 @@ Items deferred to after the milestone noted.
 - CLX: FY2026 10-K (filed 2026-08-07) not yet in companyfacts; marked stale.
 - New entities with short XBRL history: HONA (2026 spin-off), PSKY (2025 merger).
 
+## Metrics (Milestone 5): decisions pending for Milestone 6
+- Piotroski: 134 standard companies have < 9 testable criteria (144 lack COGS, so no gross
+  margin test). `f_score` is set only with all 9; `f_points`/`f_tests` hold partial results.
+- Beneish: strict `m_score` needs all 8 indices (234 of 434); `m_score_imputed` sets up to 2
+  missing indices (not TATA) to 1 (390 of 434). LOW trips the rule (DSRI 11x) because of 2025
+  B2B acquisitions, a known Beneish M&A false positive.
+- Bank shareholder yield excludes debt paydown (bank debt is operating funding).
+- SYF (consumer finance, deposit-funded) sits on the standard model; EV/EBIT 2.9x is not
+  meaningful. Consider routing to the bank model (as with GS/MS/SCHW).
+- CTVA: price implies ~$8B market cap against pre-separation financials; Corteva filed a
+  cluster of 8-Ks on 2026-09-30/10-01, consistent with a just-completed separation. Corporate
+  actions (spin-offs) aren't detected yet.
+
 ## Prices (Milestone 4)
 - Tiingo free tier: 50 requests/hour, 1,000/day, 500 unique symbols/month, 1 GB/month,
   internal use only (no sharing or displaying the data to others).
