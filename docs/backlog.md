@@ -41,6 +41,16 @@ Items deferred to after the milestone noted.
 - CLX: FY2026 10-K (filed 2026-08-07) not yet in companyfacts; marked stale.
 - New entities with short XBRL history: HONA (2026 spin-off), PSKY (2025 merger).
 
+## Prices (Milestone 4)
+- Tiingo free tier: 50 requests/hour, 1,000/day, 500 unique symbols/month, 1 GB/month,
+  internal use only (no sharing or displaying the data to others).
+- Daily closes come from the bulk IEX snapshot (1 request/day, ~11 MB). Undocumented whether
+  it counts toward the 500 unique symbols; it worked on the free key.
+- Snapshot closes are unadjusted. Milestone 10 performance tracking needs split/dividend-
+  adjusted returns: fetch EOD (adjClose) per flagged ticker only, to stay under 500 symbols.
+- No historical backfill yet: a per-ticker EOD backfill of all 503 tickers would take ~11
+  hours at 50 requests/hour and exceed the 500-symbol cap.
+
 ## Open questions
 - Standard-model peer group for "sector-median EV/EBIT": currently configured as SIC
   division (Manufacturing alone has ~200 companies). Confirm before Milestone 6, or use

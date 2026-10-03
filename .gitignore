@@ -221,3 +221,4 @@ __marimo__/
 data/cache/
 data/test_facts.csv
 data/facts.parquet
+data/prices.parquet
