@@ -15,6 +15,7 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from screener.config import DATA_DIR  # noqa: E402
+from screener.gics import industry_group  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
 from screener.sectors import CAPTIVE_FINANCE, sector_model, sic_division  # noqa: E402
 
@@ -36,6 +37,8 @@ def fetch_sp500() -> pd.DataFrame:
         "name": table["Security"],
         "gics_sector": table["GICS Sector"],
         "gics_sub_industry": table["GICS Sub-Industry"],
+        "gics_industry_group": [industry_group(sub, sec) for sub, sec
+                                in zip(table["GICS Sub-Industry"], table["GICS Sector"])],
         "wiki_cik": pd.to_numeric(table["CIK"], errors="coerce").astype("Int64"),
     })
     return df
@@ -96,7 +99,7 @@ def main() -> None:
     df = add_sic(df, sec)
 
     cols = ["ticker", "cik", "name", "sec_name", "sic", "sic_description", "sic_division",
-            "sector_model", "sector_model_source", "captive_finance", "gics_sector", "gics_sub_industry", "fiscal_year_end",
+            "sector_model", "sector_model_source", "captive_finance", "gics_sector", "gics_industry_group", "gics_sub_industry", "fiscal_year_end",
             "cik_source", "cik_mismatch", "submissions_error"]
     df = df[cols].sort_values("ticker").reset_index(drop=True)
 

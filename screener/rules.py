@@ -14,6 +14,7 @@ STATUS_FLAG = "flag"                    # MoS >= 30% and not disqualified
 STATUS_NO_FLAG = "no_flag"
 STATUS_DISQUALIFIED = "disqualified"    # Beneish / F-Score rule tripped (where applicable)
 STATUS_INSUFFICIENT = "insufficient_data"  # a fair-value / MoS input is missing; never flagged
+STATUS_NOT_APPLICABLE = "not_applicable"   # method doesn't apply (e.g. negative 3-yr avg EBIT)
 CONFIDENCE_NORMAL = "normal"
 CONFIDENCE_LOW = "low"                  # e.g. captive finance (see sectors.CAPTIVE_FINANCE)
 
@@ -139,9 +140,16 @@ MODEL_RULES: dict[str, dict] = {
     },
 }
 MODEL_RULES["standard"]["fair_value_method"] = {
-    # Fair value = sector-median EV/EBIT x 3-yr average EBIT, minus net debt, per share.
-    "type": "peer_median_multiple", "multiple": "ev_ebit", "peer_group": "sic_division",
-    "base": "ebit_3y_avg",
+    # Fair value = peer-median EV/EBIT x 3-yr average EBIT, minus net debt, per share.
+    # Peers: GICS industry group if it has >= min_peers valid EV/EBITs, else GICS sector, else
+    # all standard-model companies (e.g. Real Estate has only CBRE and CSGP outside REITs).
+    # Valid = EBIT > 0 and EV/EBIT <= max_multiple (higher means near-zero EBIT relative to EV).
+    # Multiples are winsorized at the 5th/95th percentile within the group before the median
+    # (note: this cannot change a median; kept as specified). Peer level/name/count are logged.
+    # A negative 3-yr average EBIT gives status not_applicable (logged), not insufficient_data.
+    "type": "peer_median_multiple", "multiple": "ev_ebit", "base": "ebit_3y_avg",
+    "peer_levels": ["gics_industry_group", "gics_sector", "sector_model"],
+    "min_peers": 8, "max_multiple": 100, "winsorize": (0.05, 0.95),
 }
 
 

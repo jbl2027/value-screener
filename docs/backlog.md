@@ -22,7 +22,10 @@ Items deferred to after the milestone noted.
    expense is untagged (DHI, DASH, PANW) and only catches gross omissions (CAT passes at 5.1%
    though its current maturities are likely missing).
 5. Fair value methods (configured in `rules.MODEL_RULES[...]["fair_value_method"]`):
-   - Standard: sector-median EV/EBIT x 3-yr average EBIT, minus net debt, per share.
+   - Standard: peer-median EV/EBIT x 3-yr average EBIT, minus net debt, per share. Peers =
+     GICS industry group (derived in `screener/gics.py`) if >= 8 valid EV/EBITs, else GICS
+     sector, else all standard companies. Exclude EBIT <= 0 or EV/EBIT > 100; winsorize
+     5/95 within group. Negative 3-yr average EBIT -> `not_applicable`. Log peer group/count.
    - REIT: peer-median P/FFO x FFO per share; peers = GICS sub-industry if at least 5 REITs
      in it have a computable P/FFO, else all REITs. (Only Multi-Family and Retail have 5
      members today, and Retail has 3 missing gains, so most REITs use the all-REIT median.)
@@ -51,7 +54,3 @@ Items deferred to after the milestone noted.
 - No historical backfill yet: a per-ticker EOD backfill of all 503 tickers would take ~11
   hours at 50 requests/hour and exceed the 500-symbol cap.
 
-## Open questions
-- Standard-model peer group for "sector-median EV/EBIT": currently configured as SIC
-  division (Manufacturing alone has ~200 companies). Confirm before Milestone 6, or use
-  GICS sector / 2-digit SIC.
