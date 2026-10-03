@@ -22,6 +22,10 @@ SECTOR_MODEL_OVERRIDES = {
     "SCHW": "bank",   # bank holding company filed under SIC 6211
 }
 
+# Industrials/autos with captive finance arms. Finance-arm debt inflates EV, so EV/EBIT-based
+# fair values and flags for these are marked lower confidence.
+CAPTIVE_FINANCE = {"CAT", "DE", "GM", "F"}
+
 SIC_DIVISIONS = [
     (100, 999, "Agriculture, Forestry & Fishing"),
     (1000, 1499, "Mining"),

@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from screener.config import DATA_DIR  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
-from screener.sectors import sector_model, sic_division  # noqa: E402
+from screener.sectors import CAPTIVE_FINANCE, sector_model, sic_division  # noqa: E402
 
 WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
 OUT_PATH = DATA_DIR / "universe.csv"
@@ -79,6 +79,7 @@ def add_sic(df: pd.DataFrame, sec: SECClient) -> pd.DataFrame:
     models = [sector_model(t, s) for t, s in zip(df["ticker"], sics)]
     df["sector_model"] = [m for m, _ in models]
     df["sector_model_source"] = [src for _, src in models]
+    df["captive_finance"] = df["ticker"].isin(CAPTIVE_FINANCE)
     return df
 
 
@@ -95,7 +96,7 @@ def main() -> None:
     df = add_sic(df, sec)
 
     cols = ["ticker", "cik", "name", "sec_name", "sic", "sic_description", "sic_division",
-            "sector_model", "sector_model_source", "gics_sector", "gics_sub_industry", "fiscal_year_end",
+            "sector_model", "sector_model_source", "captive_finance", "gics_sector", "gics_sub_industry", "fiscal_year_end",
             "cik_source", "cik_mismatch", "submissions_error"]
     df = df[cols].sort_values("ticker").reset_index(drop=True)
 

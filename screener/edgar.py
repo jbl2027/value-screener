@@ -1,11 +1,18 @@
-"""Fetch and cache EDGAR companyfacts JSON locally (cache is gitignored, never sent to Supabase)."""
-import json
-import time
+"""Fetch and cache EDGAR companyfacts JSON locally (cache is never committed or sent to Supabase).
 
-from screener.config import DATA_DIR
+The cache lives outside the repo (the repo sits in OneDrive; ~500 raw files would be >2 GB)
+and is gzip-compressed. Override the location with VALUE_SCREENER_CACHE.
+"""
+import gzip
+import json
+import os
+import time
+from pathlib import Path
+
 from screener.sec_client import SECClient
 
-CACHE_DIR = DATA_DIR / "cache" / "companyfacts"
+_default_cache = Path(os.getenv("LOCALAPPDATA") or Path.home() / ".cache") / "value-screener"
+CACHE_DIR = Path(os.getenv("VALUE_SCREENER_CACHE") or _default_cache) / "companyfacts"
 CACHE_MAX_AGE_SECONDS = 6 * 24 * 3600  # refetch weekly
 
 # Current CIK -> predecessor CIKs whose XBRL history belongs to the same company
@@ -20,10 +27,12 @@ def related_ciks(cik: int) -> list[int]:
 
 
 def load_companyfacts(cik: int, sec: SECClient, refresh: bool = False) -> dict:
-    path = CACHE_DIR / f"CIK{cik:010d}.json"
+    path = CACHE_DIR / f"CIK{cik:010d}.json.gz"
     if not refresh and path.exists() and time.time() - path.stat().st_mtime < CACHE_MAX_AGE_SECONDS:
-        return json.loads(path.read_text(encoding="utf-8"))
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            return json.load(f)
     data = sec.companyfacts(cik)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data), encoding="utf-8")
+    with gzip.open(path, "wt", encoding="utf-8") as f:
+        json.dump(data, f)
     return data
