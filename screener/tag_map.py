@@ -152,34 +152,62 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "IntangibleAssetsNetExcludingGoodwill",
         "FiniteLivedIntangibleAssetsNet",
     )),
-    # Debt: only one tag per concept is taken, so a filer reporting e.g. senior notes and
-    # convertible notes as separate balance-sheet lines will be understated.
+    # ---- Debt ----
+    # Aggregates and instrument-level parts are separate concepts so screener/debt.py can
+    # prefer totals and only sum parts when no total exists. Tags within one concept overlap
+    # (they describe the same debt), so only one is taken per concept; parts in different
+    # concepts are distinct and may be summed.
+    "debt_total_all": ("USD", "instant", _g(  # long- + short-term, all in
+        "DebtLongtermAndShorttermCombinedAmount",
+    )),
+    "long_term_debt_total": ("USD", "instant", _g(  # long-term incl. current maturities
+        "LongTermDebt",
+        "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "DebtInstrumentCarryingAmount",
+    )),
     "long_term_debt_noncurrent": ("USD", "instant", _g(
         "LongTermDebtNoncurrent",
-        "LongTermDebtAndCapitalLeaseObligations",
-        "ConvertibleLongTermNotesPayable",
-        "ConvertibleDebtNoncurrent",
-        "UnsecuredLongTermDebt",
-        "SeniorLongTermNotes",
-        "LongTermNotesPayable",
+        "LongTermDebtAndCapitalLeaseObligations",  # noncurrent despite the name
     )),
     "long_term_debt_current": ("USD", "instant", _g(
         "LongTermDebtCurrent",
         "LongTermDebtAndCapitalLeaseObligationsCurrent",
-        "DebtCurrent",
-        "ConvertibleNotesPayableCurrent",
-        "SeniorNotesCurrent",
     )),
-    "long_term_debt_total": ("USD", "instant", _g(
-        "LongTermDebt",
-        "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
-        "DebtInstrumentCarryingAmount",
-        "SeniorNotes",
-        "NotesPayable",
+    "debt_current_incl_short_term": ("USD", "instant", _g(  # current LTD + short-term borrowings
+        "DebtCurrent",
     )),
     "short_term_borrowings": ("USD", "instant", _g(
         "ShortTermBorrowings",
         "CommercialPaper",
+    )),
+    "notes_payable_total": ("USD", "instant", _g(  # all notes incl. current (e.g. NFLX, VRSN)
+        "NotesPayable",
+        "SeniorNotes",
+    )),
+    "debt_part_convertible_noncurrent": ("USD", "instant", _g(
+        "ConvertibleLongTermNotesPayable",
+        "ConvertibleDebtNoncurrent",
+    )),
+    "debt_part_notes_noncurrent": ("USD", "instant", _g(
+        "SeniorLongTermNotes",
+        "UnsecuredLongTermDebt",
+        "LongTermNotesPayable",
+    )),
+    "debt_part_secured_noncurrent": ("USD", "instant", _g(
+        "SecuredLongTermDebt",
+    )),
+    "debt_part_credit_facility": ("USD", "instant", _g(
+        "LongTermLineOfCredit",
+        "LineOfCredit",
+    )),
+    "debt_part_other_noncurrent": ("USD", "instant", _g(
+        "OtherLongTermDebtNoncurrent",
+    )),
+    "debt_part_convertible_current": ("USD", "instant", _g(
+        "ConvertibleNotesPayableCurrent",
+    )),
+    "debt_part_notes_current": ("USD", "instant", _g(
+        "SeniorNotesCurrent",
     )),
     "stockholders_equity": ("USD", "instant", _g(
         "StockholdersEquity",

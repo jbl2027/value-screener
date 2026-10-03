@@ -1,41 +1,40 @@
 cik,tickers,sector_model,scope,item,input,missing
 1559720,ABNB,standard,metric,beneish_m,core,receivables
 1559720,ABNB,standard,metric,roic_reinvestment,reinvestment,capex
-947484,ACGL,insurer,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 8670,ADP,standard,metric,roic_reinvestment,reinvestment,capex
 1002910,AEE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1002910,AEE,standard,metric,beneish_m,sga,sga_expense
 1002910,AEE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1002910,AEE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 4904,AEP,standard,metric,beneish_m,sga,sga_expense
-874761,AES,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 874761,AES,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-874761,AES,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-874761,AES,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
-874761,AES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
-874761,AES,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-874761,AES,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
-1267238,AIZ,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+874761,AES,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
+874761,AES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
+874761,AES,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+874761,AES,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
+1267238,AIZ,insurer,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 354190,AJG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 354190,AJG,standard,metric,beneish_m,sga,sga_expense
 354190,AJG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 354190,AJG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 1579241,ALLE,standard,metric,beneish_m,core,receivables
-820027,AMP,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 820027,AMP,standard,metric,beneish_m,core,receivables
 820027,AMP,standard,metric,beneish_m,core,current_assets
 820027,AMP,standard,metric,beneish_m,core,current_liabilities
 820027,AMP,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 820027,AMP,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-820027,AMP,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-820027,AMP,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+820027,AMP,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 820027,AMP,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-820027,AMP,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 820027,AMP,standard,metric,piotroski_f,liquidity,current_assets
 820027,AMP,standard,metric,piotroski_f,liquidity,current_liabilities
 820027,AMP,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-820027,AMP,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-820027,AMP,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+820027,AMP,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1053507,AMT,reit,fair_value,fair_value,ffo,gain_on_property_sales
 1053507,AMT,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1053507,AMT,reit,metric,p_ffo,ffo,gain_on_property_sales
@@ -72,25 +71,25 @@ cik,tickers,sector_model,scope,item,input,missing
 1035443,ARE,reit,metric,piotroski_f,liquidity,current_assets
 1035443,ARE,reit,metric,piotroski_f,liquidity,current_liabilities
 1035443,ARE,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1176948,ARES,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 1176948,ARES,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
 1176948,ARES,standard,metric,beneish_m,core,receivables
 1176948,ARES,standard,metric,beneish_m,core,current_assets
 1176948,ARES,standard,metric,beneish_m,core,ppe_net
 1176948,ARES,standard,metric,beneish_m,core,current_liabilities
 1176948,ARES,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-1176948,ARES,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-1176948,ARES,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+1176948,ARES,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 1176948,ARES,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
 1176948,ARES,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-1176948,ARES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 1176948,ARES,standard,metric,piotroski_f,liquidity,current_assets
 1176948,ARES,standard,metric,piotroski_f,liquidity,current_liabilities
 1176948,ARES,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
 1176948,ARES,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1176948,ARES,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
 1176948,ARES,standard,metric,roic_reinvestment,reinvestment,capex
-1176948,ARES,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 731802,ATO,standard,metric,beneish_m,core,ppe_net
 731802,ATO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 731802,ATO,standard,metric,beneish_m,sga,sga_expense
@@ -139,7 +138,7 @@ cik,tickers,sector_model,scope,item,input,missing
 1383312,BR,standard,metric,beneish_m,core,receivables
 1067983,BRK-B,insurer,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
 1067983,BRK-B,insurer,metric,p_b,shares,shares_outstanding | diluted_shares | eps_diluted
-1067983,BRK-B,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1067983,BRK-B,insurer,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 79282,BRO,standard,metric,beneish_m,core,receivables
 79282,BRO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 79282,BRO,standard,metric,beneish_m,sga,sga_expense
@@ -167,11 +166,6 @@ cik,tickers,sector_model,scope,item,input,missing
 1783180,CARR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 726958,CASY,standard,metric,beneish_m,core,receivables
 726958,CASY,standard,metric,beneish_m,sga,sga_expense
-18230,CAT,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-18230,CAT,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-18230,CAT,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-18230,CAT,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-18230,CAT,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1374310,CBOE,standard,metric,beneish_m,sga,sga_expense
 1138118,CBRE,standard,metric,beneish_m,sga,sga_expense
 1051470,CCI,reit,fair_value,fair_value,ffo,gain_on_property_sales
@@ -179,14 +173,9 @@ cik,tickers,sector_model,scope,item,input,missing
 815097,CCL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 815097,CCL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 815097,CCL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-813672,CDNS,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 813672,CDNS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-813672,CDNS,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-813672,CDNS,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 813672,CDNS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 813672,CDNS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-813672,CDNS,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-813672,CDNS,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1868275,CEG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1868275,CEG,standard,metric,beneish_m,sga,sga_expense
 1868275,CEG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -204,15 +193,10 @@ cik,tickers,sector_model,scope,item,input,missing
 1166691,CMCSA,standard,metric,beneish_m,sga,sga_expense
 1166691,CMCSA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1166691,CMCSA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1156375,CME,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1156375,CME,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1156375,CME,standard,metric,beneish_m,sga,sga_expense
-1156375,CME,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1156375,CME,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1156375,CME,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1156375,CME,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1156375,CME,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1156375,CME,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1058090,CMG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1058090,CMG,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 1058090,CMG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -226,7 +210,7 @@ cik,tickers,sector_model,scope,item,input,missing
 811156,CMS,standard,metric,roic_reinvestment,reinvestment,capex
 1071739,CNC,standard,metric,beneish_m,core,receivables
 1130310,CNP,standard,metric,beneish_m,sga,sga_expense
-927628,COF,bank,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+927628,COF,bank,metric,shareholder_yield,debt,total_debt (implied_rate_29%_exceeds_8%)
 1679788,COIN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1679788,COIN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1679788,COIN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
@@ -252,22 +236,12 @@ cik,tickers,sector_model,scope,item,input,missing
 1100682,CRL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1100682,CRL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1100682,CRL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1535527,CRWD,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1535527,CRWD,standard,metric,beneish_m,core,depreciation_amortization
-1535527,CRWD,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1535527,CRWD,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1535527,CRWD,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1535527,CRWD,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
-1535527,CRWD,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 277948,CSX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 277948,CSX,standard,metric,beneish_m,sga,sga_expense
 277948,CSX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 277948,CSX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1058290,CTSH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1058290,CTSH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1058290,CTSH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1058290,CTSH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1058290,CTSH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1690820,CVNA,standard,metric,beneish_m,core,depreciation_amortization
 1690820,CVNA,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
 64803,CVS,standard,metric,beneish_m,sga,sga_expense
@@ -280,26 +254,21 @@ cik,tickers,sector_model,scope,item,input,missing
 27904,DAL,standard,metric,beneish_m,sga,sga_expense | g_and_a_expense
 27904,DAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 27904,DAL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1792789,DASH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1792789,DASH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1792789,DASH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1792789,DASH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1792789,DASH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-315189,DE,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 315189,DE,standard,metric,beneish_m,core,receivables
 315189,DE,standard,metric,beneish_m,core,current_assets
 315189,DE,standard,metric,beneish_m,core,ppe_net
 315189,DE,standard,metric,beneish_m,core,current_liabilities
 315189,DE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-315189,DE,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-315189,DE,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+315189,DE,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 315189,DE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-315189,DE,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+315189,DE,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 315189,DE,standard,metric,piotroski_f,liquidity,current_assets
 315189,DE,standard,metric,piotroski_f,liquidity,current_liabilities
 315189,DE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-315189,DE,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-315189,DE,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+315189,DE,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 29534,DG,standard,metric,beneish_m,core,receivables
 882184,DHI,standard,metric,beneish_m,core,receivables
 882184,DHI,standard,metric,beneish_m,core,current_assets
@@ -382,11 +351,11 @@ cik,tickers,sector_model,scope,item,input,missing
 920522,ESS,reit,metric,beneish_m,core,ppe_net
 920522,ESS,reit,metric,beneish_m,core,current_liabilities
 920522,ESS,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-920522,ESS,reit,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-920522,ESS,reit,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+920522,ESS,reit,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+920522,ESS,reit,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 920522,ESS,reit,metric,piotroski_f,liquidity,current_assets
 920522,ESS,reit,metric,piotroski_f,liquidity,current_liabilities
-920522,ESS,reit,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+920522,ESS,reit,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 65984,ETR,standard,metric,beneish_m,core,receivables
 65984,ETR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 65984,ETR,standard,metric,beneish_m,sga,sga_expense
@@ -396,11 +365,6 @@ cik,tickers,sector_model,scope,item,input,missing
 1711269,EVRG,standard,metric,beneish_m,sga,sga_expense
 1711269,EVRG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1711269,EVRG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1099800,EW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1099800,EW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1099800,EW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1099800,EW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1099800,EW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1109357,EXC,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1109357,EXC,standard,metric,beneish_m,sga,sga_expense
 1109357,EXC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -421,12 +385,12 @@ cik,tickers,sector_model,scope,item,input,missing
 1289490,EXR,reit,metric,p_ffo,ffo,gain_on_property_sales
 1289490,EXR,reit,metric,piotroski_f,liquidity,current_assets
 1289490,EXR,reit,metric,piotroski_f,liquidity,current_liabilities
-37996,F,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
-37996,F,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-37996,F,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
-37996,F,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
-37996,F,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-37996,F,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+37996,F,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
+37996,F,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+37996,F,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
+37996,F,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
+37996,F,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+37996,F,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1539838,FANG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1539838,FANG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1539838,FANG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
@@ -482,7 +446,6 @@ cik,tickers,sector_model,scope,item,input,missing
 1467858,GM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1467858,GM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 40987,GPC,standard,metric,beneish_m,core,receivables
-886982,GS,bank,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 45012,HAL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 45012,HAL,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 45012,HAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -500,7 +463,7 @@ cik,tickers,sector_model,scope,item,input,missing
 1585689,HLT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1585689,HLT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 2089271,HONA,standard,fair_value,fair_value,ebit_3y,operating_income | pretax_income
-2089271,HONA,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 2089271,HONA,standard,fair_value,fair_value,cash,cash
 2089271,HONA,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares
 2089271,HONA,standard,fair_value,fair_value,ebit_3y,only_0_annual_years
@@ -515,9 +478,9 @@ cik,tickers,sector_model,scope,item,input,missing
 2089271,HONA,standard,metric,beneish_m,core,current_liabilities
 2089271,HONA,standard,metric,beneish_m,gross_profit,gross_profit
 2089271,HONA,standard,metric,beneish_m,sga,sga_expense
-2089271,HONA,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
 2089271,HONA,standard,metric,ev_ebit,ebit,operating_income | pretax_income
-2089271,HONA,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 2089271,HONA,standard,metric,ev_ebit,cash,cash
 2089271,HONA,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares
 2089271,HONA,standard,metric,gp_assets,gross_profit,gross_profit
@@ -525,7 +488,7 @@ cik,tickers,sector_model,scope,item,input,missing
 2089271,HONA,standard,metric,piotroski_f,profitability,net_income
 2089271,HONA,standard,metric,piotroski_f,profitability,operating_cash_flow
 2089271,HONA,standard,metric,piotroski_f,profitability,total_assets
-2089271,HONA,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 2089271,HONA,standard,metric,piotroski_f,liquidity,current_assets
 2089271,HONA,standard,metric,piotroski_f,liquidity,current_liabilities
 2089271,HONA,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares
@@ -537,26 +500,26 @@ cik,tickers,sector_model,scope,item,input,missing
 2089271,HONA,standard,metric,roic_reinvestment,tax,pretax_income
 2089271,HONA,standard,metric,roic_reinvestment,capital,stockholders_equity
 2089271,HONA,standard,metric,roic_reinvestment,capital,cash
-2089271,HONA,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
 2089271,HONA,standard,metric,roic_reinvestment,reinvestment,capex
 2089271,HONA,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
-2089271,HONA,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 2089271,HONA,standard,metric,sloan_accruals,inputs,net_income
 2089271,HONA,standard,metric,sloan_accruals,inputs,operating_cash_flow
 2089271,HONA,standard,metric,sloan_accruals,inputs,investing_cash_flow
 2089271,HONA,standard,metric,sloan_accruals,inputs,total_assets
-1783879,HOOD,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 1783879,HOOD,standard,metric,beneish_m,core,receivables
 1783879,HOOD,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1783879,HOOD,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-1783879,HOOD,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-1783879,HOOD,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+1783879,HOOD,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 1783879,HOOD,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-1783879,HOOD,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 1783879,HOOD,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1783879,HOOD,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
 1783879,HOOD,standard,metric,roic_reinvestment,reinvestment,capex
-1783879,HOOD,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1645590,HPE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1645590,HPE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1645590,HPE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
@@ -571,30 +534,25 @@ cik,tickers,sector_model,scope,item,input,missing
 49071,HUM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 49071,HUM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 49071,HUM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1381197,IBKR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 1381197,IBKR,standard,metric,beneish_m,core,receivables
 1381197,IBKR,standard,metric,beneish_m,core,current_assets
 1381197,IBKR,standard,metric,beneish_m,core,current_liabilities
 1381197,IBKR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-1381197,IBKR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-1381197,IBKR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+1381197,IBKR,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 1381197,IBKR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-1381197,IBKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 1381197,IBKR,standard,metric,piotroski_f,liquidity,current_assets
 1381197,IBKR,standard,metric,piotroski_f,liquidity,current_liabilities
 1381197,IBKR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1381197,IBKR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
 1381197,IBKR,standard,metric,roic_reinvestment,reinvestment,capex
-1381197,IBKR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1571949,ICE,standard,metric,beneish_m,core,ppe_net
 1571949,ICE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1571949,ICE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1571949,ICE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1110803,ILMN,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1110803,ILMN,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1110803,ILMN,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1110803,ILMN,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1110803,ILMN,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 879169,INCY,standard,metric,beneish_m,core,receivables
 879169,INCY,standard,metric,roic_reinvestment,reinvestment,capex
 896878,INTU,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
@@ -637,23 +595,23 @@ cik,tickers,sector_model,scope,item,input,missing
 879101,KIM,reit,metric,piotroski_f,liquidity,current_assets
 879101,KIM,reit,metric,piotroski_f,liquidity,current_liabilities
 879101,KIM,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1404912,KKR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 1404912,KKR,standard,metric,beneish_m,core,receivables
 1404912,KKR,standard,metric,beneish_m,core,current_assets
 1404912,KKR,standard,metric,beneish_m,core,ppe_net
 1404912,KKR,standard,metric,beneish_m,core,current_liabilities
 1404912,KKR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1404912,KKR,standard,metric,beneish_m,sga,sga_expense
-1404912,KKR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-1404912,KKR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+1404912,KKR,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 1404912,KKR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-1404912,KKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 1404912,KKR,standard,metric,piotroski_f,liquidity,current_assets
 1404912,KKR,standard,metric,piotroski_f,liquidity,current_liabilities
 1404912,KKR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1404912,KKR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
 1404912,KKR,standard,metric,roic_reinvestment,reinvestment,capex
-1404912,KKR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 55785,KMB,standard,metric,beneish_m,sga,sga_expense
 1506307,KMI,standard,metric,beneish_m,core,receivables
 1506307,KMI,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
@@ -714,12 +672,7 @@ cik,tickers,sector_model,scope,item,input,missing
 789570,MGM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 865752,MNST,standard,metric,beneish_m,sga,sga_expense
 764180,MO,standard,metric,beneish_m,sga,sga_expense
-1682852,MRNA,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1682852,MRNA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-1682852,MRNA,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1682852,MRNA,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1682852,MRNA,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1682852,MRNA,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 62709,MRSH,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 62709,MRSH,standard,metric,beneish_m,sga,sga_expense
 62709,MRSH,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -738,32 +691,28 @@ cik,tickers,sector_model,scope,item,input,missing
 1133421,NOC,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 1133421,NOC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1133421,NOC,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1373715,NOW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1373715,NOW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1373715,NOW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1373715,NOW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1373715,NOW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 1013871,NRG,standard,metric,beneish_m,core,ppe_net
 702165,NSC,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 702165,NSC,standard,metric,beneish_m,sga,sga_expense
 702165,NSC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 702165,NSC,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-906163,NVR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+73124,NTRS,bank,metric,shareholder_yield,debt,total_debt (implied_rate_186%_exceeds_8%)
+906163,NVR,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 906163,NVR,standard,metric,beneish_m,core,receivables
 906163,NVR,standard,metric,beneish_m,core,current_assets
 906163,NVR,standard,metric,beneish_m,core,ppe_net
 906163,NVR,standard,metric,beneish_m,core,current_liabilities
 906163,NVR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 906163,NVR,standard,metric,beneish_m,sga,sga_expense
-906163,NVR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-906163,NVR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+906163,NVR,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 906163,NVR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-906163,NVR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 906163,NVR,standard,metric,piotroski_f,liquidity,current_assets
 906163,NVR,standard,metric,piotroski_f,liquidity,current_liabilities
 906163,NVR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-906163,NVR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-906163,NVR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+906163,NVR,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1564708,NWS NWSA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1564708,NWS NWSA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1564708,NWS NWSA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
@@ -790,32 +739,21 @@ cik,tickers,sector_model,scope,item,input,missing
 797468,OXY,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 797468,OXY,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 797468,OXY,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1474432,P,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-1474432,P,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-1474432,P,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-1474432,P,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
-1474432,P,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-1474432,P,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
-1327567,PANW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1327567,PANW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1327567,PANW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1327567,PANW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1327567,PANW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 723531,PAYX,standard,metric,beneish_m,core,receivables
-75362,PCAR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 75362,PCAR,standard,fair_value,fair_value,cash,cash
 75362,PCAR,standard,metric,beneish_m,core,receivables
 75362,PCAR,standard,metric,beneish_m,core,current_assets
 75362,PCAR,standard,metric,beneish_m,core,current_liabilities
-75362,PCAR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-75362,PCAR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+75362,PCAR,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 75362,PCAR,standard,metric,ev_ebit,cash,cash
-75362,PCAR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 75362,PCAR,standard,metric,piotroski_f,liquidity,current_assets
 75362,PCAR,standard,metric,piotroski_f,liquidity,current_liabilities
 75362,PCAR,standard,metric,roic_reinvestment,capital,cash
-75362,PCAR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-75362,PCAR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+75362,PCAR,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1004980,PCG,standard,metric,beneish_m,core,depreciation_amortization
 1004980,PCG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1004980,PCG,standard,metric,beneish_m,sga,sga_expense
@@ -900,14 +838,9 @@ cik,tickers,sector_model,scope,item,input,missing
 910606,REG,reit,metric,piotroski_f,liquidity,current_assets
 910606,REG,reit,metric,piotroski_f,liquidity,current_liabilities
 910606,REG,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-872589,REGN,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 872589,REGN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-872589,REGN,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-872589,REGN,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 872589,REGN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 872589,REGN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-872589,REGN,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-872589,REGN,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 720005,RJF,standard,metric,beneish_m,core,receivables
 720005,RJF,standard,metric,beneish_m,core,current_assets
 720005,RJF,standard,metric,beneish_m,core,current_liabilities
@@ -929,20 +862,10 @@ cik,tickers,sector_model,scope,item,input,missing
 829224,SBUX,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 829224,SBUX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 829224,SBUX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-87347,SLB,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 87347,SLB,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 87347,SLB,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
-87347,SLB,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-87347,SLB,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 87347,SLB,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 87347,SLB,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-87347,SLB,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-87347,SLB,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1375365,SMCI,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1375365,SMCI,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1375365,SMCI,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1375365,SMCI,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-1375365,SMCI,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 91440,SNA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 91440,SNA,standard,metric,beneish_m,sga,sga_expense
 91440,SNA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -990,11 +913,6 @@ cik,tickers,sector_model,scope,item,input,missing
 732717,T,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 732717,T,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 732717,T,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-842023,TECH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-842023,TECH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-842023,TECH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-842023,TECH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
-842023,TECH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
 27419,TGT,standard,metric,beneish_m,core,receivables
 1973266,TKO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1973266,TKO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -1024,26 +942,25 @@ cik,tickers,sector_model,scope,item,input,missing
 1113169,TROW,standard,metric,piotroski_f,liquidity,current_liabilities
 1113169,TROW,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 1113169,TROW,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
-86312,TRV,insurer,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
 916365,TSCO,standard,metric,beneish_m,core,receivables
 1466258,TT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1466258,TT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1466258,TT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-217346,TXT,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,fair_value,fair_value,debt,total_debt (no_debt_tags_found)
 217346,TXT,standard,metric,beneish_m,core,receivables
 217346,TXT,standard,metric,beneish_m,core,current_assets
 217346,TXT,standard,metric,beneish_m,core,ppe_net
 217346,TXT,standard,metric,beneish_m,core,current_liabilities
 217346,TXT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-217346,TXT,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-217346,TXT,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,beneish_m,debt,total_debt (no_debt_tags_found)
+217346,TXT,standard,metric,ev_ebit,debt,total_debt (no_debt_tags_found)
 217346,TXT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-217346,TXT,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | total_debt
 217346,TXT,standard,metric,piotroski_f,liquidity,current_assets
 217346,TXT,standard,metric,piotroski_f,liquidity,current_liabilities
 217346,TXT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-217346,TXT,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-217346,TXT,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,roic_reinvestment,debt,total_debt (no_debt_tags_found)
+217346,TXT,standard,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 100517,UAL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 100517,UAL,standard,metric,beneish_m,sga,sga_expense
 100517,UAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -1138,7 +1055,7 @@ cik,tickers,sector_model,scope,item,input,missing
 107263,WMB,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 107263,WMB,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 107263,WMB,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-11544,WRB,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+11544,WRB,insurer,metric,shareholder_yield,debt,total_debt (no_debt_tags_found)
 1140536,WTW,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 1140536,WTW,standard,metric,beneish_m,sga,sga_expense
 1140536,WTW,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
@@ -1156,11 +1073,5 @@ cik,tickers,sector_model,scope,item,input,missing
 2115436,XOM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 2115436,XOM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 2115436,XOM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-1512673,XYZ,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
-1512673,XYZ,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
-1512673,XYZ,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
-1512673,XYZ,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
-1512673,XYZ,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
-1512673,XYZ,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
 1041061,YUM,standard,metric,beneish_m,core,receivables
 1041061,YUM,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense

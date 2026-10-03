@@ -76,9 +76,9 @@ MSFT,ppe_net,313076000000.0,USD,PropertyPlantAndEquipmentNet,,2026-06-30,10-K,20
 MSFT,long_term_investments,36348000000.0,USD,LongTermInvestments,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,goodwill,119651000000.0,USD,Goodwill,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,intangibles_ex_goodwill,18609000000.0,USD,FiniteLivedIntangibleAssetsNet,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
+MSFT,long_term_debt_total,40294000000.0,USD,LongTermDebt,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,long_term_debt_noncurrent,31067000000.0,USD,LongTermDebtNoncurrent,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,long_term_debt_current,9227000000.0,USD,LongTermDebtCurrent,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
-MSFT,long_term_debt_total,40294000000.0,USD,LongTermDebt,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,stockholders_equity,442387000000.0,USD,StockholdersEquity,,2026-06-30,10-K,2026-07-29,0001193125-26-323660
 MSFT,shares_outstanding,7425545491.0,shares,EntityCommonStockSharesOutstanding,,2026-07-23,10-K,2026-07-29,0001193125-26-323660
 MSFT,diluted_shares,7453000000.0,shares,WeightedAverageNumberOfDilutedSharesOutstanding,2025-07-01,2026-06-30,10-K,2026-07-29,0001193125-26-323660
@@ -111,6 +111,7 @@ CAT,goodwill,5321000000.0,USD,Goodwill,,2025-12-31,10-K,2026-02-13,0000018230-26
 CAT,intangibles_ex_goodwill,241000000.0,USD,IntangibleAssetsNetExcludingGoodwill,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
 CAT,long_term_debt_noncurrent,30696000000.0,USD,LongTermDebtNoncurrent,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
 CAT,short_term_borrowings,5514000000.0,USD,ShortTermBorrowings,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
+CAT,debt_part_credit_facility,771000000.0,USD,LineOfCredit,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
 CAT,stockholders_equity,21318000000.0,USD,StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
 CAT,minority_interest,0.0,USD,MinorityInterest,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
 CAT,shares_outstanding,465287332.0,shares,EntityCommonStockSharesOutstanding,,2025-12-31,10-K,2026-02-13,0000018230-26-000008
@@ -143,9 +144,9 @@ AAPL,short_term_investments,18763000000.0,USD,MarketableSecuritiesCurrent,,2025-
 AAPL,receivables,39777000000.0,USD,AccountsReceivableNetCurrent,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,ppe_net,49834000000.0,USD,PropertyPlantAndEquipmentNet,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,long_term_investments,77723000000.0,USD,MarketableSecuritiesNoncurrent,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
+AAPL,long_term_debt_total,90678000000.0,USD,LongTermDebt,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,long_term_debt_noncurrent,78328000000.0,USD,LongTermDebtNoncurrent,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,long_term_debt_current,12350000000.0,USD,LongTermDebtCurrent,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
-AAPL,long_term_debt_total,90678000000.0,USD,LongTermDebt,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,short_term_borrowings,7979000000.0,USD,CommercialPaper,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,stockholders_equity,73733000000.0,USD,StockholdersEquity,,2025-09-27,10-K,2025-10-31,0000320193-25-000079
 AAPL,shares_outstanding,14776353000.0,shares,EntityCommonStockSharesOutstanding,,2025-10-17,10-K,2025-10-31,0000320193-25-000079
@@ -176,6 +177,7 @@ XOM,ppe_net,299373000000.0,USD,PropertyPlantAndEquipmentNet,,2025-12-31,10-K,202
 XOM,long_term_investments,271000000.0,USD,LongTermInvestments,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
 XOM,long_term_debt_noncurrent,34241000000.0,USD,LongTermDebtAndCapitalLeaseObligations,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
 XOM,long_term_debt_current,6200000000.0,USD,LongTermDebtCurrent,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
+XOM,debt_current_incl_short_term,9296000000.0,USD,DebtCurrent,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
 XOM,short_term_borrowings,3059000000.0,USD,CommercialPaper,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
 XOM,stockholders_equity,259386000000.0,USD,StockholdersEquity,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
 XOM,minority_interest,7240000000.0,USD,MinorityInterest,,2025-12-31,10-K,2026-02-18,0000034088-26-000045
@@ -208,9 +210,10 @@ JNJ,receivables,17178000000.0,USD,AccountsReceivableNetCurrent,,2025-12-28,10-K,
 JNJ,ppe_net,23169000000.0,USD,PropertyPlantAndEquipmentNet,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,goodwill,48772000000.0,USD,Goodwill,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,intangibles_ex_goodwill,50403000000.0,USD,IntangibleAssetsNetExcludingGoodwill,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
+JNJ,long_term_debt_total,41438000000.0,USD,LongTermDebt,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,long_term_debt_noncurrent,39438000000.0,USD,LongTermDebtNoncurrent,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,long_term_debt_current,2000000000.0,USD,LongTermDebtCurrent,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
-JNJ,long_term_debt_total,41438000000.0,USD,LongTermDebt,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
+JNJ,debt_current_incl_short_term,8500000000.0,USD,DebtCurrent,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,short_term_borrowings,8495000000.0,USD,ShortTermBorrowings,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,stockholders_equity,81544000000.0,USD,StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
 JNJ,preferred_stock,0.0,USD,PreferredStockValue,,2025-12-28,10-K,2026-02-11,0000200406-26-000016
@@ -240,9 +243,9 @@ WMT,cash,10727000000.0,USD,CashAndCashEquivalentsAtCarryingValue,,2026-01-31,10-
 WMT,receivables,11172000000.0,USD,ReceivablesNetCurrent,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,ppe_net,136083000000.0,USD,PropertyPlantAndEquipmentNet,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,goodwill,28735000000.0,USD,Goodwill,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
+WMT,long_term_debt_total,38166000000.0,USD,LongTermDebt,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,long_term_debt_noncurrent,34624000000.0,USD,LongTermDebtNoncurrent,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,long_term_debt_current,3542000000.0,USD,LongTermDebtCurrent,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
-WMT,long_term_debt_total,38166000000.0,USD,LongTermDebt,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,short_term_borrowings,6596000000.0,USD,ShortTermBorrowings,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,stockholders_equity,99617000000.0,USD,StockholdersEquity,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
 WMT,minority_interest,6270000000.0,USD,MinorityInterest,,2026-01-31,10-K,2026-03-13,0000104169-26-000055
@@ -297,7 +300,8 @@ TRV,liabilities_and_equity,143708000000.0,USD,LiabilitiesAndStockholdersEquity,,
 TRV,cash,842000000.0,USD,CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
 TRV,goodwill,4066000000.0,USD,Goodwill,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
 TRV,intangibles_ex_goodwill,336000000.0,USD,IntangibleAssetsNetExcludingGoodwill,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
-TRV,long_term_debt_current,300000000.0,USD,DebtCurrent,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
+TRV,debt_total_all,9267000000.0,USD,DebtLongtermAndShorttermCombinedAmount,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
+TRV,debt_current_incl_short_term,300000000.0,USD,DebtCurrent,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
 TRV,short_term_borrowings,100000000.0,USD,CommercialPaper,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
 TRV,stockholders_equity,32894000000.0,USD,StockholdersEquity,,2025-12-31,10-K,2026-02-12,0000086312-26-000065
 TRV,shares_outstanding,216237902.0,shares,EntityCommonStockSharesOutstanding,,2026-02-05,10-K,2026-02-12,0000086312-26-000065

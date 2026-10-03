@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from screener.config import DATA_DIR  # noqa: E402
 from screener.fundamentals import extract_facts, latest_annual_snapshot  # noqa: E402
 from screener.rules import (  # noqa: E402
-    DEBT, EBIT, METRIC_INPUTS, MODEL_RULES, SHARES, derived_concepts, met_by, missing_for,
+    EBIT, METRIC_INPUTS, MODEL_RULES, SHARES, derived_concepts, met_by, missing_for,
 )
 from screener.sec_client import SECClient  # noqa: E402
 
@@ -49,21 +49,24 @@ def process(cik: int, tickers: list[str], model: str, sec: SECClient) -> tuple[p
 
     info, snap = latest_annual_snapshot(facts)
     values = snap["value"].to_dict() if len(snap) else {}
-    available = set(values) | derived_concepts(cik, values)
+    derived, debt = derived_concepts(cik, values)
+    available = set(values) | derived
     rules = MODEL_RULES[model]
     gaps = []
 
-    for scope, metrics in [("metric", rules["metrics"])]:
-        for metric in metrics:
-            for key, requirement in METRIC_INPUTS[metric].items():
-                for concept in missing_for(requirement, available):
-                    gaps.append({"cik": cik, "tickers": base["tickers"], "sector_model": model,
-                                 "scope": scope, "item": metric, "input": key, "missing": concept})
+    def explain(concept: str) -> str:
+        return f"total_debt ({debt.problem})" if concept == "total_debt" else concept
+
+    for metric in rules["metrics"]:
+        for key, requirement in METRIC_INPUTS[metric].items():
+            for concept in missing_for(requirement, available):
+                gaps.append({"cik": cik, "tickers": base["tickers"], "sector_model": model,
+                             "scope": "metric", "item": metric, "input": key, "missing": explain(concept)})
 
     fv_missing = []
     for key, requirement in rules["fair_value_inputs"].items():
         for concept in missing_for(requirement, available):
-            fv_missing.append(f"{key}:{concept}")
+            fv_missing.append(f"{key}:{explain(concept)}")
     if model == "standard":
         n = ebit_years(facts)
         if n < EBIT_YEARS_NEEDED:
@@ -85,7 +88,11 @@ def process(cik: int, tickers: list[str], model: str, sec: SECClient) -> tuple[p
         "metrics_blocked": " ".join(metrics_blocked),
         # Which alternative satisfied each key input (M5 uses these for confidence).
         "ebit_basis": met_by(EBIT, available),
-        "debt_basis": met_by(DEBT, available),
+        "debt_basis": debt.basis,
+        "debt_confidence": debt.confidence,
+        "debt_total": debt.total,
+        "debt_implied_rate": debt.implied_rate,
+        "debt_problem": debt.problem,
         "shares_basis": met_by(SHARES, available),
     }
     return facts, summary, gaps
@@ -140,12 +147,25 @@ def main() -> None:
     ok = summary_df[summary_df["error"].isna()]
     print(ok.groupby("sector_model")["fair_value_ready"].agg(ready="sum", total="count").to_string())
 
+    print("\n=== Debt resolution (standard model) ===")
+    std = ok[ok["sector_model"] == "standard"]
+    print(std.groupby(["debt_basis", "debt_confidence"], dropna=False).size().rename("companies").to_string())
+    high = std[std["debt_problem"].fillna("").str.startswith("implied_rate")]
+    if len(high):
+        print("Rejected by implied-rate check:")
+        print(high[["tickers", "debt_basis", "debt_problem"]].to_string(index=False))
+
     print("\n=== Inferred inputs (review these) ===")
-    for col, pattern in [("debt_basis", "no_long_term_debt"), ("ebit_basis", r"^pretax_income$"),
+    for col, pattern in [("debt_basis", "no_long_term_debt|noncurrent_only|notes_total|parts_sum|current_parts"),
+                         ("ebit_basis", r"^pretax_income$"),
                          ("shares_basis", "diluted_shares"), ("shares_basis", "eps_diluted")]:
         hit = ok[ok[col].fillna("").str.contains(pattern)]
         print(f"{col} = {pattern.strip('^$')}: {len(hit)}")
-        print("   " + " ".join(hit["tickers"]))
+        if col == "debt_basis":
+            for basis, grp in hit.groupby("debt_basis"):
+                print(f"   {basis}: " + " ".join(grp["tickers"]))
+        else:
+            print("   " + " ".join(hit["tickers"]))
 
     fv = gaps_df[gaps_df["scope"] == "fair_value"]
     print("\n=== Missing fair-value inputs (companies) ===")

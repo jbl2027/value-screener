@@ -7,6 +7,7 @@ Requirements are lists of alternatives; each alternative is a list of concepts. 
 is met when every concept in at least one alternative is available. Concepts in
 ABSENT_MEANS_ZERO count as available (value 0) when a company doesn't report them.
 """
+from screener.debt import DebtResult, resolve_debt
 
 # ---- Statuses produced by Milestone 6 ----
 STATUS_FLAG = "flag"                    # MoS >= 30% and not disqualified
@@ -22,8 +23,8 @@ ABSENT_MEANS_ZERO = {
     "intangibles_ex_goodwill", "preferred_stock", "minority_interest",
     "short_term_investments", "long_term_investments", "short_term_borrowings",
 }
-# Deliberately NOT zero-on-absence: long_term_debt_current (CAT reports it under a custom tag)
-# and gain_on_property_sales (PLD likewise). Their absence makes fair value insufficient.
+# Deliberately NOT zero-on-absence: gain_on_property_sales (PLD reports it under a custom tag).
+# Its absence makes REIT fair value insufficient. Debt has its own resolver (screener/debt.py).
 
 # ---- Reusable requirements ----
 # EBIT, in order of preference. Pretax income alone is a conservative last resort (it
@@ -34,27 +35,14 @@ EBIT_CONSERVATIVE_BASIS = "pretax_income"
 GROSS_PROFIT = [["gross_profit"], ["revenue", "cost_of_revenue"]]
 SGA = [["sga_expense"], ["selling_marketing_expense", "g_and_a_expense"]]
 TOTAL_LIABILITIES = [["total_liabilities"], ["liabilities_and_equity", "stockholders_equity"]]
-# Total debt: reported total, or both noncurrent and current pieces (+ short-term borrowings),
-# or an inferred absence of long-term debt (see derived_concepts).
-DEBT = [["long_term_debt_total", "short_term_borrowings"],
-        ["long_term_debt_noncurrent", "long_term_debt_current", "short_term_borrowings"],
-        ["no_long_term_debt", "short_term_borrowings"]]
-LONG_TERM_DEBT = [["long_term_debt_noncurrent"], ["long_term_debt_total"], ["no_long_term_debt"]]
+# Total debt comes from screener/debt.py; "total_debt" is available when it resolves.
+DEBT = [["total_debt"]]
+LONG_TERM_DEBT = [["long_term_debt_noncurrent"], ["long_term_debt_total"], ["total_debt"]]
 # Multi-class filers' cover-page share counts are dimensional and absent from companyfacts
 # (META, V, CMCSA, ...). Fall back to weighted diluted shares, then to shares implied by
 # net income / diluted EPS (for V this yields Class A-equivalent shares, matching V's price).
 # BRK-B needs a class ratio (EPS is per Class A share) - handled in M5.
 SHARES = [["shares_outstanding"], ["diluted_shares"], ["net_income", "eps_diluted"]]
-
-# A company with no long-term debt tags is treated as having none only if its interest
-# expense is also absent or negligible; otherwise its debt is likely under a custom tag.
-NO_DEBT_MAX_INTEREST_TO_ASSETS = 0.002
-NO_DEBT_MAX_INTEREST_TO_REVENUE = 0.005  # catches balance-sheet-heavy filers (e.g. AMP)
-LTD_CONCEPTS = ("long_term_debt_total", "long_term_debt_noncurrent", "long_term_debt_current")
-# Known to carry debt under custom tags with no tagged interest expense: never infer zero debt.
-HAS_UNTAGGED_DEBT = {
-    217346,  # TXT (Textron)
-}
 
 
 def req(*concepts: str) -> list[list[str]]:
@@ -115,7 +103,11 @@ MODEL_RULES: dict[str, dict] = {
         "valuation": "p_ffo",
         "metrics": ["p_ffo", "sloan_accruals", "piotroski_f", "beneish_m", "shareholder_yield"],
         "disqualifiers": ["beneish_m", "piotroski_f"],
-        # Assumption pending confirmation: fair value = sector-median P/FFO x FFO per share.
+        # Fair value = peer-median P/FFO x FFO per share. Peers = same GICS sub-industry when
+        # at least `min_peers` REITs in it have a computable P/FFO; otherwise all REITs.
+        "fair_value_method": {"type": "peer_median_multiple", "multiple": "p_ffo",
+                              "peer_group": "gics_sub_industry", "min_peers": 5,
+                              "fallback_group": "sector_model"},
         "fair_value_inputs": {"ffo": req("net_income", "depreciation_amortization",
                                          "gain_on_property_sales"),
                               "shares": SHARES},
@@ -124,33 +116,39 @@ MODEL_RULES: dict[str, dict] = {
         "valuation": "p_tbv",
         "metrics": ["p_tbv", "rotce", "shareholder_yield"],
         "disqualifiers": [],  # no Beneish, no Piotroski
+        # Fair P/TBV = cross-sectional OLS of P/TBV on ROTCE across all banks, evaluated at the
+        # bank's ROTCE. Fair value = fair P/TBV x TBV per share. R-squared logged every run.
+        "fair_value_method": {"type": "regression", "y": "p_tbv", "x": "rotce",
+                              "group": "sector_model"},
         "fair_value_inputs": {"tbv": req("stockholders_equity", "preferred_stock", "goodwill",
                                          "intangibles_ex_goodwill"),
+                              "rotce": req("net_income"),
                               "shares": SHARES},
     },
     "insurer": {
         "valuation": "p_b",
         "metrics": ["p_b", "roe", "shareholder_yield"],
         "disqualifiers": [],  # no Beneish, no Piotroski
-        # Assumption pending confirmation: fair value = sector-median P/B x book value per share.
+        # Fair P/B = cross-sectional OLS of P/B on ROE across all insurers, evaluated at the
+        # insurer's ROE. Fair value = fair P/B x book value per share. R-squared logged every run.
+        "fair_value_method": {"type": "regression", "y": "p_b", "x": "roe",
+                              "group": "sector_model"},
         "fair_value_inputs": {"book_value": req("stockholders_equity", "preferred_stock"),
+                              "roe": req("net_income"),
                               "shares": SHARES},
     },
 }
+MODEL_RULES["standard"]["fair_value_method"] = {
+    # Fair value = sector-median EV/EBIT x 3-yr average EBIT, minus net debt, per share.
+    "type": "peer_median_multiple", "multiple": "ev_ebit", "peer_group": "sic_division",
+    "base": "ebit_3y_avg",
+}
 
 
-def derived_concepts(cik: int, values: dict[str, float]) -> set[str]:
-    """Pseudo-concepts inferred from a snapshot of {concept: value} (latest annual filing)."""
-    derived = set()
-    if cik not in HAS_UNTAGGED_DEBT and not any(c in values for c in LTD_CONCEPTS):
-        interest = abs(values.get("interest_expense", 0) or 0)
-        assets = values.get("total_assets") or 0
-        revenue = values.get("revenue") or 0
-        if (assets and interest <= NO_DEBT_MAX_INTEREST_TO_ASSETS * assets
-                and interest <= NO_DEBT_MAX_INTEREST_TO_REVENUE * max(revenue, 0)
-                or interest == 0 and assets):
-            derived.add("no_long_term_debt")
-    return derived
+def derived_concepts(cik: int, values: dict[str, float]) -> tuple[set[str], DebtResult]:
+    """Pseudo-concepts inferred from a snapshot of {concept: value}, plus the debt resolution."""
+    debt = resolve_debt(cik, values)
+    return ({"total_debt"} if debt.ok else set()), debt
 
 
 def met_by(requirement: list[list[str]], available: set[str]) -> str | None:
