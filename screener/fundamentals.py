@@ -7,6 +7,9 @@ a restatement, with its own `filed` date. This preserves exactly what was knowab
 
 Note: companyfacts `fy`/`fp` describe the *filing*, not the fact's period (a FY2025 10-K's
 prior-year comparatives also carry fy=2025). Use period_start/period_end to identify periods.
+
+Note: a ~365-day duration is not always a fiscal year. Some filers (e.g. AMZN) report
+trailing-twelve-month figures in 10-Qs. Identify fiscal years from 10-K-family filings.
 """
 from datetime import date
 
@@ -23,15 +26,29 @@ FACT_COLUMNS = ["cik", "source_cik", "concept", "taxonomy", "tag", "unit", "valu
                 "period_end", "duration_days", "fy", "fp", "form", "filed", "accn", "frame"]
 
 
+def _tag_facts(facts: dict, taxonomy: str, tag: str, unit: str) -> list[dict]:
+    """Facts for a tag, or for a sum tag "A+B" (A required; B added from the same filing/period)."""
+    parts = tag.split("+")
+    nodes = [facts.get(taxonomy, {}).get(p) for p in parts]
+    if not nodes[0] or unit not in nodes[0]["units"]:
+        return []
+    base = nodes[0]["units"][unit]
+    if len(parts) == 1:
+        return base
+    addends: dict[tuple, float] = {}
+    for node in nodes[1:]:
+        for f in (node or {}).get("units", {}).get(unit, []):
+            key = (f["accn"], f.get("start"), f["end"])
+            addends[key] = addends.get(key, 0) + f["val"]
+    return [{**f, "val": f["val"] + addends.get((f["accn"], f.get("start"), f["end"]), 0)} for f in base]
+
+
 def _raw_facts(cf: dict, source_cik: int) -> list[dict]:
     rows = []
     facts = cf.get("facts", {})
     for concept, (unit, period_type, candidates) in TAG_MAP.items():
         for tag_rank, (taxonomy, tag) in enumerate(candidates):
-            node = facts.get(taxonomy, {}).get(tag)
-            if not node or unit not in node["units"]:
-                continue
-            for f in node["units"][unit]:
+            for f in _tag_facts(facts, taxonomy, tag, unit):
                 if f.get("form") not in FORMS or f["end"] < HISTORY_START:
                     continue
                 start = f.get("start")

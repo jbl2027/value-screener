@@ -1,0 +1,501 @@
+cik,tickers,sector_model,error,fact_rows,has_10k,latest_10k_filed,fy_end,latest_10k_accn,stale_10k,fair_value_ready,fair_value_missing,metrics_blocked,ebit_basis,debt_basis,shares_basis
+1090872,A,standard,,2286,True,2025-12-22,2025-10-31,0001090872-25-000087,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+320193,AAPL,standard,,2228,True,2025-10-31,2025-09-27,0000320193-25-000079,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1551152,ABBV,standard,,2182,True,2026-02-20,2025-12-31,0001551152-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1559720,ABNB,standard,,974,True,2026-02-12,2025-12-31,0001559720-26-000004,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+1800,ABT,standard,,2138,True,2026-02-20,2025-12-31,0001628280-26-010185,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+947484,ACGL,insurer,,1499,True,2026-02-26,2025-12-31,0000947484-26-000017,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+1467373,ACN,standard,,2194,True,2025-10-10,2025-08-31,0001467373-25-000217,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+796343,ADBE,standard,,2227,True,2026-01-15,2025-11-28,0000796343-26-000003,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+6281,ADI,standard,,2238,True,2025-11-25,2025-11-01,0000006281-25-000153,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+7084,ADM,standard,,1971,True,2026-02-17,2025-12-31,0000007084-26-000011,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+8670,ADP,standard,,2239,True,2026-08-05,2026-06-30,0000008670-26-000030,False,True,,roic_reinvestment,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+769397,ADSK,standard,,2274,True,2026-03-03,2026-01-31,0000769397-26-000015,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1002910,AEE,standard,,1841,True,2026-02-18,2025-12-31,0001002910-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+4904,AEP,standard,,1986,True,2026-02-12,2025-12-31,0000004904-26-000013,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+874761,AES,standard,,2051,True,2026-03-02,2025-12-31,0000874761-26-000063,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+4977,AFL,insurer,,1541,True,2026-02-25,2025-12-31,0001628280-26-011402,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+5272,AIG,insurer,,1628,True,2026-02-12,2025-12-31,0000005272-26-000023,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1267238,AIZ,insurer,,1672,True,2026-02-19,2025-12-31,0001267238-26-000010,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+354190,AJG,standard,,1926,True,2026-02-17,2025-12-31,0001628280-26-008662,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1086222,AKAM,standard,,2185,True,2026-02-20,2025-12-31,0001086222-26-000022,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+915913,ALB,standard,,2382,True,2026-02-11,2025-12-31,0000915913-26-000018,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1097149,ALGN,standard,,1966,True,2026-02-27,2025-12-31,0001097149-26-000014,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+899051,ALL,insurer,,1606,True,2026-02-20,2025-12-31,0000899051-26-000031,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1579241,ALLE,standard,,2008,True,2026-02-17,2025-12-31,0001579241-26-000007,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+6951,AMAT,standard,,2395,True,2025-12-12,2025-10-26,0001628280-25-056742,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1748790,AMCR,standard,,1620,True,2026-08-14,2026-06-30,0001748790-26-000022,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2488,AMD,standard,,2126,True,2026-02-04,2025-12-27,0000002488-26-000018,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1037868,AME,standard,,1941,True,2026-02-17,2025-12-31,0001037868-26-000016,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+318154,AMGN,standard,,2012,True,2026-02-13,2025-12-31,0000318154-26-000010,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+820027,AMP,standard,,1497,True,2026-02-19,2025-12-31,0000820027-26-000011,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+1053507,AMT,reit,,2301,True,2026-02-24,2025-12-31,0001053507-26-000035,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1018724,AMZN,standard,,2309,True,2026-02-06,2025-12-31,0001018724-26-000004,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1596532,ANET,standard,,2178,True,2026-02-17,2025-12-31,0001596532-26-000013,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+315293,AON,standard,,1956,True,2026-02-13,2025-12-31,0001628280-26-008116,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+91142,AOS,standard,,2041,True,2026-02-10,2025-12-31,0000091142-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1841666,APA,standard,,780,True,2026-02-26,2025-12-31,0001841666-26-000015,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2969,APD,standard,,2412,True,2025-11-20,2025-09-30,0000002969-25-000055,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+820313,APH,standard,,2275,True,2026-02-11,2025-12-31,0001104659-26-013549,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1858681,APO,standard,,635,True,2026-02-25,2025-12-31,0001858681-26-000013,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1751008,APP,standard,,1078,True,2026-02-19,2025-12-31,0001751008-26-000010,False,True,,roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1521332,APTV,standard,,2411,True,2026-02-06,2025-12-31,0001521332-26-000009,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1035443,ARE,reit,,1534,True,2026-01-26,2025-12-31,0001035443-26-000013,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1176948,ARES,standard,,1018,True,2026-02-25,2025-12-31,0001628280-26-011413,False,False,debt:long_term_debt_total | no_long_term_debt; shares:shares_outstanding | diluted_shares | eps_diluted,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,
+731802,ATO,standard,,1842,True,2025-11-14,2025-09-30,0000731802-25-000056,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1730168,AVGO,standard,,1688,True,2025-12-18,2025-11-02,0001730168-25-000121,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+8818,AVY,standard,,1957,True,2026-02-25,2025-12-31,0000008818-26-000015,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1410636,AWK,standard,,1804,True,2026-02-18,2025-12-31,0001410636-26-000034,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1069183,AXON,standard,,2143,True,2026-02-25,2025-12-31,0001628280-26-011360,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+4962,AXP,standard,,1594,True,2026-02-06,2025-12-31,0000004962-26-000080,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+866787,AZO,standard,,1743,True,2025-10-27,2025-08-30,0001104659-25-102611,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+12927,BA,standard,,2393,True,2026-01-30,2025-12-31,0001628280-26-004357,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+70858,BAC,bank,,1500,True,2026-02-25,2025-12-31,0000070858-26-000157,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+9389,BALL,standard,,2190,True,2026-02-19,2025-12-31,0001104659-26-017410,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+10456,BAX,standard,,2569,True,2026-02-12,2025-12-31,0001628280-26-007733,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+764478,BBY,standard,,2146,True,2026-03-18,2026-01-31,0000764478-26-000009,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+10795,BDX,standard,,2075,True,2025-11-25,2025-09-30,0000010795-25-000099,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1664703,BE,standard,,1796,True,2026-02-09,2025-12-31,0001628280-26-006516,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+38777,BEN,standard,,1842,True,2025-11-10,2025-09-30,0000038777-25-000238,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+14693,BF-B,standard,,1976,True,2026-06-12,2026-04-30,0000014693-26-000024,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1996862,BG,standard,,578,True,2026-02-19,2025-12-31,0001628280-26-009842,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+875045,BIIB,standard,,2112,True,2026-02-06,2025-12-31,0000875045-26-000013,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1075531,BKNG,standard,,2079,True,2026-02-18,2025-12-31,0001075531-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1701605,BKR,standard,,1420,True,2026-02-05,2025-12-31,0001701605-26-000007,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+2012383,BLK,standard,,386,True,2026-02-25,2025-12-31,0001193125-26-071966,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+14272,BMY,standard,,2233,True,2026-02-11,2025-12-31,0000014272-26-000004,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1390777,BNY,bank,,1571,True,2026-02-25,2025-12-31,0001390777-26-000033,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1383312,BR,standard,,2077,True,2026-08-04,2026-06-30,0001628280-26-052243,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1067983,BRK-B,insurer,,1123,True,2026-03-02,2025-12-31,0001193125-26-083899,False,False,shares:shares_outstanding | diluted_shares | eps_diluted,p_b shareholder_yield,pretax_income+interest_expense,,
+79282,BRO,standard,,2078,True,2026-02-12,2025-12-31,0001193125-26-046984,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+885725,BSX,standard,,1937,True,2026-02-17,2025-12-31,0000885725-26-000010,False,True,,beneish_m,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1393818,BX,standard,,1430,True,2026-02-27,2025-12-31,0001193125-26-082531,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1037540,BXP,reit,,1634,True,2026-02-27,2025-12-31,0001037540-26-000006,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+831001,C,bank,,1619,True,2026-02-20,2025-12-31,0000831001-26-000011,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+721371,CAH,standard,,2013,True,2026-08-11,2026-06-30,0000721371-26-000038,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1783180,CARR,standard,,1117,True,2026-02-05,2025-12-31,0001783180-26-000008,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+726958,CASY,standard,,1883,True,2026-06-22,2026-04-30,0000726958-26-000046,False,True,,beneish_m,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+18230,CAT,standard,,2067,True,2026-02-13,2025-12-31,0000018230-26-000008,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+896159,CB,insurer,,1493,True,2026-02-27,2025-12-31,0000896159-26-000005,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1374310,CBOE,standard,,2072,True,2026-02-20,2025-12-31,0001628280-26-010013,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1138118,CBRE,standard,,2209,True,2026-02-12,2025-12-31,0001138118-26-000005,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1051470,CCI,reit,,2500,True,2026-02-23,2025-12-31,0001051470-26-000016,False,False,ffo:gain_on_property_sales,p_ffo,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+815097,CCL,standard,,1935,True,2026-01-27,2025-11-30,0000815097-26-000007,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+813672,CDNS,standard,,1717,True,2026-02-19,2025-12-31,0000813672-26-000016,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1402057,CDW,standard,,2148,True,2026-02-20,2025-12-31,0001402057-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1868275,CEG,standard,,785,True,2026-02-24,2025-12-31,0001868275-26-000032,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1324404,CF,standard,,2240,True,2026-02-25,2025-12-31,0001324404-26-000007,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+759944,CFG,bank,,1473,True,2026-02-12,2025-12-31,0000759944-26-000028,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+313927,CHD,standard,,2202,True,2026-02-12,2025-12-31,0001193125-26-048139,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1043277,CHRW,standard,,1826,True,2026-02-13,2025-12-31,0001043277-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1091667,CHTR,standard,,1918,True,2026-01-30,2025-12-31,0001091667-26-000017,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1739940,CI,standard,,1467,True,2026-02-26,2025-12-31,0001739940-26-000006,False,True,,roic_reinvestment,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+936395,CIEN,standard,,2384,True,2025-12-12,2025-11-01,0001628280-25-056698,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+20286,CINF,insurer,,1429,True,2026-02-23,2025-12-31,0000020286-26-000008,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+21665,CL,standard,,2008,True,2026-02-23,2025-12-31,0000021665-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+21076,CLX,standard,,2119,True,2025-08-08,2025-06-30,0000021076-25-000039,True,False,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1166691,CMCSA,standard,,1977,True,2026-02-03,2025-12-31,0001628280-26-004994,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+1156375,CME,standard,,1743,True,2026-02-26,2025-12-31,0001156375-26-000009,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+1058090,CMG,standard,,1667,True,2026-02-04,2025-12-31,0001058090-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+26172,CMI,standard,,2177,True,2026-02-10,2025-12-31,0000026172-26-000009,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+811156,CMS,standard,,1793,True,2026-02-10,2025-12-31,0000811156-26-000004,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1071739,CNC,standard,,2243,True,2026-02-17,2025-12-31,0001071739-26-000049,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1130310,CNP,standard,,1873,True,2026-02-19,2025-12-31,0001130310-26-000008,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+927628,COF,bank,,1541,True,2026-02-19,2025-12-31,0000927628-26-000024,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+820318,COHR,standard,,2102,True,2026-08-14,2026-06-30,0000820318-26-000020,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1679788,COIN,standard,,934,True,2026-02-12,2025-12-31,0001679788-26-000015,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+711404,COO,standard,,2378,True,2025-12-05,2025-10-31,0001628280-25-055615,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1163165,COP,standard,,1862,True,2026-02-17,2025-12-31,0001163165-26-000009,False,True,,beneish_m roic_reinvestment,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1140859,COR,standard,,2080,True,2025-11-25,2025-09-30,0001140859-25-000131,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+909832,COST,standard,,2071,True,2025-10-08,2025-08-31,0000909832-25-000101,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1175454,CPAY,standard,,1913,True,2026-02-27,2025-12-31,0001175454-26-000018,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+900075,CPRT,standard,,2064,True,2026-09-29,2026-07-31,0001193125-26-405731,False,True,,beneish_m gp_assets piotroski_f,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+906345,CPT,reit,,1499,True,2026-02-12,2025-12-31,0001628280-26-007697,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+849395,CRH,standard,,651,True,2026-02-18,2025-12-31,0001628280-26-009043,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1100682,CRL,standard,,2150,True,2026-02-18,2025-12-27,0001100682-26-000022,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1108524,CRM,standard,,2447,True,2026-03-02,2026-01-31,0001108524-26-000060,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1535527,CRWD,standard,,1380,True,2026-03-05,2026-01-31,0001535527-26-000010,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+858877,CSCO,standard,,2360,True,2026-09-02,2026-07-25,0000858877-26-000132,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1057352,CSGP,standard,,2233,True,2026-02-26,2025-12-31,0001057352-26-000020,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+277948,CSX,standard,,1946,True,2026-02-12,2025-12-31,0000277948-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+723254,CTAS,standard,,2061,True,2026-07-29,2026-05-31,0000723254-26-000028,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1058290,CTSH,standard,,2205,True,2026-02-12,2025-12-31,0001058290-26-000008,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1755672,CTVA,standard,,1448,True,2026-02-12,2025-12-31,0001755672-26-000004,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1690820,CVNA,standard,,1564,True,2026-02-18,2025-12-31,0001690820-26-000009,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+64803,CVS,standard,,2283,True,2026-02-10,2025-12-31,0000064803-26-000010,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+93410,CVX,standard,,1951,True,2026-02-24,2025-12-31,0000093410-26-000078,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+715957,D,standard,,2228,True,2026-02-23,2025-12-31,0001193125-26-063120,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+27904,DAL,standard,,1940,True,2026-02-11,2025-12-31,0000027904-26-000013,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1792789,DASH,standard,,981,True,2026-02-18,2025-12-31,0001792789-26-000013,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+1666700,DD,standard,,2091,True,2026-02-17,2025-12-31,0001666700-26-000013,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1561550,DDOG,standard,,1241,True,2026-02-18,2025-12-31,0001628280-26-008819,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+315189,DE,standard,,2107,True,2025-12-18,2025-11-02,0001104659-25-122321,False,False,debt:long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+910521,DECK,standard,,1921,True,2026-05-22,2026-03-31,0001628280-26-037664,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1571996,DELL,standard,,2221,True,2026-03-16,2026-01-30,0001571996-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+29534,DG,standard,,1817,True,2026-03-20,2026-01-30,0001104659-26-032325,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1022079,DGX,standard,,2052,True,2026-02-26,2025-12-31,0001022079-26-000015,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+882184,DHI,standard,,1703,True,2025-11-19,2025-09-30,0000882184-25-000081,False,True,,beneish_m piotroski_f,pretax_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+313616,DHR,standard,,2602,True,2026-02-24,2025-12-31,0000313616-26-000062,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1744489,DIS,standard,,1339,True,2025-11-13,2025-09-27,0001744489-25-000155,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1297996,DLR,reit,,1719,True,2026-02-13,2025-12-31,0001104659-26-015365,False,True,,beneish_m piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+935703,DLTR,standard,,2028,True,2026-03-16,2026-01-31,0000935703-26-000025,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+765880,DOC,reit,,1907,True,2026-02-03,2025-12-31,0001628280-26-005044,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+29905,DOV,standard,,2270,True,2026-02-13,2025-12-31,0000029905-26-000009,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1751788,DOW,standard,,1348,True,2026-02-03,2025-12-31,0001751788-26-000018,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1286681,DPZ,standard,,2019,True,2026-02-23,2025-12-28,0001193125-26-062321,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+940944,DRI,standard,,1965,True,2026-07-24,2026-05-31,0000940944-26-000025,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+936340,DTE,standard,,1810,True,2026-02-17,2025-12-31,0000936340-26-000054,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1326160,DUK,standard,,1981,True,2026-02-26,2025-12-31,0001326160-26-000014,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+927066,DVA,standard,,2151,True,2026-02-11,2025-12-31,0000927066-26-000012,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1090012,DVN,standard,,2229,True,2026-02-18,2025-12-31,0001193125-26-056485,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1093557,DXCM,standard,,2076,True,2026-02-12,2025-12-31,0001093557-26-000027,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1065088,EBAY,standard,,2681,True,2026-02-19,2025-12-31,0001065088-26-000027,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1415404,ECHO,standard,,2283,True,2026-03-02,2025-12-31,0001104659-26-021817,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+31462,ECL,standard,,2210,True,2026-02-23,2025-12-31,0001104659-26-018357,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1047862,ED,standard,,1803,True,2026-02-19,2025-12-31,0001047862-26-000031,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+33185,EFX,standard,,2157,True,2026-02-19,2025-12-31,0000033185-26-000010,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1095073,EG,insurer,,1532,True,2026-02-26,2025-12-31,0001095073-26-000006,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+827052,EIX,standard,,1828,True,2026-02-18,2025-12-31,0000827052-26-000012,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1001250,EL,standard,,2140,True,2026-08-19,2026-06-30,0001001250-26-000041,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+1156039,ELV,standard,,2351,True,2026-02-06,2025-12-31,0001156039-26-000013,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+105634,EME,standard,,2109,True,2026-02-26,2025-12-31,0000105634-26-000025,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+32604,EMR,standard,,2057,True,2025-11-10,2025-09-30,0000032604-25-000087,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+821189,EOG,standard,,1832,True,2026-02-24,2025-12-31,0000821189-26-000054,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1101239,EQIX,reit,,2404,True,2026-02-11,2025-12-31,0001101239-26-000032,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+33213,EQT,standard,,2097,True,2026-02-18,2025-12-31,0000033213-26-000018,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+922621,ERIE,standard,,1195,True,2026-02-23,2025-12-31,0001628280-26-010666,False,False,shares:shares_outstanding | diluted_shares | eps_diluted,beneish_m ev_ebit gp_assets piotroski_f,operating_income,no_long_term_debt+short_term_borrowings,
+72741,ES,standard,,1828,True,2026-02-17,2025-12-31,0001628280-26-008461,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+920522,ESS,reit,,1613,True,2026-02-20,2025-12-31,0000920522-26-000003,False,True,,beneish_m piotroski_f shareholder_yield,operating_income,,shares_outstanding
+1551182,ETN,standard,,2048,True,2026-02-26,2025-12-31,0001551182-26-000007,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+65984,ETR,standard,,1783,True,2026-02-19,2025-12-31,0000065984-26-000174,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1711269,EVRG,standard,,1206,True,2026-02-19,2025-12-31,0001711269-26-000017,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1099800,EW,standard,,2138,True,2026-02-25,2025-12-31,0001099800-26-000009,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1109357,EXC,standard,,1966,True,2026-02-12,2025-12-31,0001109357-26-000018,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+895126,EXE,standard,,1920,True,2026-02-18,2025-12-31,0000895126-26-000011,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+746515,EXPD,standard,,1835,True,2026-02-25,2025-12-31,0001193125-26-071569,False,True,,beneish_m gp_assets piotroski_f,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1324424,EXPE,standard,,2185,True,2026-02-13,2025-12-31,0001324424-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1289490,EXR,reit,,1795,True,2026-02-20,2025-12-31,0001289490-26-000011,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+37996,F,standard,,1792,True,2026-02-11,2025-12-31,0000037996-26-000015,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit piotroski_f roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+1539838,FANG,standard,,1962,True,2026-02-25,2025-12-31,0001539838-26-000010,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+815556,FAST,standard,,2204,True,2026-02-05,2025-12-31,0000815556-26-000009,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+831259,FCX,standard,,2036,True,2026-02-13,2025-12-31,0000831259-26-000012,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1013237,FDS,standard,,2075,True,2025-10-22,2025-08-31,0001628280-25-045769,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1048911,FDX,standard,,1742,True,2026-07-20,2026-05-31,0001048911-26-000105,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2082247,FDXF,standard,,71,True,2026-08-05,2026-05-31,0001628280-26-053359,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1031296,FE,standard,,1917,True,2026-02-18,2025-12-31,0001031296-26-000046,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+2011641,FERG,standard,,510,True,2025-09-26,2025-07-31,0002011641-25-000027,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1048695,FFIV,standard,,2074,True,2025-11-25,2025-09-30,0001048695-25-000157,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+814547,FICO,standard,,2244,True,2025-11-07,2025-09-30,0000814547-25-000030,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1136893,FIS,standard,,2556,True,2026-02-24,2025-12-31,0001136893-26-000013,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+798354,FISV,standard,,1854,True,2026-02-19,2025-12-31,0000798354-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+35527,FITB,bank,,1557,True,2026-02-24,2025-12-31,0000035527-26-000124,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1035983,FIX,standard,,2114,True,2026-02-19,2025-12-31,0001104659-26-017530,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+866374,FLEX,standard,,2191,True,2026-05-20,2026-03-31,0000866374-26-000012,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1754301,FOX FOXA,standard,,1188,True,2026-08-06,2026-06-30,0001628280-26-053960,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,diluted_shares
+34903,FRT,reit,,1497,True,2026-02-12,2025-12-31,0000034903-26-000017,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1274494,FSLR,standard,,2120,True,2026-02-24,2025-12-31,0001274494-26-000021,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1262039,FTNT,standard,,2275,True,2026-02-25,2025-12-31,0001262039-26-000007,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1659166,FTV,standard,,2125,True,2026-02-25,2025-12-31,0001659166-26-000007,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+40533,GD,standard,,1812,True,2026-01-30,2025-12-31,0000040533-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1609711,GDDY,standard,,1790,True,2026-02-25,2025-12-31,0001609711-26-000010,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+40545,GE,standard,,2465,True,2026-01-29,2025-12-31,0000040545-26-000008,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1932393,GEHC,standard,,679,True,2026-02-04,2025-12-31,0001932393-26-000007,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+849399,GEN,standard,,2396,True,2026-05-21,2026-04-03,0000849399-26-000017,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1996810,GEV,standard,,500,True,2026-01-29,2025-12-31,0001996810-26-000015,False,True,,beneish_m,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+882095,GILD,standard,,2336,True,2026-02-24,2025-12-31,0000882095-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+40704,GIS,standard,,2200,True,2026-07-01,2026-05-31,0001628280-26-046466,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+320335,GL,insurer,,1835,True,2026-02-25,2025-12-31,0000320335-26-000090,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+24741,GLW,standard,,2126,True,2026-02-12,2025-12-31,0000024741-26-000124,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1467858,GM,standard,,1834,True,2026-01-27,2025-12-31,0001467858-26-000013,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1474735,GNRC,standard,,2454,True,2026-02-18,2025-12-31,0001437749-26-004568,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1652044,GOOG GOOGL,standard,,1819,True,2026-02-05,2025-12-31,0001652044-26-000018,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+40987,GPC,standard,,2028,True,2026-02-20,2025-12-31,0000040987-26-000003,False,True,,beneish_m,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1123360,GPN,standard,,2351,True,2026-02-20,2025-12-31,0001123360-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1121788,GRMN,standard,,1920,True,2026-02-18,2025-12-27,0001193125-26-056028,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+886982,GS,bank,,1528,True,2026-02-25,2025-12-31,0000886982-26-000091,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+277135,GWW,standard,,2332,True,2026-02-19,2025-12-31,0000277135-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+45012,HAL,standard,,1824,True,2026-02-06,2025-12-31,0000045012-26-000015,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+46080,HAS,standard,,2356,True,2026-02-25,2025-12-28,0000046080-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+49196,HBAN,bank,,1540,True,2026-02-13,2025-12-31,0000049196-26-000015,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+860730,HCA,standard,,1805,True,2026-02-10,2025-12-31,0001193125-26-044769,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+354950,HD,standard,,2144,True,2026-03-18,2026-02-01,0001628280-26-019436,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+874766,HIG,insurer,,1622,True,2026-02-20,2025-12-31,0000874766-26-000012,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1501585,HII,standard,,1837,True,2026-02-05,2025-12-31,0001501585-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1585689,HLT,standard,,2256,True,2026-02-11,2025-12-31,0001585689-26-000007,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+773840,HON,standard,,2280,True,2026-02-17,2025-12-31,0000773840-26-000013,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2089271,HONA,standard,,83,False,,,,False,False,ebit_3y:operating_income | pretax_income; debt:long_term_debt_total | no_long_term_debt; cash:cash; shares:shares_outstanding | diluted_shares; ebit_3y:only_0_annual_years,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield sloan_accruals,,,
+1783879,HOOD,standard,,802,True,2026-02-18,2025-12-31,0001783879-26-000023,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,diluted_shares
+1645590,HPE,standard,,1964,True,2025-12-18,2025-10-31,0001645590-25-000130,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+47217,HPQ,standard,,2181,True,2025-12-10,2025-10-31,0000047217-25-000071,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+48465,HRL,standard,,2147,True,2025-12-05,2025-10-26,0000048465-25-000059,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1000228,HSIC,standard,,2451,True,2026-02-24,2025-12-27,0001000228-26-000013,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1070750,HST,reit,,1672,True,2026-02-25,2025-12-31,0001070750-26-000054,False,True,,beneish_m piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+47111,HSY,standard,,2066,True,2026-02-17,2025-12-31,0001628280-26-008586,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+48898,HUBB,standard,,2276,True,2026-02-12,2025-12-31,0001628280-26-007500,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+49071,HUM,standard,,1888,True,2026-02-19,2025-12-31,0000049071-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+4281,HWM,standard,,2434,True,2026-02-12,2025-12-31,0000004281-26-000012,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1381197,IBKR,standard,,1262,True,2026-02-27,2025-12-31,0001381197-26-000062,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,diluted_shares
+51143,IBM,standard,,2227,True,2026-02-24,2025-12-31,0000051143-26-000010,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1571949,ICE,standard,,2229,True,2026-02-05,2025-12-31,0001571949-26-000004,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+874716,IDXX,standard,,2105,True,2026-02-20,2025-12-31,0000874716-26-000038,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+832101,IEX,standard,,2314,True,2026-02-19,2025-12-31,0000832101-26-000003,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+51253,IFF,standard,,2407,True,2026-02-27,2025-12-31,0000051253-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1110803,ILMN,standard,,2163,True,2026-02-12,2025-12-28,0001110803-26-000024,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+879169,INCY,standard,,1795,True,2026-02-10,2025-12-31,0000879169-26-000010,False,True,,beneish_m roic_reinvestment,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+50863,INTC,standard,,2118,True,2026-01-23,2025-12-27,0000050863-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+896878,INTU,standard,,2275,True,2026-09-09,2026-07-31,0000896878-26-000037,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1687229,INVH,reit,,1463,True,2026-02-19,2025-12-31,0001687229-26-000016,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+51434,IP,standard,,2122,True,2026-02-27,2025-12-31,0000051434-26-000055,False,True,,beneish_m,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1478242,IQV,standard,,2208,True,2026-02-17,2025-12-31,0001628280-26-008322,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1699150,IR,standard,,1778,True,2026-02-17,2025-12-31,0001628280-26-008617,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1020569,IRM,reit,,2002,True,2026-02-12,2025-12-31,0001020569-26-000013,False,False,ffo:gain_on_property_sales,p_ffo,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1035267,ISRG,standard,,2149,True,2026-02-03,2025-12-31,0001035267-26-000010,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+749251,IT,standard,,1917,True,2026-02-12,2025-12-31,0000749251-26-000112,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+49826,ITW,standard,,1933,True,2026-02-13,2025-12-31,0000049826-26-000008,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+914208,IVZ,standard,,1707,True,2026-02-24,2025-12-31,0000914208-26-000079,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+52988,J,standard,,2208,True,2025-11-20,2025-09-26,0001628280-25-053316,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+728535,JBHT,standard,,1740,True,2026-02-24,2025-12-31,0001437749-26-005294,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+898293,JBL,standard,,2255,True,2025-10-17,2025-08-31,0001628280-25-045293,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+833444,JCI,standard,,2312,True,2025-11-14,2025-09-30,0000833444-25-000097,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+779152,JKHY,standard,,2215,True,2026-08-28,2026-06-30,0000779152-26-000067,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+200406,JNJ,standard,,2073,True,2026-02-11,2025-12-28,0000200406-26-000016,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+19617,JPM,bank,,1405,True,2026-02-13,2025-12-31,0001628280-26-008131,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1418135,KDP,standard,,2473,True,2026-02-24,2025-12-31,0001418135-26-000016,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+91576,KEY,bank,,1592,True,2026-02-23,2025-12-31,0001628280-26-010546,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1601046,KEYS,standard,,2012,True,2025-12-17,2025-10-31,0001601046-25-000127,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1637459,KHC,standard,,2321,True,2026-02-12,2025-12-27,0001637459-26-000009,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+879101,KIM,reit,,1697,True,2026-02-20,2025-12-31,0001193125-26-060760,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1404912,KKR,standard,,1193,True,2026-02-27,2025-12-31,0001404912-26-000007,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+319201,KLAC,standard,,2073,True,2026-08-06,2026-06-30,0000319201-26-000027,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+55785,KMB,standard,,2089,True,2026-02-12,2025-12-31,0001628280-26-007567,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1506307,KMI,standard,,2042,True,2026-02-13,2025-12-31,0001506307-26-000011,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+21344,KO,standard,,2072,True,2026-02-20,2025-12-31,0001628280-26-010047,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+56873,KR,standard,,2129,True,2026-03-31,2026-01-31,0001104659-26-037723,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1944048,KVUE,standard,,768,True,2026-02-20,2025-12-28,0001944048-26-000030,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+60086,L,insurer,,1587,True,2026-02-10,2025-12-31,0000060086-26-000008,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1336920,LDOS,standard,,2240,True,2026-02-17,2026-01-02,0001336920-26-000030,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+920760,LEN,standard,,1583,True,2026-01-28,2025-11-30,0001628280-26-003870,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,diluted_shares
+920148,LH,standard,,2304,True,2026-02-24,2025-12-31,0000920148-26-000111,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+202058,LHX,standard,,2238,True,2026-02-12,2026-01-02,0000202058-26-000015,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1069202,LII,standard,,2081,True,2026-02-17,2025-12-31,0001069202-26-000028,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1707925,LIN,standard,,1550,True,2026-02-25,2025-12-31,0001628280-26-011430,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1633978,LITE,standard,,2062,True,2026-08-17,2026-06-27,0001628280-26-057358,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+59478,LLY,standard,,2038,True,2026-02-12,2025-12-31,0000059478-26-000013,False,True,,roic_reinvestment,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+936468,LMT,standard,,2086,True,2026-01-29,2025-12-31,0001628280-26-004195,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+352541,LNT,standard,,1822,True,2026-02-20,2025-12-31,0000352541-26-000007,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+60667,LOW,standard,,2126,True,2026-03-23,2026-01-30,0000060667-26-000029,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+707549,LRCX,standard,,2150,True,2026-08-07,2026-06-28,0000707549-26-000037,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1397187,LULU,standard,,1910,True,2026-03-17,2026-02-01,0001397187-26-000020,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+92380,LUV,standard,,1855,True,2026-02-05,2025-12-31,0000092380-26-000004,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1300514,LVS,standard,,2413,True,2026-02-06,2025-12-31,0001300514-26-000013,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1489393,LYB,standard,,2139,True,2026-02-20,2025-12-31,0001489393-26-000012,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1335258,LYV,standard,,2000,True,2026-02-19,2025-12-31,0001335258-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1141391,MA,standard,,1903,True,2026-02-11,2025-12-31,0001141391-26-000013,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+912595,MAA,reit,,1056,True,2026-02-06,2025-12-31,0001193125-26-041208,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1048286,MAR,standard,,1857,True,2026-02-10,2025-12-31,0001048286-26-000007,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+62996,MAS,standard,,2276,True,2026-02-10,2025-12-31,0000062996-26-000005,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+63908,MCD,standard,,2056,True,2026-02-24,2025-12-31,0000063908-26-000035,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+827054,MCHP,standard,,2368,True,2026-05-21,2026-03-31,0000827054-26-000016,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+927653,MCK,standard,,2140,True,2026-05-08,2026-03-31,0000927653-26-000069,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1059556,MCO,standard,,2247,True,2026-02-18,2025-12-31,0001628280-26-009136,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1103982,MDLZ,standard,,2195,True,2026-02-04,2025-12-31,0001628280-26-005345,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1613103,MDT,standard,,2187,True,2026-06-18,2026-04-24,0001628280-26-044354,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1099219,MET,insurer,,1960,True,2026-02-19,2025-12-31,0001099219-26-000013,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1326801,META,standard,,1879,True,2026-01-29,2025-12-31,0001628280-26-003942,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+789570,MGM,standard,,2030,True,2026-02-11,2025-12-31,0000789570-26-000018,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+63754,MKC,standard,,2243,True,2026-01-22,2025-11-30,0000063754-26-000037,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+916076,MLM,standard,,2488,True,2026-02-19,2025-12-31,0001193125-26-059193,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+66740,MMM,standard,,2135,True,2026-02-03,2025-12-31,0000066740-26-000014,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+865752,MNST,standard,,1778,True,2026-02-27,2025-12-31,0001104659-26-020831,False,True,,beneish_m,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+764180,MO,standard,,2023,True,2026-02-25,2025-12-31,0000764180-26-000017,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1285785,MOS,standard,,2034,True,2026-02-27,2025-12-31,0001285785-26-000017,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1510295,MPC,standard,,2305,True,2026-02-26,2025-12-31,0001510295-26-000009,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1280452,MPWR,standard,,2008,True,2026-02-27,2025-12-31,0001437749-26-006113,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+310158,MRK,standard,,2101,True,2026-02-24,2025-12-31,0000310158-26-000063,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1682852,MRNA,standard,,1379,True,2026-02-20,2025-12-31,0001682852-26-000033,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+62709,MRSH,standard,,1911,True,2026-02-09,2025-12-31,0000062709-26-000022,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1835632,MRVL,standard,,1138,True,2026-03-11,2026-01-31,0001835632-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+895421,MS,bank,,1415,True,2026-02-19,2025-12-31,0000895421-26-000086,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1408198,MSCI,standard,,2275,True,2026-02-06,2025-12-31,0001408198-26-000011,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+789019,MSFT,standard,,2542,True,2026-07-29,2026-06-30,0001193125-26-323660,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+68505,MSI,standard,,2354,True,2026-02-12,2025-12-31,0000068505-26-000010,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+36270,MTB,bank,,1393,True,2026-02-18,2025-12-31,0000036270-26-000010,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1037646,MTD,standard,,2033,True,2026-02-06,2025-12-31,0001037646-26-000011,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+723125,MU,standard,,2251,True,2025-10-03,2025-08-28,0000723125-25-000028,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1513761,NCLH,standard,,1830,True,2026-03-02,2025-12-31,0001104659-26-022067,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1120193,NDAQ,standard,,2273,True,2026-02-12,2025-12-31,0001628280-26-007703,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+72331,NDSN,standard,,2085,True,2025-12-17,2025-10-31,0000072331-25-000144,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+753308,NEE,standard,,1764,True,2026-02-13,2025-12-31,0000753308-26-000015,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1164727,NEM,standard,,2137,True,2026-02-19,2025-12-31,0001164727-26-000010,False,True,,beneish_m,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1065280,NFLX,standard,,2046,True,2026-01-23,2025-12-31,0001065280-26-000034,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1111711,NI,standard,,2149,True,2026-02-11,2025-12-31,0001111711-26-000027,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+320187,NKE,standard,,1884,True,2026-07-15,2026-05-31,0000320187-26-000088,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,diluted_shares
+1133421,NOC,standard,,1994,True,2026-01-27,2025-12-31,0001133421-26-000003,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1373715,NOW,standard,,2217,True,2026-01-29,2025-12-31,0001373715-26-000007,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1013871,NRG,standard,,2343,True,2026-02-24,2025-12-31,0001013871-26-000004,False,True,,beneish_m,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+702165,NSC,standard,,1846,True,2026-02-09,2025-12-31,0001628280-26-006268,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1002047,NTAP,standard,,2561,True,2026-06-05,2026-04-24,0001193125-26-259683,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+73124,NTRS,bank,,1376,True,2026-02-24,2025-12-31,0000073124-26-000016,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+73309,NUE,standard,,2242,True,2026-02-25,2025-12-31,0001193125-26-071575,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1045810,NVDA,standard,,2346,True,2026-02-25,2026-01-25,0001045810-26-000021,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+906163,NVR,standard,,1232,True,2026-02-11,2025-12-31,0000906163-26-000018,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+1564708,NWS NWSA,standard,,1893,True,2026-08-07,2026-06-30,0001564708-26-000175,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,diluted_shares
+1413447,NXPI,standard,,1328,True,2026-02-19,2025-12-31,0001413447-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+726728,O,reit,,1704,True,2026-02-25,2025-12-31,0000726728-26-000011,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+878927,ODFL,standard,,1803,True,2026-02-24,2025-12-31,0001193125-26-067161,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1039684,OKE,standard,,2091,True,2026-02-24,2025-12-31,0001039684-26-000006,False,True,,beneish_m,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+29989,OMC,standard,,2014,True,2026-02-20,2025-12-31,0000029989-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1097864,ON,standard,,2362,True,2026-02-09,2025-12-31,0001097864-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1341439,ORCL,standard,,2180,True,2026-06-22,2026-05-31,0001193125-26-277521,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+898173,ORLY,standard,,1857,True,2026-02-27,2025-12-31,0000898173-26-000009,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1781335,OTIS,standard,,1192,True,2026-02-05,2025-12-31,0001781335-26-000011,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+797468,OXY,standard,,1919,True,2026-02-18,2025-12-31,0001628280-26-009059,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1474432,P,standard,,1967,True,2026-03-25,2026-02-01,0001474432-26-000027,False,False,debt:long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt,beneish_m ev_ebit piotroski_f roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1327567,PANW,standard,,2597,True,2026-09-10,2026-07-31,0001327567-26-000023,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+723531,PAYX,standard,,1927,True,2026-07-17,2026-05-31,0001193125-26-307785,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+75362,PCAR,standard,,1230,True,2026-02-18,2025-12-31,0001193125-26-057025,False,False,debt:long_term_debt_total | no_long_term_debt; cash:cash,beneish_m ev_ebit piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+1004980,PCG,standard,,1627,True,2026-02-12,2025-12-31,0001004980-26-000009,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+788784,PEG,standard,,1800,True,2026-02-26,2025-12-31,0001193125-26-077446,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+77476,PEP,standard,,2214,True,2026-02-03,2025-12-27,0000077476-26-000007,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+78003,PFE,standard,,2301,True,2026-02-26,2025-12-31,0000078003-26-000026,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1126328,PFG,insurer,,1508,True,2026-02-18,2025-12-31,0001104659-26-017031,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+80424,PG,standard,,2114,True,2026-08-04,2026-06-30,0000080424-26-000103,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+80661,PGR,insurer,,1553,True,2026-03-02,2025-12-31,0000080661-26-000086,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+76334,PH,standard,,2414,True,2026-08-21,2026-06-30,0000076334-26-000105,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+822416,PHM,standard,,1506,True,2026-02-04,2025-12-31,0000822416-26-000007,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+75677,PKG,standard,,2081,True,2026-02-26,2025-12-31,0001193125-26-074129,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1045609,PLD,reit,,1671,True,2026-02-13,2025-12-31,0001193125-26-051453,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1321655,PLTR,standard,,1082,True,2026-02-17,2025-12-31,0001321655-26-000011,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1413329,PM,standard,,2040,True,2026-02-06,2025-12-31,0001628280-26-005939,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+713676,PNC,bank,,1395,True,2026-02-20,2025-12-31,0000713676-26-000020,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+77360,PNR,standard,,2064,True,2026-02-24,2025-12-31,0000077360-26-000007,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+764622,PNW,standard,,1608,True,2026-02-25,2025-12-31,0000764622-26-000011,False,True,,beneish_m,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1145197,PODD,standard,,2376,True,2026-02-18,2025-12-31,0001145197-26-000028,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+79879,PPG,standard,,2528,True,2026-02-19,2025-12-31,0000079879-26-000046,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+922224,PPL,standard,,1859,True,2026-02-20,2025-12-31,0000922224-26-000008,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1137774,PRU,insurer,,1619,True,2026-02-12,2025-12-31,0001137774-26-000048,False,True,,,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1393311,PSA,reit,,1791,True,2026-02-12,2025-12-31,0001628280-26-007696,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+2041610,PSKY,standard,,325,True,2026-02-25,2025-12-31,0002041610-26-000011,False,False,ebit_3y:operating_income | pretax_income; shares:shares_outstanding | diluted_shares; ebit_3y:only_2_annual_years,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment sloan_accruals,,long_term_debt_total+short_term_borrowings,
+1534701,PSX,standard,,1850,True,2026-02-20,2025-12-31,0001534701-26-000006,False,True,,roic_reinvestment,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+857005,PTC,standard,,2140,True,2025-11-21,2025-09-30,0001193125-25-291326,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1050915,PWR,standard,,2311,True,2026-02-19,2025-12-31,0001050915-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1633917,PYPL,standard,,2005,True,2026-02-03,2025-12-31,0001633917-26-000024,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2058873,Q,standard,,285,True,2026-02-26,2025-12-31,0002058873-26-000010,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+804328,QCOM,standard,,2213,True,2025-11-05,2025-09-28,0000804328-25-000085,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+884887,RCL,standard,,1984,True,2026-02-11,2025-12-31,0000884887-26-000007,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1713445,RDDT,standard,,518,True,2026-02-06,2025-12-31,0001713445-26-000022,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,diluted_shares
+910606,REG,reit,,1085,True,2026-02-13,2025-12-31,0001193125-26-051668,False,True,,beneish_m piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+872589,REGN,standard,,2014,True,2026-02-04,2025-12-31,0000872589-26-000008,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+1281761,RF,bank,,1415,True,2026-02-24,2025-12-31,0001281761-26-000019,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+720005,RJF,standard,,1679,True,2025-11-25,2025-09-30,0000720005-25-000093,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1037038,RL,standard,,2092,True,2026-05-21,2026-03-28,0001628280-26-037074,False,True,,roic_reinvestment,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+943819,RMD,standard,,2089,True,2026-08-13,2026-06-30,0000943819-26-000047,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1024478,ROK,standard,,2227,True,2025-11-12,2025-09-30,0001024478-25-000116,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+84839,ROL,standard,,1880,True,2026-02-12,2025-12-31,0000084839-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+882835,ROP,standard,,2203,True,2026-02-24,2025-12-31,0000882835-26-000009,False,True,,roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+745732,ROST,standard,,1835,True,2026-03-31,2026-01-31,0000745732-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1060391,RSG,standard,,2278,True,2026-02-18,2025-12-31,0001060391-26-000094,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+101829,RTX,standard,,2352,True,2026-02-06,2025-12-31,0000101829-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+31791,RVTY,standard,,2374,True,2026-02-24,2025-12-28,0000031791-26-000012,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1034054,SBAC,reit,,2105,True,2026-02-27,2025-12-31,0001034054-26-000002,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+829224,SBUX,standard,,2201,True,2025-11-14,2025-09-28,0000829224-25-000114,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+316709,SCHW,bank,,1546,True,2026-02-25,2025-12-31,0000316709-26-000009,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+89800,SHW,standard,,2486,True,2026-02-19,2025-12-31,0000089800-26-000008,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+91419,SJM,standard,,2206,True,2026-06-09,2026-04-30,0000091419-26-000050,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+87347,SLB,standard,,1977,True,2026-01-23,2025-12-31,0001193125-26-021017,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+1375365,SMCI,standard,,2244,True,2026-08-31,2026-06-30,0001375365-26-000022,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+91440,SNA,standard,,2027,True,2026-02-12,2026-01-03,0000091440-26-000045,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2023554,SNDK,standard,,408,True,2026-08-17,2026-07-03,0001628280-26-057406,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+883241,SNPS,standard,,2338,True,2025-12-22,2025-10-31,0000883241-25-000028,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+92122,SO,standard,,1762,True,2026-02-19,2025-12-31,0000092122-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1964738,SOLV,standard,,491,True,2026-02-27,2025-12-31,0001964738-26-000007,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1063761,SPG,reit,,1413,True,2026-02-25,2025-12-31,0001104659-26-019419,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+64040,SPGI,standard,,2152,True,2026-02-11,2025-12-31,0000064040-26-000013,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1032208,SRE,standard,,1958,True,2026-02-26,2025-12-31,0001032208-26-000010,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1757898,STE,standard,,1832,True,2026-05-29,2026-03-31,0001628280-26-039136,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1022671,STLD,standard,,2300,True,2026-02-27,2025-12-31,0001104659-26-021395,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+93751,STT,bank,,1456,True,2026-02-19,2025-12-31,0000093751-26-000124,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1137789,STX,standard,,1911,True,2026-08-04,2026-07-03,0001137789-26-000159,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+16918,STZ,standard,,1938,True,2026-04-22,2026-02-28,0000016918-26-000011,False,False,shares:shares_outstanding | diluted_shares | eps_diluted,ev_ebit piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,
+2005951,SW,standard,,511,True,2026-02-27,2025-12-31,0001628280-26-012555,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+93556,SWK,standard,,2588,True,2026-02-24,2026-01-03,0000093556-26-000009,False,True,,beneish_m,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+4127,SWKS,standard,,2186,True,2025-11-07,2025-10-03,0000004127-25-000085,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1601712,SYF,standard,,1285,True,2026-02-06,2025-12-31,0001601712-26-000006,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+310764,SYK,standard,,2060,True,2026-02-11,2025-12-31,0000310764-26-000010,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+96021,SYY,standard,,1946,True,2026-08-21,2026-06-27,0000096021-26-000033,False,True,,beneish_m,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+732717,T,standard,,1967,True,2026-02-09,2025-12-31,0000732717-26-000120,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1260221,TDG,standard,,2230,True,2025-11-12,2025-09-30,0001260221-25-000081,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1094285,TDY,standard,,2142,True,2026-02-20,2025-12-28,0001094285-26-000017,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+842023,TECH,standard,,2089,True,2026-08-24,2026-06-30,0001104659-26-100322,False,False,debt:long_term_debt_total | long_term_debt_current | no_long_term_debt,beneish_m ev_ebit roic_reinvestment shareholder_yield,operating_income,,shares_outstanding
+1385157,TEL,standard,,2160,True,2025-11-10,2025-09-26,0001104659-25-109150,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+97210,TER,standard,,2134,True,2026-02-19,2025-12-31,0001193125-26-059002,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+92230,TFC,bank,,1358,True,2026-02-24,2025-12-31,0000092230-26-000030,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+27419,TGT,standard,,2118,True,2026-03-11,2026-01-31,0000027419-26-000016,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+109198,TJX,standard,,1994,True,2026-03-31,2026-01-31,0000109198-26-000008,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1973266,TKO,standard,,615,True,2026-02-25,2025-12-31,0001193125-26-071651,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+97745,TMO,standard,,2155,True,2026-02-26,2025-12-31,0000097745-26-000018,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1283699,TMUS,standard,,1994,True,2026-02-11,2025-12-31,0001283699-26-000010,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1811074,TPL,standard,,893,True,2026-02-18,2025-12-31,0001811074-26-000018,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1116132,TPR,standard,,2268,True,2026-08-13,2026-06-27,0001116132-26-000018,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1389170,TRGP,standard,,2011,True,2026-02-19,2025-12-31,0001193125-26-059296,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+864749,TRMB,standard,,2504,True,2026-02-25,2026-01-02,0000864749-26-000015,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1113169,TROW,standard,,1392,True,2026-02-13,2025-12-31,0001628280-26-008002,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+86312,TRV,insurer,,1455,True,2026-02-12,2025-12-31,0000086312-26-000065,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+916365,TSCO,standard,,1946,True,2026-02-19,2025-12-27,0000916365-26-000014,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1318605,TSLA,standard,,2297,True,2026-01-29,2025-12-31,0001628280-26-003952,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+100493,TSN,standard,,2076,True,2025-11-10,2025-09-27,0000100493-25-000095,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,diluted_shares
+1466258,TT,standard,,2037,True,2026-02-05,2025-12-31,0001628280-26-005731,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+946581,TTWO,standard,,2235,True,2026-05-22,2026-03-31,0001628280-26-037434,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+97476,TXN,standard,,2369,True,2026-02-06,2025-12-31,0000097476-26-000059,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+217346,TXT,standard,,1427,True,2026-02-11,2026-01-03,0000217346-26-000006,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit gp_assets piotroski_f roic_reinvestment shareholder_yield,pretax_income,,shares_outstanding
+860731,TYL,standard,,2035,True,2026-02-18,2025-12-31,0000860731-26-000016,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+100517,UAL,standard,,1921,True,2026-02-12,2025-12-31,0000100517-26-000023,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1543151,UBER,standard,,1411,True,2026-02-13,2025-12-31,0001543151-26-000015,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+74208,UDR,reit,,1656,True,2026-02-17,2025-12-31,0000074208-26-000013,False,True,,beneish_m piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+352915,UHS,standard,,1779,True,2026-02-25,2025-12-31,0001193125-26-071676,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1403568,ULTA,standard,,1874,True,2026-03-26,2026-01-31,0001104659-26-035243,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+731766,UNH,standard,,2112,True,2026-03-02,2025-12-31,0000731766-26-000062,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+100885,UNP,standard,,1820,True,2026-02-06,2025-12-31,0000100885-26-000037,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1090727,UPS,standard,,1825,True,2026-02-17,2025-12-31,0001628280-26-008432,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+1067701,URI,standard,,2000,True,2026-01-28,2025-12-31,0001067701-26-000007,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+36104,USB,bank,,1415,True,2026-02-23,2025-12-31,0000036104-26-000011,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1403161,V,standard,,1601,True,2025-11-06,2025-09-30,0001403161-25-000089,False,False,shares:shares_outstanding | diluted_shares | eps_diluted,beneish_m ev_ebit gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,
+1393052,VEEV,standard,,2072,True,2026-03-20,2026-01-31,0001393052-26-000014,False,True,,beneish_m roic_reinvestment,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1705696,VICI,reit,,1201,True,2026-02-25,2025-12-31,0001705696-26-000034,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1035002,VLO,standard,,1872,True,2026-02-25,2025-12-31,0001628280-26-011499,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1967680,VLTO,standard,,579,True,2026-02-20,2025-12-31,0001967680-26-000011,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1396009,VMC,standard,,2351,True,2026-02-19,2025-12-31,0001628280-26-009546,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+906107,VMRK,reit,,1699,True,2026-02-13,2025-12-31,0001193125-26-051433,False,True,,beneish_m piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1442145,VRSK,standard,,2286,True,2026-02-18,2025-12-31,0001437749-26-004452,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1014473,VRSN,standard,,2023,True,2026-02-05,2025-12-31,0001014473-26-000006,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1674101,VRT,standard,,1417,True,2026-02-13,2025-12-31,0001674101-26-000008,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+875320,VRTX,standard,,2104,True,2026-02-13,2025-12-31,0000875320-26-000056,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+1692819,VST,standard,,1637,True,2026-02-27,2025-12-31,0001692819-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+740260,VTR,reit,,1723,True,2026-02-06,2025-12-31,0000740260-26-000006,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+1792044,VTRS,standard,,1211,True,2026-02-26,2025-12-31,0001792044-26-000013,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+732712,VZ,standard,,1907,True,2026-02-17,2025-12-31,0000732712-26-000007,False,True,,beneish_m gp_assets piotroski_f roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+943452,WAB,standard,,2453,True,2026-02-13,2025-12-31,0001628280-26-008067,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1000697,WAT,standard,,2397,True,2026-02-23,2025-12-31,0001193125-26-062604,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1437107,WBD,standard,,1931,True,2026-02-27,2025-12-31,0001437107-26-000020,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1327811,WDAY,standard,,2089,True,2026-03-06,2026-01-31,0001327811-26-000014,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,diluted_shares
+106040,WDC,standard,,2339,True,2026-08-14,2026-07-03,0001628280-26-057139,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+783325,WEC,standard,,1864,True,2026-02-20,2025-12-31,0000783325-26-000018,False,True,,beneish_m roic_reinvestment,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+766704,WELL,reit,,1780,True,2026-02-12,2025-12-31,0000766704-26-000010,False,False,ffo:gain_on_property_sales,beneish_m p_ffo piotroski_f,,long_term_debt_total+short_term_borrowings,shares_outstanding
+72971,WFC,bank,,1637,True,2026-02-24,2025-12-31,0000072971-26-000133,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding
+823768,WM,standard,,2034,True,2026-02-09,2025-12-31,0001104659-26-012049,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+107263,WMB,standard,,1810,True,2026-02-24,2025-12-31,0000107263-26-000006,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+104169,WMT,standard,,1973,True,2026-03-13,2026-01-31,0000104169-26-000055,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+11544,WRB,insurer,,1564,True,2026-02-27,2025-12-31,0000011544-26-000005,False,True,,shareholder_yield,pretax_income+interest_expense,,shares_outstanding
+719955,WSM,standard,,1918,True,2026-03-26,2026-02-01,0000719955-26-000059,False,True,,,operating_income,no_long_term_debt+short_term_borrowings,shares_outstanding
+105770,WST,standard,,2184,True,2026-02-17,2025-12-31,0000105770-26-000010,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1140536,WTW,standard,,1964,True,2026-02-25,2025-12-31,0001193125-26-069307,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+106535,WY,reit,,2168,True,2026-02-13,2025-12-31,0001193125-26-051422,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1174922,WYNN,standard,,2096,True,2026-03-02,2025-12-31,0001174922-26-000013,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+72903,XEL,standard,,1768,True,2026-02-25,2025-12-31,0000072903-26-000009,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+2115436,XOM,standard,,1757,True,2026-02-18,2025-12-31,0000034088-26-000045,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+1524472,XYL,standard,,2223,True,2026-02-25,2025-12-31,0001524472-26-000012,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1512673,XYZ,standard,,1890,True,2026-02-26,2025-12-31,0001628280-26-012254,False,False,debt:long_term_debt_total | no_long_term_debt,beneish_m ev_ebit piotroski_f roic_reinvestment shareholder_yield,operating_income,,diluted_shares
+1041061,YUM,standard,,2067,True,2026-02-20,2025-12-31,0001041061-26-000084,False,True,,beneish_m,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1136869,ZBH,standard,,2200,True,2026-02-20,2025-12-31,0001193125-26-059853,False,True,,,operating_income,long_term_debt_noncurrent+long_term_debt_current+short_term_borrowings,shares_outstanding
+877212,ZBRA,standard,,2311,True,2026-02-12,2025-12-31,0001628280-26-007668,False,True,,,operating_income,long_term_debt_total+short_term_borrowings,shares_outstanding
+1555280,ZTS,standard,,2155,True,2026-02-12,2025-12-31,0001555280-26-000011,False,True,,,pretax_income+interest_expense,long_term_debt_total+short_term_borrowings,shares_outstanding

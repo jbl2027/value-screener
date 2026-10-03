@@ -1,11 +1,12 @@
 """Canonical concept -> ordered XBRL tag fallbacks.
 
-For each reporting period, the first tag in the list that has a value wins. Companies switch
-tags over time (e.g. SalesRevenueNet -> RevenueFromContractWithCustomer... after ASC 606 in
-2018), so resolution is per period, not per company.
+Within each filing, the first tag in the list that has a value for a period wins. Companies
+switch tags over time (e.g. SalesRevenueNet -> RevenueFromContractWithCustomer... after
+ASC 606 in 2018), so resolution is per filing and period, not per company.
 
 Each entry: (unit, period_type, [(taxonomy, tag), ...])
   period_type: "duration" (income/cash-flow) or "instant" (balance sheet, share counts)
+  A tag written "A+B" is a sum: A must be present; B is added when the same filing reports it.
 """
 
 G = "us-gaap"
@@ -39,6 +40,11 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
     "pretax_income": ("USD", "duration", _g(
         "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
         "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+        # Some filers (e.g. NVR, PHM, PSX) report only the domestic/foreign split.
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic"
+        "+IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign",
+        # Last resort (e.g. CASY uses a custom pretax tag): net income + income tax.
+        "NetIncomeLoss+IncomeTaxExpenseBenefit",
     )),
     "income_tax": ("USD", "duration", _g("IncomeTaxExpenseBenefit")),
     "interest_expense": ("USD", "duration", _g(
@@ -46,6 +52,10 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "InterestExpenseNonoperating",
         "InterestExpenseDebt",
         "InterestAndDebtExpense",
+        "InterestExpenseBorrowings",
+        # Cash interest paid (supplemental cash-flow disclosure): a close proxy, last resort.
+        "InterestPaidNet",
+        "InterestPaid",
     )),
     "net_income": ("USD", "duration", _g(
         "NetIncomeLoss",
@@ -76,6 +86,7 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "GainLossOnDispositionOfProperty",
         "GainLossOnSaleOfPropertyPlantEquipment",
         "GainLossOnDispositionOfAssets",
+        "GainLossOnDispositionOfAssets1",
     )),
     # ---- Cash flow ----
     "operating_cash_flow": ("USD", "duration", _g(
@@ -141,19 +152,30 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "IntangibleAssetsNetExcludingGoodwill",
         "FiniteLivedIntangibleAssetsNet",
     )),
+    # Debt: only one tag per concept is taken, so a filer reporting e.g. senior notes and
+    # convertible notes as separate balance-sheet lines will be understated.
     "long_term_debt_noncurrent": ("USD", "instant", _g(
         "LongTermDebtNoncurrent",
         "LongTermDebtAndCapitalLeaseObligations",
+        "ConvertibleLongTermNotesPayable",
+        "ConvertibleDebtNoncurrent",
+        "UnsecuredLongTermDebt",
+        "SeniorLongTermNotes",
+        "LongTermNotesPayable",
     )),
     "long_term_debt_current": ("USD", "instant", _g(
         "LongTermDebtCurrent",
         "LongTermDebtAndCapitalLeaseObligationsCurrent",
         "DebtCurrent",
+        "ConvertibleNotesPayableCurrent",
+        "SeniorNotesCurrent",
     )),
     "long_term_debt_total": ("USD", "instant", _g(
         "LongTermDebt",
         "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
         "DebtInstrumentCarryingAmount",
+        "SeniorNotes",
+        "NotesPayable",
     )),
     "short_term_borrowings": ("USD", "instant", _g(
         "ShortTermBorrowings",
@@ -177,5 +199,9 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "WeightedAverageNumberOfDilutedSharesOutstanding",
         "WeightedAverageNumberOfShareOutstandingBasicAndDiluted",
         "WeightedAverageNumberOfSharesOutstandingBasic",  # last resort, e.g. XOM reports basic only
+    )),
+    "eps_diluted": ("USD/shares", "duration", _g(
+        "EarningsPerShareDiluted",
+        "EarningsPerShareBasicAndDiluted",
     )),
 }

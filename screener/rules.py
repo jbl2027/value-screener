@@ -1,4 +1,4 @@
-"""Per-model metric applicability, disqualifiers, and input requirements.
+﻿"""Per-model metric applicability, disqualifiers, and input requirements.
 
 Declared here so the data pipeline (Milestone 3) can log coverage against exactly what the
 metrics (Milestone 5) and fair value / flags (Milestone 6) will need.
@@ -26,13 +26,35 @@ ABSENT_MEANS_ZERO = {
 # and gain_on_property_sales (PLD likewise). Their absence makes fair value insufficient.
 
 # ---- Reusable requirements ----
-EBIT = [["operating_income"], ["pretax_income", "interest_expense"]]
+# EBIT, in order of preference. Pretax income alone is a conservative last resort (it
+# understates EBIT by the interest expense), used e.g. by homebuilders that capitalize
+# interest into cost of sales and report no interest expense line (DHI).
+EBIT = [["operating_income"], ["pretax_income", "interest_expense"], ["pretax_income"]]
+EBIT_CONSERVATIVE_BASIS = "pretax_income"
 GROSS_PROFIT = [["gross_profit"], ["revenue", "cost_of_revenue"]]
 SGA = [["sga_expense"], ["selling_marketing_expense", "g_and_a_expense"]]
 TOTAL_LIABILITIES = [["total_liabilities"], ["liabilities_and_equity", "stockholders_equity"]]
-# Total debt: reported total, or both noncurrent and current pieces (+ short-term borrowings).
+# Total debt: reported total, or both noncurrent and current pieces (+ short-term borrowings),
+# or an inferred absence of long-term debt (see derived_concepts).
 DEBT = [["long_term_debt_total", "short_term_borrowings"],
-        ["long_term_debt_noncurrent", "long_term_debt_current", "short_term_borrowings"]]
+        ["long_term_debt_noncurrent", "long_term_debt_current", "short_term_borrowings"],
+        ["no_long_term_debt", "short_term_borrowings"]]
+LONG_TERM_DEBT = [["long_term_debt_noncurrent"], ["long_term_debt_total"], ["no_long_term_debt"]]
+# Multi-class filers' cover-page share counts are dimensional and absent from companyfacts
+# (META, V, CMCSA, ...). Fall back to weighted diluted shares, then to shares implied by
+# net income / diluted EPS (for V this yields Class A-equivalent shares, matching V's price).
+# BRK-B needs a class ratio (EPS is per Class A share) - handled in M5.
+SHARES = [["shares_outstanding"], ["diluted_shares"], ["net_income", "eps_diluted"]]
+
+# A company with no long-term debt tags is treated as having none only if its interest
+# expense is also absent or negligible; otherwise its debt is likely under a custom tag.
+NO_DEBT_MAX_INTEREST_TO_ASSETS = 0.002
+NO_DEBT_MAX_INTEREST_TO_REVENUE = 0.005  # catches balance-sheet-heavy filers (e.g. AMP)
+LTD_CONCEPTS = ("long_term_debt_total", "long_term_debt_noncurrent", "long_term_debt_current")
+# Known to carry debt under custom tags with no tagged interest expense: never infer zero debt.
+HAS_UNTAGGED_DEBT = {
+    217346,  # TXT (Textron)
+}
 
 
 def req(*concepts: str) -> list[list[str]]:
@@ -41,13 +63,14 @@ def req(*concepts: str) -> list[list[str]]:
 
 # ---- Metric inputs (annual values, current and prior year unless noted) ----
 METRIC_INPUTS: dict[str, dict[str, list[list[str]]]] = {
-    "ev_ebit": {"ebit": EBIT, "debt": DEBT, "cash": req("cash"), "shares": req("shares_outstanding")},
+    "ev_ebit": {"ebit": EBIT, "debt": DEBT, "cash": req("cash"), "shares": SHARES},
     "gp_assets": {"gross_profit": GROSS_PROFIT, "total_assets": req("total_assets")},
     "sloan_accruals": {"inputs": req("net_income", "operating_cash_flow", "investing_cash_flow", "total_assets")},
     "piotroski_f": {
         "profitability": req("net_income", "operating_cash_flow", "total_assets"),
-        "leverage_liquidity": req("long_term_debt_noncurrent", "current_assets", "current_liabilities",
-                                  "shares_outstanding"),
+        "leverage": LONG_TERM_DEBT,
+        "liquidity": req("current_assets", "current_liabilities"),
+        "dilution": SHARES,
         "gross_margin": GROSS_PROFIT,
         "asset_turnover": req("revenue", "total_assets"),
     },
@@ -65,12 +88,12 @@ METRIC_INPUTS: dict[str, dict[str, list[list[str]]]] = {
                           "reinvestment": req("capex", "depreciation_amortization")},
     "rd_capitalized": {"rd": req("rd_expense")},  # 5 prior years of R&D, straight-line
     "p_tbv": {"tbv": req("stockholders_equity", "preferred_stock", "goodwill", "intangibles_ex_goodwill"),
-              "shares": req("shares_outstanding")},
+              "shares": SHARES},
     "rotce": {"inputs": req("net_income", "stockholders_equity", "preferred_stock", "goodwill",
                             "intangibles_ex_goodwill")},
     "p_ffo": {"ffo": req("net_income", "depreciation_amortization", "gain_on_property_sales"),
-              "shares": req("shares_outstanding")},
-    "p_b": {"inputs": req("stockholders_equity", "preferred_stock", "shares_outstanding")},
+              "shares": SHARES},
+    "p_b": {"inputs": req("stockholders_equity", "preferred_stock"), "shares": SHARES},
     "roe": {"inputs": req("net_income", "stockholders_equity")},
 }
 
@@ -86,7 +109,7 @@ MODEL_RULES: dict[str, dict] = {
         "fair_value_inputs": {"ebit_3y": EBIT, "debt": DEBT, "cash": req("cash"),
                               "minority_interest": req("minority_interest"),
                               "preferred_stock": req("preferred_stock"),
-                              "shares": req("shares_outstanding")},
+                              "shares": SHARES},
     },
     "reit": {
         "valuation": "p_ffo",
@@ -95,7 +118,7 @@ MODEL_RULES: dict[str, dict] = {
         # Assumption pending confirmation: fair value = sector-median P/FFO x FFO per share.
         "fair_value_inputs": {"ffo": req("net_income", "depreciation_amortization",
                                          "gain_on_property_sales"),
-                              "shares": req("shares_outstanding")},
+                              "shares": SHARES},
     },
     "bank": {
         "valuation": "p_tbv",
@@ -103,7 +126,7 @@ MODEL_RULES: dict[str, dict] = {
         "disqualifiers": [],  # no Beneish, no Piotroski
         "fair_value_inputs": {"tbv": req("stockholders_equity", "preferred_stock", "goodwill",
                                          "intangibles_ex_goodwill"),
-                              "shares": req("shares_outstanding")},
+                              "shares": SHARES},
     },
     "insurer": {
         "valuation": "p_b",
@@ -111,9 +134,32 @@ MODEL_RULES: dict[str, dict] = {
         "disqualifiers": [],  # no Beneish, no Piotroski
         # Assumption pending confirmation: fair value = sector-median P/B x book value per share.
         "fair_value_inputs": {"book_value": req("stockholders_equity", "preferred_stock"),
-                              "shares": req("shares_outstanding")},
+                              "shares": SHARES},
     },
 }
+
+
+def derived_concepts(cik: int, values: dict[str, float]) -> set[str]:
+    """Pseudo-concepts inferred from a snapshot of {concept: value} (latest annual filing)."""
+    derived = set()
+    if cik not in HAS_UNTAGGED_DEBT and not any(c in values for c in LTD_CONCEPTS):
+        interest = abs(values.get("interest_expense", 0) or 0)
+        assets = values.get("total_assets") or 0
+        revenue = values.get("revenue") or 0
+        if (assets and interest <= NO_DEBT_MAX_INTEREST_TO_ASSETS * assets
+                and interest <= NO_DEBT_MAX_INTEREST_TO_REVENUE * max(revenue, 0)
+                or interest == 0 and assets):
+            derived.add("no_long_term_debt")
+    return derived
+
+
+def met_by(requirement: list[list[str]], available: set[str]) -> str | None:
+    """The first satisfied alternative, joined with '+', or None."""
+    have = available | ABSENT_MEANS_ZERO
+    for alt in requirement:
+        if all(c in have for c in alt):
+            return "+".join(alt)
+    return None
 
 
 def is_met(requirement: list[list[str]], available: set[str]) -> bool:

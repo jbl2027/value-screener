@@ -1,0 +1,1166 @@
+cik,tickers,sector_model,scope,item,input,missing
+1559720,ABNB,standard,metric,beneish_m,core,receivables
+1559720,ABNB,standard,metric,roic_reinvestment,reinvestment,capex
+947484,ACGL,insurer,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+8670,ADP,standard,metric,roic_reinvestment,reinvestment,capex
+1002910,AEE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1002910,AEE,standard,metric,beneish_m,sga,sga_expense
+1002910,AEE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1002910,AEE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+4904,AEP,standard,metric,beneish_m,sga,sga_expense
+874761,AES,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+874761,AES,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+874761,AES,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1267238,AIZ,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+354190,AJG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+354190,AJG,standard,metric,beneish_m,sga,sga_expense
+354190,AJG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+354190,AJG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1579241,ALLE,standard,metric,beneish_m,core,receivables
+820027,AMP,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,beneish_m,core,receivables
+820027,AMP,standard,metric,beneish_m,core,current_assets
+820027,AMP,standard,metric,beneish_m,core,current_liabilities
+820027,AMP,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+820027,AMP,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+820027,AMP,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+820027,AMP,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,piotroski_f,liquidity,current_assets
+820027,AMP,standard,metric,piotroski_f,liquidity,current_liabilities
+820027,AMP,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+820027,AMP,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+820027,AMP,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1053507,AMT,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1053507,AMT,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1053507,AMT,reit,metric,p_ffo,ffo,gain_on_property_sales
+1053507,AMT,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1018724,AMZN,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+315293,AON,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+315293,AON,standard,metric,beneish_m,sga,sga_expense
+315293,AON,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+315293,AON,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1841666,APA,standard,metric,beneish_m,core,revenue
+1841666,APA,standard,metric,beneish_m,gross_profit,gross_profit
+1841666,APA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1841666,APA,standard,metric,gp_assets,gross_profit,gross_profit
+1841666,APA,standard,metric,piotroski_f,gross_margin,gross_profit
+1841666,APA,standard,metric,piotroski_f,asset_turnover,revenue
+1841666,APA,standard,metric,roic_reinvestment,reinvestment,capex
+1858681,APO,standard,metric,beneish_m,core,receivables
+1858681,APO,standard,metric,beneish_m,core,current_assets
+1858681,APO,standard,metric,beneish_m,core,ppe_net
+1858681,APO,standard,metric,beneish_m,core,current_liabilities
+1858681,APO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1858681,APO,standard,metric,beneish_m,sga,sga_expense
+1858681,APO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1858681,APO,standard,metric,piotroski_f,liquidity,current_assets
+1858681,APO,standard,metric,piotroski_f,liquidity,current_liabilities
+1858681,APO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1858681,APO,standard,metric,roic_reinvestment,reinvestment,capex
+1751008,APP,standard,metric,roic_reinvestment,reinvestment,capex
+1035443,ARE,reit,metric,beneish_m,core,receivables
+1035443,ARE,reit,metric,beneish_m,core,current_assets
+1035443,ARE,reit,metric,beneish_m,core,current_liabilities
+1035443,ARE,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1035443,ARE,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1035443,ARE,reit,metric,piotroski_f,liquidity,current_assets
+1035443,ARE,reit,metric,piotroski_f,liquidity,current_liabilities
+1035443,ARE,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1176948,ARES,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
+1176948,ARES,standard,metric,beneish_m,core,receivables
+1176948,ARES,standard,metric,beneish_m,core,current_assets
+1176948,ARES,standard,metric,beneish_m,core,ppe_net
+1176948,ARES,standard,metric,beneish_m,core,current_liabilities
+1176948,ARES,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1176948,ARES,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
+1176948,ARES,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1176948,ARES,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,piotroski_f,liquidity,current_assets
+1176948,ARES,standard,metric,piotroski_f,liquidity,current_liabilities
+1176948,ARES,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
+1176948,ARES,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1176948,ARES,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1176948,ARES,standard,metric,roic_reinvestment,reinvestment,capex
+1176948,ARES,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+731802,ATO,standard,metric,beneish_m,core,ppe_net
+731802,ATO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+731802,ATO,standard,metric,beneish_m,sga,sga_expense
+731802,ATO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+731802,ATO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1410636,AWK,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1410636,AWK,standard,metric,beneish_m,sga,sga_expense
+1410636,AWK,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1410636,AWK,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1069183,AXON,standard,metric,beneish_m,core,receivables
+4962,AXP,standard,metric,beneish_m,core,receivables
+4962,AXP,standard,metric,beneish_m,core,current_assets
+4962,AXP,standard,metric,beneish_m,core,current_liabilities
+4962,AXP,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+4962,AXP,standard,metric,beneish_m,sga,sga_expense
+4962,AXP,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+4962,AXP,standard,metric,piotroski_f,liquidity,current_assets
+4962,AXP,standard,metric,piotroski_f,liquidity,current_liabilities
+4962,AXP,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+12927,BA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+38777,BEN,standard,metric,beneish_m,core,receivables
+38777,BEN,standard,metric,beneish_m,core,current_assets
+38777,BEN,standard,metric,beneish_m,core,current_liabilities
+38777,BEN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+38777,BEN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+38777,BEN,standard,metric,piotroski_f,liquidity,current_assets
+38777,BEN,standard,metric,piotroski_f,liquidity,current_liabilities
+38777,BEN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1075531,BKNG,standard,metric,beneish_m,core,receivables
+1075531,BKNG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1075531,BKNG,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1075531,BKNG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1075531,BKNG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1701605,BKR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1701605,BKR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1701605,BKR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+2012383,BLK,standard,metric,beneish_m,core,receivables
+2012383,BLK,standard,metric,beneish_m,core,current_assets
+2012383,BLK,standard,metric,beneish_m,core,current_liabilities
+2012383,BLK,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+2012383,BLK,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+2012383,BLK,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+2012383,BLK,standard,metric,piotroski_f,liquidity,current_assets
+2012383,BLK,standard,metric,piotroski_f,liquidity,current_liabilities
+2012383,BLK,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1383312,BR,standard,metric,beneish_m,core,receivables
+1067983,BRK-B,insurer,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
+1067983,BRK-B,insurer,metric,p_b,shares,shares_outstanding | diluted_shares | eps_diluted
+1067983,BRK-B,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+79282,BRO,standard,metric,beneish_m,core,receivables
+79282,BRO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+79282,BRO,standard,metric,beneish_m,sga,sga_expense
+79282,BRO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+79282,BRO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+885725,BSX,standard,metric,beneish_m,core,receivables
+1393818,BX,standard,metric,beneish_m,core,receivables
+1393818,BX,standard,metric,beneish_m,core,current_assets
+1393818,BX,standard,metric,beneish_m,core,current_liabilities
+1393818,BX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1393818,BX,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1393818,BX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1393818,BX,standard,metric,piotroski_f,liquidity,current_assets
+1393818,BX,standard,metric,piotroski_f,liquidity,current_liabilities
+1393818,BX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1037540,BXP,reit,metric,beneish_m,core,receivables
+1037540,BXP,reit,metric,beneish_m,core,current_assets
+1037540,BXP,reit,metric,beneish_m,core,ppe_net
+1037540,BXP,reit,metric,beneish_m,core,current_liabilities
+1037540,BXP,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1037540,BXP,reit,metric,piotroski_f,liquidity,current_assets
+1037540,BXP,reit,metric,piotroski_f,liquidity,current_liabilities
+1783180,CARR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1783180,CARR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1783180,CARR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+726958,CASY,standard,metric,beneish_m,core,receivables
+726958,CASY,standard,metric,beneish_m,sga,sga_expense
+18230,CAT,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+18230,CAT,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+18230,CAT,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+18230,CAT,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+18230,CAT,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1374310,CBOE,standard,metric,beneish_m,sga,sga_expense
+1138118,CBRE,standard,metric,beneish_m,sga,sga_expense
+1051470,CCI,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1051470,CCI,reit,metric,p_ffo,ffo,gain_on_property_sales
+815097,CCL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+815097,CCL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+815097,CCL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+813672,CDNS,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+813672,CDNS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+813672,CDNS,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+813672,CDNS,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+813672,CDNS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+813672,CDNS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+813672,CDNS,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+813672,CDNS,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1868275,CEG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1868275,CEG,standard,metric,beneish_m,sga,sga_expense
+1868275,CEG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1868275,CEG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1043277,CHRW,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1043277,CHRW,standard,metric,beneish_m,sga,sga_expense
+1043277,CHRW,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1043277,CHRW,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1091667,CHTR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1091667,CHTR,standard,metric,beneish_m,sga,sga_expense | g_and_a_expense
+1091667,CHTR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1091667,CHTR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1739940,CI,standard,metric,roic_reinvestment,reinvestment,capex
+1166691,CMCSA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1166691,CMCSA,standard,metric,beneish_m,sga,sga_expense
+1166691,CMCSA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1166691,CMCSA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1156375,CME,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1156375,CME,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1156375,CME,standard,metric,beneish_m,sga,sga_expense
+1156375,CME,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1156375,CME,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1156375,CME,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1156375,CME,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1156375,CME,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1156375,CME,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1058090,CMG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1058090,CMG,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1058090,CMG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1058090,CMG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+26172,CMI,standard,metric,beneish_m,core,receivables
+811156,CMS,standard,metric,beneish_m,core,receivables
+811156,CMS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+811156,CMS,standard,metric,beneish_m,sga,sga_expense
+811156,CMS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+811156,CMS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+811156,CMS,standard,metric,roic_reinvestment,reinvestment,capex
+1071739,CNC,standard,metric,beneish_m,core,receivables
+1130310,CNP,standard,metric,beneish_m,sga,sga_expense
+927628,COF,bank,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1679788,COIN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1679788,COIN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1679788,COIN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1679788,COIN,standard,metric,roic_reinvestment,reinvestment,capex
+1163165,COP,standard,metric,beneish_m,core,receivables
+1163165,COP,standard,metric,roic_reinvestment,reinvestment,capex
+1175454,CPAY,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1175454,CPAY,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1175454,CPAY,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1175454,CPAY,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+900075,CPRT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+900075,CPRT,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+900075,CPRT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+900075,CPRT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+906345,CPT,reit,metric,beneish_m,core,receivables
+906345,CPT,reit,metric,beneish_m,core,current_assets
+906345,CPT,reit,metric,beneish_m,core,ppe_net
+906345,CPT,reit,metric,beneish_m,core,current_liabilities
+906345,CPT,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+906345,CPT,reit,metric,piotroski_f,liquidity,current_assets
+906345,CPT,reit,metric,piotroski_f,liquidity,current_liabilities
+849395,CRH,standard,metric,beneish_m,core,receivables
+1100682,CRL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1100682,CRL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1100682,CRL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1535527,CRWD,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1535527,CRWD,standard,metric,beneish_m,core,depreciation_amortization
+1535527,CRWD,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1535527,CRWD,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1535527,CRWD,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1535527,CRWD,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+1535527,CRWD,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+277948,CSX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+277948,CSX,standard,metric,beneish_m,sga,sga_expense
+277948,CSX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+277948,CSX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1058290,CTSH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1058290,CTSH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1058290,CTSH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1058290,CTSH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1058290,CTSH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1690820,CVNA,standard,metric,beneish_m,core,depreciation_amortization
+1690820,CVNA,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+64803,CVS,standard,metric,beneish_m,sga,sga_expense
+715957,D,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+715957,D,standard,metric,beneish_m,sga,sga_expense
+715957,D,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+715957,D,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+715957,D,standard,metric,roic_reinvestment,reinvestment,capex
+27904,DAL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+27904,DAL,standard,metric,beneish_m,sga,sga_expense | g_and_a_expense
+27904,DAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+27904,DAL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1792789,DASH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1792789,DASH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1792789,DASH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1792789,DASH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1792789,DASH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+315189,DE,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,beneish_m,core,receivables
+315189,DE,standard,metric,beneish_m,core,current_assets
+315189,DE,standard,metric,beneish_m,core,ppe_net
+315189,DE,standard,metric,beneish_m,core,current_liabilities
+315189,DE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+315189,DE,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+315189,DE,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+315189,DE,standard,metric,piotroski_f,liquidity,current_assets
+315189,DE,standard,metric,piotroski_f,liquidity,current_liabilities
+315189,DE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+315189,DE,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+315189,DE,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+29534,DG,standard,metric,beneish_m,core,receivables
+882184,DHI,standard,metric,beneish_m,core,receivables
+882184,DHI,standard,metric,beneish_m,core,current_assets
+882184,DHI,standard,metric,beneish_m,core,current_liabilities
+882184,DHI,standard,metric,piotroski_f,liquidity,current_assets
+882184,DHI,standard,metric,piotroski_f,liquidity,current_liabilities
+1744489,DIS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1744489,DIS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1744489,DIS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1297996,DLR,reit,metric,beneish_m,core,receivables
+1297996,DLR,reit,metric,beneish_m,core,current_assets
+1297996,DLR,reit,metric,beneish_m,core,ppe_net
+1297996,DLR,reit,metric,beneish_m,core,current_liabilities
+1297996,DLR,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1297996,DLR,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1297996,DLR,reit,metric,piotroski_f,liquidity,current_assets
+1297996,DLR,reit,metric,piotroski_f,liquidity,current_liabilities
+1297996,DLR,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+935703,DLTR,standard,metric,beneish_m,core,receivables
+765880,DOC,reit,metric,beneish_m,core,receivables
+765880,DOC,reit,metric,beneish_m,core,current_assets
+765880,DOC,reit,metric,beneish_m,core,ppe_net
+765880,DOC,reit,metric,beneish_m,core,current_liabilities
+765880,DOC,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+765880,DOC,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+765880,DOC,reit,metric,piotroski_f,liquidity,current_assets
+765880,DOC,reit,metric,piotroski_f,liquidity,current_liabilities
+765880,DOC,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1286681,DPZ,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+940944,DRI,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+936340,DTE,standard,metric,beneish_m,core,revenue
+936340,DTE,standard,metric,beneish_m,gross_profit,gross_profit
+936340,DTE,standard,metric,beneish_m,sga,sga_expense
+936340,DTE,standard,metric,gp_assets,gross_profit,gross_profit
+936340,DTE,standard,metric,piotroski_f,gross_margin,gross_profit
+936340,DTE,standard,metric,piotroski_f,asset_turnover,revenue
+936340,DTE,standard,metric,roic_reinvestment,reinvestment,capex
+1326160,DUK,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1326160,DUK,standard,metric,beneish_m,sga,sga_expense
+1326160,DUK,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1326160,DUK,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+927066,DVA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+927066,DVA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+927066,DVA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+927066,DVA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1090012,DVN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1090012,DVN,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1090012,DVN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1090012,DVN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1047862,ED,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1047862,ED,standard,metric,beneish_m,sga,sga_expense
+1047862,ED,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1047862,ED,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1047862,ED,standard,metric,roic_reinvestment,reinvestment,capex
+827052,EIX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+827052,EIX,standard,metric,beneish_m,sga,sga_expense
+827052,EIX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+827052,EIX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1156039,ELV,standard,metric,beneish_m,core,receivables
+821189,EOG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+821189,EOG,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+821189,EOG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+821189,EOG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+821189,EOG,standard,metric,roic_reinvestment,reinvestment,capex
+922621,ERIE,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
+922621,ERIE,standard,metric,beneish_m,core,ppe_net
+922621,ERIE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+922621,ERIE,standard,metric,beneish_m,sga,sga_expense
+922621,ERIE,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
+922621,ERIE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+922621,ERIE,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
+922621,ERIE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+72741,ES,standard,metric,beneish_m,core,ppe_net
+72741,ES,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+72741,ES,standard,metric,beneish_m,sga,sga_expense
+72741,ES,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+72741,ES,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+920522,ESS,reit,metric,beneish_m,core,receivables
+920522,ESS,reit,metric,beneish_m,core,current_assets
+920522,ESS,reit,metric,beneish_m,core,ppe_net
+920522,ESS,reit,metric,beneish_m,core,current_liabilities
+920522,ESS,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+920522,ESS,reit,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+920522,ESS,reit,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+920522,ESS,reit,metric,piotroski_f,liquidity,current_assets
+920522,ESS,reit,metric,piotroski_f,liquidity,current_liabilities
+920522,ESS,reit,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+65984,ETR,standard,metric,beneish_m,core,receivables
+65984,ETR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+65984,ETR,standard,metric,beneish_m,sga,sga_expense
+65984,ETR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+65984,ETR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1711269,EVRG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1711269,EVRG,standard,metric,beneish_m,sga,sga_expense
+1711269,EVRG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1711269,EVRG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1099800,EW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1099800,EW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1099800,EW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1099800,EW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1099800,EW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1109357,EXC,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1109357,EXC,standard,metric,beneish_m,sga,sga_expense
+1109357,EXC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1109357,EXC,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+895126,EXE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+895126,EXE,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+895126,EXE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+895126,EXE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+746515,EXPD,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+746515,EXPD,standard,metric,beneish_m,sga,sga_expense | g_and_a_expense
+746515,EXPD,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+746515,EXPD,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1289490,EXR,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1289490,EXR,reit,metric,beneish_m,core,receivables
+1289490,EXR,reit,metric,beneish_m,core,current_assets
+1289490,EXR,reit,metric,beneish_m,core,current_liabilities
+1289490,EXR,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1289490,EXR,reit,metric,p_ffo,ffo,gain_on_property_sales
+1289490,EXR,reit,metric,piotroski_f,liquidity,current_assets
+1289490,EXR,reit,metric,piotroski_f,liquidity,current_liabilities
+37996,F,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+37996,F,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+37996,F,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+37996,F,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+37996,F,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+37996,F,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1539838,FANG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1539838,FANG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1539838,FANG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1539838,FANG,standard,metric,roic_reinvestment,reinvestment,capex
+1048911,FDX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1048911,FDX,standard,metric,beneish_m,sga,sga_expense
+1048911,FDX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1048911,FDX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+2082247,FDXF,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+2082247,FDXF,standard,metric,beneish_m,sga,sga_expense
+2082247,FDXF,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+2082247,FDXF,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1031296,FE,standard,metric,beneish_m,core,ppe_net
+1031296,FE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1031296,FE,standard,metric,beneish_m,sga,sga_expense
+1031296,FE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1031296,FE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1136893,FIS,standard,metric,beneish_m,core,receivables
+798354,FISV,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+798354,FISV,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+798354,FISV,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1035983,FIX,standard,metric,beneish_m,core,receivables
+1754301,FOX FOXA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1754301,FOX FOXA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1754301,FOX FOXA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+34903,FRT,reit,fair_value,fair_value,ffo,gain_on_property_sales
+34903,FRT,reit,metric,beneish_m,core,receivables
+34903,FRT,reit,metric,beneish_m,core,current_assets
+34903,FRT,reit,metric,beneish_m,core,ppe_net
+34903,FRT,reit,metric,beneish_m,core,current_liabilities
+34903,FRT,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+34903,FRT,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+34903,FRT,reit,metric,p_ffo,ffo,gain_on_property_sales
+34903,FRT,reit,metric,piotroski_f,liquidity,current_assets
+34903,FRT,reit,metric,piotroski_f,liquidity,current_liabilities
+34903,FRT,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+40533,GD,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+40533,GD,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+40533,GD,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+40533,GD,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1609711,GDDY,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+40545,GE,standard,metric,beneish_m,core,ppe_net
+40545,GE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+40545,GE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+40545,GE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1932393,GEHC,standard,metric,beneish_m,core,receivables
+1932393,GEHC,standard,metric,beneish_m,core,ppe_net
+849399,GEN,standard,metric,beneish_m,sga,sga_expense | g_and_a_expense
+1996810,GEV,standard,metric,beneish_m,core,ppe_net
+1467858,GM,standard,metric,beneish_m,core,ppe_net
+1467858,GM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1467858,GM,standard,metric,beneish_m,sga,sga_expense
+1467858,GM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1467858,GM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+40987,GPC,standard,metric,beneish_m,core,receivables
+886982,GS,bank,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+45012,HAL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+45012,HAL,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+45012,HAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+45012,HAL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+860730,HCA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+860730,HCA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+860730,HCA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+860730,HCA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1501585,HII,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1501585,HII,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1501585,HII,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1501585,HII,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1585689,HLT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1585689,HLT,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1585689,HLT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1585689,HLT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+2089271,HONA,standard,fair_value,fair_value,ebit_3y,operating_income | pretax_income
+2089271,HONA,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,fair_value,fair_value,cash,cash
+2089271,HONA,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares
+2089271,HONA,standard,fair_value,fair_value,ebit_3y,only_0_annual_years
+2089271,HONA,standard,metric,beneish_m,core,receivables
+2089271,HONA,standard,metric,beneish_m,core,revenue
+2089271,HONA,standard,metric,beneish_m,core,current_assets
+2089271,HONA,standard,metric,beneish_m,core,ppe_net
+2089271,HONA,standard,metric,beneish_m,core,total_assets
+2089271,HONA,standard,metric,beneish_m,core,depreciation_amortization
+2089271,HONA,standard,metric,beneish_m,core,net_income
+2089271,HONA,standard,metric,beneish_m,core,operating_cash_flow
+2089271,HONA,standard,metric,beneish_m,core,current_liabilities
+2089271,HONA,standard,metric,beneish_m,gross_profit,gross_profit
+2089271,HONA,standard,metric,beneish_m,sga,sga_expense
+2089271,HONA,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,ev_ebit,ebit,operating_income | pretax_income
+2089271,HONA,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,ev_ebit,cash,cash
+2089271,HONA,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares
+2089271,HONA,standard,metric,gp_assets,gross_profit,gross_profit
+2089271,HONA,standard,metric,gp_assets,total_assets,total_assets
+2089271,HONA,standard,metric,piotroski_f,profitability,net_income
+2089271,HONA,standard,metric,piotroski_f,profitability,operating_cash_flow
+2089271,HONA,standard,metric,piotroski_f,profitability,total_assets
+2089271,HONA,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,piotroski_f,liquidity,current_assets
+2089271,HONA,standard,metric,piotroski_f,liquidity,current_liabilities
+2089271,HONA,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares
+2089271,HONA,standard,metric,piotroski_f,gross_margin,gross_profit
+2089271,HONA,standard,metric,piotroski_f,asset_turnover,revenue
+2089271,HONA,standard,metric,piotroski_f,asset_turnover,total_assets
+2089271,HONA,standard,metric,roic_reinvestment,ebit,operating_income | pretax_income
+2089271,HONA,standard,metric,roic_reinvestment,tax,income_tax
+2089271,HONA,standard,metric,roic_reinvestment,tax,pretax_income
+2089271,HONA,standard,metric,roic_reinvestment,capital,stockholders_equity
+2089271,HONA,standard,metric,roic_reinvestment,capital,cash
+2089271,HONA,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,roic_reinvestment,reinvestment,capex
+2089271,HONA,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+2089271,HONA,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+2089271,HONA,standard,metric,sloan_accruals,inputs,net_income
+2089271,HONA,standard,metric,sloan_accruals,inputs,operating_cash_flow
+2089271,HONA,standard,metric,sloan_accruals,inputs,investing_cash_flow
+2089271,HONA,standard,metric,sloan_accruals,inputs,total_assets
+1783879,HOOD,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,beneish_m,core,receivables
+1783879,HOOD,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1783879,HOOD,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1783879,HOOD,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1783879,HOOD,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1783879,HOOD,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1783879,HOOD,standard,metric,roic_reinvestment,reinvestment,capex
+1783879,HOOD,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1645590,HPE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1645590,HPE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1645590,HPE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1070750,HST,reit,metric,beneish_m,core,receivables
+1070750,HST,reit,metric,beneish_m,core,current_assets
+1070750,HST,reit,metric,beneish_m,core,current_liabilities
+1070750,HST,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1070750,HST,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1070750,HST,reit,metric,piotroski_f,liquidity,current_assets
+1070750,HST,reit,metric,piotroski_f,liquidity,current_liabilities
+1070750,HST,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+49071,HUM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+49071,HUM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+49071,HUM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1381197,IBKR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,beneish_m,core,receivables
+1381197,IBKR,standard,metric,beneish_m,core,current_assets
+1381197,IBKR,standard,metric,beneish_m,core,current_liabilities
+1381197,IBKR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1381197,IBKR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1381197,IBKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,piotroski_f,liquidity,current_assets
+1381197,IBKR,standard,metric,piotroski_f,liquidity,current_liabilities
+1381197,IBKR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1381197,IBKR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1381197,IBKR,standard,metric,roic_reinvestment,reinvestment,capex
+1381197,IBKR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1571949,ICE,standard,metric,beneish_m,core,ppe_net
+1571949,ICE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1571949,ICE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1571949,ICE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1110803,ILMN,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1110803,ILMN,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1110803,ILMN,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1110803,ILMN,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1110803,ILMN,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+879169,INCY,standard,metric,beneish_m,core,receivables
+879169,INCY,standard,metric,roic_reinvestment,reinvestment,capex
+896878,INTU,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+896878,INTU,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+896878,INTU,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1687229,INVH,reit,metric,beneish_m,core,receivables
+1687229,INVH,reit,metric,beneish_m,core,current_assets
+1687229,INVH,reit,metric,beneish_m,core,current_liabilities
+1687229,INVH,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1687229,INVH,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1687229,INVH,reit,metric,piotroski_f,liquidity,current_assets
+1687229,INVH,reit,metric,piotroski_f,liquidity,current_liabilities
+1687229,INVH,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+51434,IP,standard,metric,beneish_m,core,receivables
+1020569,IRM,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1020569,IRM,reit,metric,p_ffo,ffo,gain_on_property_sales
+49826,ITW,standard,metric,beneish_m,sga,sga_expense
+914208,IVZ,standard,metric,beneish_m,core,receivables
+914208,IVZ,standard,metric,beneish_m,core,current_assets
+914208,IVZ,standard,metric,beneish_m,core,current_liabilities
+914208,IVZ,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+914208,IVZ,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+914208,IVZ,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+914208,IVZ,standard,metric,piotroski_f,liquidity,current_assets
+914208,IVZ,standard,metric,piotroski_f,liquidity,current_liabilities
+914208,IVZ,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+728535,JBHT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+728535,JBHT,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+728535,JBHT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+728535,JBHT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+898293,JBL,standard,metric,beneish_m,core,receivables
+879101,KIM,reit,fair_value,fair_value,ffo,gain_on_property_sales
+879101,KIM,reit,metric,beneish_m,core,receivables
+879101,KIM,reit,metric,beneish_m,core,current_assets
+879101,KIM,reit,metric,beneish_m,core,ppe_net
+879101,KIM,reit,metric,beneish_m,core,current_liabilities
+879101,KIM,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+879101,KIM,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+879101,KIM,reit,metric,p_ffo,ffo,gain_on_property_sales
+879101,KIM,reit,metric,piotroski_f,liquidity,current_assets
+879101,KIM,reit,metric,piotroski_f,liquidity,current_liabilities
+879101,KIM,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1404912,KKR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,beneish_m,core,receivables
+1404912,KKR,standard,metric,beneish_m,core,current_assets
+1404912,KKR,standard,metric,beneish_m,core,ppe_net
+1404912,KKR,standard,metric,beneish_m,core,current_liabilities
+1404912,KKR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1404912,KKR,standard,metric,beneish_m,sga,sga_expense
+1404912,KKR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1404912,KKR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,piotroski_f,liquidity,current_assets
+1404912,KKR,standard,metric,piotroski_f,liquidity,current_liabilities
+1404912,KKR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1404912,KKR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1404912,KKR,standard,metric,roic_reinvestment,reinvestment,capex
+1404912,KKR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+55785,KMB,standard,metric,beneish_m,sga,sga_expense
+1506307,KMI,standard,metric,beneish_m,core,receivables
+1506307,KMI,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+56873,KR,standard,metric,beneish_m,sga,sga_expense
+920760,LEN,standard,metric,beneish_m,core,receivables
+920760,LEN,standard,metric,beneish_m,core,current_assets
+920760,LEN,standard,metric,beneish_m,core,current_liabilities
+920760,LEN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+920760,LEN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+920760,LEN,standard,metric,piotroski_f,liquidity,current_assets
+920760,LEN,standard,metric,piotroski_f,liquidity,current_liabilities
+920760,LEN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+202058,LHX,standard,metric,beneish_m,core,revenue
+202058,LHX,standard,metric,beneish_m,gross_profit,gross_profit
+202058,LHX,standard,metric,gp_assets,gross_profit,gross_profit
+202058,LHX,standard,metric,piotroski_f,gross_margin,gross_profit
+202058,LHX,standard,metric,piotroski_f,asset_turnover,revenue
+1633978,LITE,standard,metric,beneish_m,core,receivables
+59478,LLY,standard,metric,roic_reinvestment,reinvestment,capex
+936468,LMT,standard,metric,beneish_m,sga,sga_expense
+352541,LNT,standard,metric,beneish_m,sga,sga_expense
+352541,LNT,standard,metric,roic_reinvestment,reinvestment,capex
+92380,LUV,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+92380,LUV,standard,metric,beneish_m,sga,sga_expense
+92380,LUV,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+92380,LUV,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1300514,LVS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1300514,LVS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1300514,LVS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1489393,LYB,standard,metric,beneish_m,core,receivables
+1335258,LYV,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1335258,LYV,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1335258,LYV,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1141391,MA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1141391,MA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1141391,MA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1141391,MA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+912595,MAA,reit,metric,beneish_m,core,receivables
+912595,MAA,reit,metric,beneish_m,core,current_assets
+912595,MAA,reit,metric,beneish_m,core,ppe_net
+912595,MAA,reit,metric,beneish_m,core,current_liabilities
+912595,MAA,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+912595,MAA,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+912595,MAA,reit,metric,piotroski_f,liquidity,current_assets
+912595,MAA,reit,metric,piotroski_f,liquidity,current_liabilities
+912595,MAA,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1048286,MAR,standard,metric,beneish_m,core,receivables
+1048286,MAR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1048286,MAR,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1048286,MAR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1048286,MAR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+63908,MCD,standard,metric,beneish_m,core,receivables
+63908,MCD,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+63908,MCD,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+63908,MCD,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+789570,MGM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+789570,MGM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+789570,MGM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+865752,MNST,standard,metric,beneish_m,sga,sga_expense
+764180,MO,standard,metric,beneish_m,sga,sga_expense
+1682852,MRNA,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1682852,MRNA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1682852,MRNA,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1682852,MRNA,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1682852,MRNA,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1682852,MRNA,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+62709,MRSH,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+62709,MRSH,standard,metric,beneish_m,sga,sga_expense
+62709,MRSH,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+62709,MRSH,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1408198,MSCI,standard,metric,beneish_m,core,receivables
+1120193,NDAQ,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+753308,NEE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+753308,NEE,standard,metric,beneish_m,sga,sga_expense
+753308,NEE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+753308,NEE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+753308,NEE,standard,metric,roic_reinvestment,reinvestment,capex
+1164727,NEM,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1065280,NFLX,standard,metric,beneish_m,core,receivables
+1111711,NI,standard,metric,beneish_m,sga,sga_expense
+1133421,NOC,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1133421,NOC,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1133421,NOC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1133421,NOC,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1373715,NOW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1373715,NOW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1373715,NOW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1373715,NOW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1373715,NOW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1013871,NRG,standard,metric,beneish_m,core,ppe_net
+702165,NSC,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+702165,NSC,standard,metric,beneish_m,sga,sga_expense
+702165,NSC,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+702165,NSC,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+906163,NVR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,beneish_m,core,receivables
+906163,NVR,standard,metric,beneish_m,core,current_assets
+906163,NVR,standard,metric,beneish_m,core,ppe_net
+906163,NVR,standard,metric,beneish_m,core,current_liabilities
+906163,NVR,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+906163,NVR,standard,metric,beneish_m,sga,sga_expense
+906163,NVR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+906163,NVR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,piotroski_f,liquidity,current_assets
+906163,NVR,standard,metric,piotroski_f,liquidity,current_liabilities
+906163,NVR,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+906163,NVR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+906163,NVR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1564708,NWS NWSA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1564708,NWS NWSA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1564708,NWS NWSA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+726728,O,reit,metric,beneish_m,core,receivables
+726728,O,reit,metric,beneish_m,core,current_assets
+726728,O,reit,metric,beneish_m,core,ppe_net
+726728,O,reit,metric,beneish_m,core,current_liabilities
+726728,O,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+726728,O,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+726728,O,reit,metric,piotroski_f,liquidity,current_assets
+726728,O,reit,metric,piotroski_f,liquidity,current_liabilities
+726728,O,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+878927,ODFL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+878927,ODFL,standard,metric,beneish_m,sga,sga_expense
+878927,ODFL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+878927,ODFL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1039684,OKE,standard,metric,beneish_m,sga,sga_expense
+1341439,ORCL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1341439,ORCL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1341439,ORCL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1781335,OTIS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1781335,OTIS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1781335,OTIS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+797468,OXY,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+797468,OXY,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+797468,OXY,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1474432,P,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+1474432,P,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+1474432,P,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+1474432,P,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1474432,P,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+1474432,P,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+1327567,PANW,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1327567,PANW,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1327567,PANW,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1327567,PANW,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1327567,PANW,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+723531,PAYX,standard,metric,beneish_m,core,receivables
+75362,PCAR,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,fair_value,fair_value,cash,cash
+75362,PCAR,standard,metric,beneish_m,core,receivables
+75362,PCAR,standard,metric,beneish_m,core,current_assets
+75362,PCAR,standard,metric,beneish_m,core,current_liabilities
+75362,PCAR,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,ev_ebit,cash,cash
+75362,PCAR,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,piotroski_f,liquidity,current_assets
+75362,PCAR,standard,metric,piotroski_f,liquidity,current_liabilities
+75362,PCAR,standard,metric,roic_reinvestment,capital,cash
+75362,PCAR,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+75362,PCAR,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1004980,PCG,standard,metric,beneish_m,core,depreciation_amortization
+1004980,PCG,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1004980,PCG,standard,metric,beneish_m,sga,sga_expense
+1004980,PCG,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1004980,PCG,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1004980,PCG,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+788784,PEG,standard,metric,beneish_m,core,ppe_net
+788784,PEG,standard,metric,beneish_m,core,depreciation_amortization
+788784,PEG,standard,metric,beneish_m,sga,sga_expense
+788784,PEG,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+77476,PEP,standard,metric,beneish_m,core,receivables
+822416,PHM,standard,metric,beneish_m,core,receivables
+822416,PHM,standard,metric,beneish_m,core,current_assets
+822416,PHM,standard,metric,beneish_m,core,current_liabilities
+822416,PHM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+822416,PHM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+822416,PHM,standard,metric,piotroski_f,liquidity,current_assets
+822416,PHM,standard,metric,piotroski_f,liquidity,current_liabilities
+822416,PHM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1045609,PLD,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1045609,PLD,reit,metric,beneish_m,core,receivables
+1045609,PLD,reit,metric,beneish_m,core,current_assets
+1045609,PLD,reit,metric,beneish_m,core,current_liabilities
+1045609,PLD,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1045609,PLD,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1045609,PLD,reit,metric,p_ffo,ffo,gain_on_property_sales
+1045609,PLD,reit,metric,piotroski_f,liquidity,current_assets
+1045609,PLD,reit,metric,piotroski_f,liquidity,current_liabilities
+1045609,PLD,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1413329,PM,standard,metric,beneish_m,sga,sga_expense
+77360,PNR,standard,metric,beneish_m,core,receivables
+764622,PNW,standard,metric,beneish_m,core,receivables
+764622,PNW,standard,metric,beneish_m,sga,sga_expense
+1145197,PODD,standard,metric,beneish_m,core,receivables
+922224,PPL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+922224,PPL,standard,metric,beneish_m,sga,sga_expense
+922224,PPL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+922224,PPL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1393311,PSA,reit,metric,beneish_m,core,receivables
+1393311,PSA,reit,metric,beneish_m,core,current_assets
+1393311,PSA,reit,metric,beneish_m,core,ppe_net
+1393311,PSA,reit,metric,beneish_m,core,current_liabilities
+1393311,PSA,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1393311,PSA,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1393311,PSA,reit,metric,piotroski_f,liquidity,current_assets
+1393311,PSA,reit,metric,piotroski_f,liquidity,current_liabilities
+1393311,PSA,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+2041610,PSKY,standard,fair_value,fair_value,ebit_3y,operating_income | pretax_income
+2041610,PSKY,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares
+2041610,PSKY,standard,fair_value,fair_value,ebit_3y,only_2_annual_years
+2041610,PSKY,standard,metric,beneish_m,core,revenue
+2041610,PSKY,standard,metric,beneish_m,core,depreciation_amortization
+2041610,PSKY,standard,metric,beneish_m,core,net_income
+2041610,PSKY,standard,metric,beneish_m,core,operating_cash_flow
+2041610,PSKY,standard,metric,beneish_m,gross_profit,gross_profit
+2041610,PSKY,standard,metric,beneish_m,sga,sga_expense
+2041610,PSKY,standard,metric,ev_ebit,ebit,operating_income | pretax_income
+2041610,PSKY,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares
+2041610,PSKY,standard,metric,gp_assets,gross_profit,gross_profit
+2041610,PSKY,standard,metric,piotroski_f,profitability,net_income
+2041610,PSKY,standard,metric,piotroski_f,profitability,operating_cash_flow
+2041610,PSKY,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares
+2041610,PSKY,standard,metric,piotroski_f,gross_margin,gross_profit
+2041610,PSKY,standard,metric,piotroski_f,asset_turnover,revenue
+2041610,PSKY,standard,metric,roic_reinvestment,ebit,operating_income | pretax_income
+2041610,PSKY,standard,metric,roic_reinvestment,tax,income_tax
+2041610,PSKY,standard,metric,roic_reinvestment,tax,pretax_income
+2041610,PSKY,standard,metric,roic_reinvestment,reinvestment,capex
+2041610,PSKY,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+2041610,PSKY,standard,metric,sloan_accruals,inputs,net_income
+2041610,PSKY,standard,metric,sloan_accruals,inputs,operating_cash_flow
+2041610,PSKY,standard,metric,sloan_accruals,inputs,investing_cash_flow
+1534701,PSX,standard,metric,roic_reinvestment,reinvestment,capex
+1633917,PYPL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1633917,PYPL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1633917,PYPL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+910606,REG,reit,metric,beneish_m,core,receivables
+910606,REG,reit,metric,beneish_m,core,current_assets
+910606,REG,reit,metric,beneish_m,core,current_liabilities
+910606,REG,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+910606,REG,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+910606,REG,reit,metric,piotroski_f,liquidity,current_assets
+910606,REG,reit,metric,piotroski_f,liquidity,current_liabilities
+910606,REG,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+872589,REGN,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+872589,REGN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+872589,REGN,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+872589,REGN,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+872589,REGN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+872589,REGN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+872589,REGN,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+872589,REGN,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+720005,RJF,standard,metric,beneish_m,core,receivables
+720005,RJF,standard,metric,beneish_m,core,current_assets
+720005,RJF,standard,metric,beneish_m,core,current_liabilities
+720005,RJF,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+720005,RJF,standard,metric,beneish_m,sga,sga_expense
+720005,RJF,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+720005,RJF,standard,metric,piotroski_f,liquidity,current_assets
+720005,RJF,standard,metric,piotroski_f,liquidity,current_liabilities
+720005,RJF,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1037038,RL,standard,metric,roic_reinvestment,reinvestment,capex
+882835,ROP,standard,metric,roic_reinvestment,reinvestment,capex
+101829,RTX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+101829,RTX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+101829,RTX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+31791,RVTY,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+31791,RVTY,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+31791,RVTY,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+829224,SBUX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+829224,SBUX,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+829224,SBUX,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+829224,SBUX,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+87347,SLB,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+87347,SLB,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+87347,SLB,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+87347,SLB,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+87347,SLB,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+87347,SLB,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+87347,SLB,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+87347,SLB,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+87347,SLB,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1375365,SMCI,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1375365,SMCI,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1375365,SMCI,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1375365,SMCI,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+1375365,SMCI,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+91440,SNA,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+91440,SNA,standard,metric,beneish_m,sga,sga_expense
+91440,SNA,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+91440,SNA,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+92122,SO,standard,metric,beneish_m,core,receivables
+92122,SO,standard,metric,beneish_m,core,ppe_net
+92122,SO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+92122,SO,standard,metric,beneish_m,sga,sga_expense
+92122,SO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+92122,SO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1063761,SPG,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1063761,SPG,reit,metric,beneish_m,core,receivables
+1063761,SPG,reit,metric,beneish_m,core,current_assets
+1063761,SPG,reit,metric,beneish_m,core,ppe_net
+1063761,SPG,reit,metric,beneish_m,core,current_liabilities
+1063761,SPG,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1063761,SPG,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1063761,SPG,reit,metric,p_ffo,ffo,gain_on_property_sales
+1063761,SPG,reit,metric,piotroski_f,liquidity,current_assets
+1063761,SPG,reit,metric,piotroski_f,liquidity,current_liabilities
+1063761,SPG,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1032208,SRE,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1032208,SRE,standard,metric,beneish_m,sga,sga_expense
+1032208,SRE,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1032208,SRE,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+16918,STZ,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
+16918,STZ,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
+16918,STZ,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
+93556,SWK,standard,metric,beneish_m,core,receivables
+1601712,SYF,standard,metric,beneish_m,core,receivables
+1601712,SYF,standard,metric,beneish_m,core,revenue
+1601712,SYF,standard,metric,beneish_m,core,current_assets
+1601712,SYF,standard,metric,beneish_m,core,ppe_net
+1601712,SYF,standard,metric,beneish_m,core,current_liabilities
+1601712,SYF,standard,metric,beneish_m,gross_profit,gross_profit
+1601712,SYF,standard,metric,beneish_m,sga,sga_expense
+1601712,SYF,standard,metric,gp_assets,gross_profit,gross_profit
+1601712,SYF,standard,metric,piotroski_f,liquidity,current_assets
+1601712,SYF,standard,metric,piotroski_f,liquidity,current_liabilities
+1601712,SYF,standard,metric,piotroski_f,gross_margin,gross_profit
+1601712,SYF,standard,metric,piotroski_f,asset_turnover,revenue
+1601712,SYF,standard,metric,roic_reinvestment,reinvestment,capex
+96021,SYY,standard,metric,beneish_m,core,receivables
+96021,SYY,standard,metric,beneish_m,sga,sga_expense
+732717,T,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+732717,T,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+732717,T,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+842023,TECH,standard,fair_value,fair_value,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+842023,TECH,standard,metric,beneish_m,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+842023,TECH,standard,metric,ev_ebit,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+842023,TECH,standard,metric,roic_reinvestment,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+842023,TECH,standard,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_current | no_long_term_debt
+27419,TGT,standard,metric,beneish_m,core,receivables
+1973266,TKO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1973266,TKO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1973266,TKO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1973266,TKO,standard,metric,roic_reinvestment,reinvestment,capex
+97745,TMO,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+97745,TMO,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+97745,TMO,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1283699,TMUS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1283699,TMUS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1283699,TMUS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1811074,TPL,standard,metric,beneish_m,core,receivables
+1811074,TPL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1811074,TPL,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1811074,TPL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1811074,TPL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1811074,TPL,standard,metric,roic_reinvestment,reinvestment,capex
+1389170,TRGP,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1113169,TROW,standard,metric,beneish_m,core,receivables
+1113169,TROW,standard,metric,beneish_m,core,current_assets
+1113169,TROW,standard,metric,beneish_m,core,depreciation_amortization
+1113169,TROW,standard,metric,beneish_m,core,current_liabilities
+1113169,TROW,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1113169,TROW,standard,metric,beneish_m,sga,sga_expense
+1113169,TROW,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1113169,TROW,standard,metric,piotroski_f,liquidity,current_assets
+1113169,TROW,standard,metric,piotroski_f,liquidity,current_liabilities
+1113169,TROW,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1113169,TROW,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+86312,TRV,insurer,metric,shareholder_yield,debt,long_term_debt_total | long_term_debt_noncurrent | no_long_term_debt
+916365,TSCO,standard,metric,beneish_m,core,receivables
+1466258,TT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1466258,TT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1466258,TT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+217346,TXT,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,beneish_m,core,receivables
+217346,TXT,standard,metric,beneish_m,core,current_assets
+217346,TXT,standard,metric,beneish_m,core,ppe_net
+217346,TXT,standard,metric,beneish_m,core,current_liabilities
+217346,TXT,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+217346,TXT,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+217346,TXT,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,piotroski_f,liquidity,current_assets
+217346,TXT,standard,metric,piotroski_f,liquidity,current_liabilities
+217346,TXT,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+217346,TXT,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+217346,TXT,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+100517,UAL,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+100517,UAL,standard,metric,beneish_m,sga,sga_expense
+100517,UAL,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+100517,UAL,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+74208,UDR,reit,metric,beneish_m,core,receivables
+74208,UDR,reit,metric,beneish_m,core,current_assets
+74208,UDR,reit,metric,beneish_m,core,ppe_net
+74208,UDR,reit,metric,beneish_m,core,current_liabilities
+74208,UDR,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+74208,UDR,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+74208,UDR,reit,metric,piotroski_f,liquidity,current_assets
+74208,UDR,reit,metric,piotroski_f,liquidity,current_liabilities
+74208,UDR,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+352915,UHS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+352915,UHS,standard,metric,beneish_m,sga,sga_expense
+352915,UHS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+352915,UHS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+100885,UNP,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+100885,UNP,standard,metric,beneish_m,sga,sga_expense
+100885,UNP,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+100885,UNP,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1090727,UPS,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1090727,UPS,standard,metric,beneish_m,sga,sga_expense
+1090727,UPS,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1090727,UPS,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1067701,URI,standard,metric,beneish_m,core,ppe_net
+1067701,URI,standard,metric,roic_reinvestment,reinvestment,capex
+1403161,V,standard,fair_value,fair_value,shares,shares_outstanding | diluted_shares | eps_diluted
+1403161,V,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1403161,V,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1403161,V,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
+1403161,V,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1403161,V,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
+1403161,V,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1393052,VEEV,standard,metric,beneish_m,core,depreciation_amortization
+1393052,VEEV,standard,metric,roic_reinvestment,reinvestment,capex
+1393052,VEEV,standard,metric,roic_reinvestment,reinvestment,depreciation_amortization
+1705696,VICI,reit,fair_value,fair_value,ffo,gain_on_property_sales
+1705696,VICI,reit,metric,beneish_m,core,receivables
+1705696,VICI,reit,metric,beneish_m,core,current_assets
+1705696,VICI,reit,metric,beneish_m,core,current_liabilities
+1705696,VICI,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1705696,VICI,reit,metric,p_ffo,ffo,gain_on_property_sales
+1705696,VICI,reit,metric,piotroski_f,liquidity,current_assets
+1705696,VICI,reit,metric,piotroski_f,liquidity,current_liabilities
+1035002,VLO,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1035002,VLO,standard,metric,roic_reinvestment,reinvestment,capex
+1396009,VMC,standard,metric,beneish_m,core,receivables
+906107,VMRK,reit,metric,beneish_m,core,receivables
+906107,VMRK,reit,metric,beneish_m,core,revenue
+906107,VMRK,reit,metric,beneish_m,core,current_assets
+906107,VMRK,reit,metric,beneish_m,core,ppe_net
+906107,VMRK,reit,metric,beneish_m,core,current_liabilities
+906107,VMRK,reit,metric,beneish_m,gross_profit,gross_profit
+906107,VMRK,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+906107,VMRK,reit,metric,piotroski_f,liquidity,current_assets
+906107,VMRK,reit,metric,piotroski_f,liquidity,current_liabilities
+906107,VMRK,reit,metric,piotroski_f,gross_margin,gross_profit
+906107,VMRK,reit,metric,piotroski_f,asset_turnover,revenue
+1692819,VST,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1692819,VST,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1692819,VST,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+740260,VTR,reit,fair_value,fair_value,ffo,gain_on_property_sales
+740260,VTR,reit,metric,beneish_m,core,current_assets
+740260,VTR,reit,metric,beneish_m,core,ppe_net
+740260,VTR,reit,metric,beneish_m,core,current_liabilities
+740260,VTR,reit,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+740260,VTR,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+740260,VTR,reit,metric,p_ffo,ffo,gain_on_property_sales
+740260,VTR,reit,metric,piotroski_f,liquidity,current_assets
+740260,VTR,reit,metric,piotroski_f,liquidity,current_liabilities
+740260,VTR,reit,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+732712,VZ,standard,metric,beneish_m,core,receivables
+732712,VZ,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+732712,VZ,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+732712,VZ,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+732712,VZ,standard,metric,roic_reinvestment,reinvestment,capex
+1327811,WDAY,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1327811,WDAY,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1327811,WDAY,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+783325,WEC,standard,metric,beneish_m,sga,sga_expense
+783325,WEC,standard,metric,roic_reinvestment,reinvestment,capex
+766704,WELL,reit,fair_value,fair_value,ffo,gain_on_property_sales
+766704,WELL,reit,metric,beneish_m,core,receivables
+766704,WELL,reit,metric,beneish_m,core,current_assets
+766704,WELL,reit,metric,beneish_m,core,ppe_net
+766704,WELL,reit,metric,beneish_m,core,current_liabilities
+766704,WELL,reit,metric,p_ffo,ffo,gain_on_property_sales
+766704,WELL,reit,metric,piotroski_f,liquidity,current_assets
+766704,WELL,reit,metric,piotroski_f,liquidity,current_liabilities
+107263,WMB,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+107263,WMB,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+107263,WMB,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+107263,WMB,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+11544,WRB,insurer,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1140536,WTW,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1140536,WTW,standard,metric,beneish_m,sga,sga_expense
+1140536,WTW,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1140536,WTW,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+106535,WY,reit,metric,beneish_m,sga,sga_expense | selling_marketing_expense
+1174922,WYNN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+1174922,WYNN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+1174922,WYNN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+72903,XEL,standard,metric,beneish_m,core,revenue
+72903,XEL,standard,metric,beneish_m,gross_profit,gross_profit
+72903,XEL,standard,metric,beneish_m,sga,sga_expense
+72903,XEL,standard,metric,gp_assets,gross_profit,gross_profit
+72903,XEL,standard,metric,piotroski_f,gross_margin,gross_profit
+72903,XEL,standard,metric,piotroski_f,asset_turnover,revenue
+2115436,XOM,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
+2115436,XOM,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
+2115436,XOM,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
+1512673,XYZ,standard,fair_value,fair_value,debt,long_term_debt_total | no_long_term_debt
+1512673,XYZ,standard,metric,beneish_m,debt,long_term_debt_total | no_long_term_debt
+1512673,XYZ,standard,metric,ev_ebit,debt,long_term_debt_total | no_long_term_debt
+1512673,XYZ,standard,metric,piotroski_f,leverage,long_term_debt_noncurrent | long_term_debt_total | no_long_term_debt
+1512673,XYZ,standard,metric,roic_reinvestment,debt,long_term_debt_total | no_long_term_debt
+1512673,XYZ,standard,metric,shareholder_yield,debt,long_term_debt_total | no_long_term_debt
+1041061,YUM,standard,metric,beneish_m,core,receivables
+1041061,YUM,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
