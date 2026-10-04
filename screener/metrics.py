@@ -10,7 +10,9 @@ Definitions
   EV/EBIT            EV / TTM EBIT
   GP/A               gross profit_t / total assets_t                      (Novy-Marx)
   Sloan accruals     (NI_t - CFO_t - CFI_t) / average total assets(t, t-1)
-  Piotroski F        9 binary tests, t vs t-1 (ROA on beginning assets); full score needs all 9
+  Piotroski F        9 binary tests, t vs t-1 (ROA on beginning assets); full score needs all 9.
+                     Margin test uses operating margin when there is no COGS. Scaled score =
+                     9 x points / tests run, when at least 7 tests run (else low confidence).
   Beneish M          8-variable model; strict needs all 8 indices
   Shareholder yield  (TTM dividends + TTM buybacks - TTM issuance + debt paydown_t) / market cap
                      where debt paydown_t = total debt_(t-1) - total debt_t (0 for banks)
@@ -31,7 +33,7 @@ import math
 from datetime import date
 
 from screener.debt import resolve_debt
-from screener.rules import ABSENT_MEANS_ZERO, MODEL_RULES
+from screener.rules import ABSENT_MEANS_ZERO, MODEL_RULES, PIOTROSKI_MIN_TESTS
 from screener.series import CompanyData
 
 DEFAULT_TAX_RATE = 0.21
@@ -220,7 +222,12 @@ class Calc:
         cr0, cr1 = _div(f("current_assets"), f("current_liabilities")), _div(f("current_assets", 1), f("current_liabilities", 1))
         sh0 = f("diluted_shares") or f("shares_outstanding")
         sh1 = f("diluted_shares", 1) or f("shares_outstanding", 1)
+        # Margin test: gross margin; companies without COGS use operating (EBIT) margin instead.
         gm0, gm1 = _div(self.gross_profit(), rev0), _div(self.gross_profit(1), rev1)
+        margin_basis = "gross"
+        if gm0 is None or gm1 is None:
+            gm0, gm1 = _div(self.ebit_fy(0)[0], rev0), _div(self.ebit_fy(1)[0], rev1)
+            margin_basis = "operating"
         at0, at1 = _div(rev0, ta1), _div(rev1, ta2)
 
         def cmp(a, b, test):
@@ -234,13 +241,18 @@ class Calc:
             "leverage_down": cmp(lev0, lev1, lambda a, b: a < b or (a == 0 and b == 0)),
             "current_ratio_up": cmp(cr0, cr1, lambda a, b: a > b),
             "no_dilution": cmp(sh0, sh1, lambda a, b: a <= b),
-            "gross_margin_up": cmp(gm0, gm1, lambda a, b: a > b),
+            "margin_up": cmp(gm0, gm1, lambda a, b: a > b),
             "asset_turnover_up": cmp(at0, at1, lambda a, b: a > b),
         }
         have = {k: v for k, v in tests.items() if v is not None}
         self.m["f_points"] = sum(have.values())
         self.m["f_tests"] = len(have)
         self.m["f_score"] = self.m["f_points"] if len(have) == 9 else None
+        # Scaled to a 0-9 scale when >= PIOTROSKI_MIN_TESTS criteria ran; otherwise low confidence.
+        self.m["f_ratio"] = self.m["f_points"] / len(have) if have else None
+        self.m["f_score_scaled"] = (9 * self.m["f_ratio"] if len(have) >= PIOTROSKI_MIN_TESTS else None)
+        self.m["f_confidence"] = "normal" if len(have) >= PIOTROSKI_MIN_TESTS else "low"
+        self.m["f_margin_basis"] = margin_basis
         self.m["f_detail"] = " ".join(f"{k}={'-' if v is None else v}" for k, v in tests.items())
         if len(have) < 9:
             self.notes.append("f_score: missing " + ",".join(k for k, v in tests.items() if v is None))
@@ -287,6 +299,9 @@ class Calc:
         imputable = len(missing) <= BENEISH_MAX_IMPUTED and "tata" not in missing
         self.m["m_score_imputed"] = score if imputable else None
         self.m["m_missing"] = " ".join(missing)
+        # M&A exception input: cash acquisitions this year / beginning-of-year total assets
+        # (end-of-year assets are inflated by the acquisition itself).
+        self.m["acquisitions_to_assets"] = _div(self.fy("acquisitions"), ta1)
         self.m["m_detail"] = " ".join(f"{k}={'-' if v is None else round(v, 3)}" for k, v in idx.items())
         if missing:
             self.notes.append("m_score: missing " + ",".join(missing))

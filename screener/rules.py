@@ -15,12 +15,27 @@ STATUS_NO_FLAG = "no_flag"
 STATUS_DISQUALIFIED = "disqualified"    # Beneish / F-Score rule tripped (where applicable)
 STATUS_INSUFFICIENT = "insufficient_data"  # a fair-value / MoS input is missing; never flagged
 STATUS_NOT_APPLICABLE = "not_applicable"   # method doesn't apply (e.g. negative 3-yr avg EBIT)
+STATUS_CORPORATE_ACTION = "corporate_action_pending"  # 8-K Item 2.01 not yet followed by a 10-Q
+STATUS_EXCLUDED = "excluded"            # manual exclusion (MANUAL_EXCLUSIONS)
 CONFIDENCE_NORMAL = "normal"
 CONFIDENCE_LOW = "low"                  # e.g. captive finance (see sectors.CAPTIVE_FINANCE)
 
+# ---- Flag and disqualification thresholds (Milestone 6) ----
+MOS_FLAG_THRESHOLD = 0.30
+BENEISH_THRESHOLD = -1.78               # strict M-Score above this disqualifies; imputed only warns
+BENEISH_MA_EXCEPTION = 0.10             # acquisitions > 10% of beginning total assets: review, not DQ
+PIOTROSKI_MIN_TESTS = 7                 # fewer testable criteria: no DQ, F-Score low confidence
+PIOTROSKI_DQ_RATIO = 1 / 3              # disqualify if points / tests run <= 1/3
+CORPORATE_ACTION_LOOKBACK_DAYS = 120    # 8-K Item 2.01 within this window and no 10-Q since
+TREASURY_SERIES = "DGS10"               # standard model: flag only if EBIT/EV > 10-yr Treasury
+
+MANUAL_EXCLUSIONS = {
+    "CTVA": "2026 separation: price reflects post-separation company, financials are pre-separation",
+}
+
 # Not reporting these is normal and means zero (e.g. AAPL reports no goodwill line).
 ABSENT_MEANS_ZERO = {
-    "rd_expense", "dividends_paid", "buybacks", "stock_issuance", "goodwill",
+    "rd_expense", "dividends_paid", "buybacks", "stock_issuance", "goodwill", "acquisitions",
     "intangibles_ex_goodwill", "preferred_stock", "minority_interest",
     "short_term_investments", "long_term_investments", "short_term_borrowings",
 }

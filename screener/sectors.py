@@ -20,6 +20,7 @@ SECTOR_MODEL_OVERRIDES = {
     "GS": "bank",     # bank holding company filed under SIC 6211
     "MS": "bank",     # bank holding company filed under SIC 6211
     "SCHW": "bank",   # bank holding company filed under SIC 6211
+    "SYF": "bank",    # deposit-funded consumer lender (deposits 79% of liabilities)
 }
 
 # Industrials/autos with captive finance arms. Finance-arm debt inflates EV, so EV/EBIT-based

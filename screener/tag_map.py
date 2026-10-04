@@ -102,6 +102,10 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "PaymentsToAcquireProductiveAssets",
         "PaymentsForCapitalImprovements",
     )),
+    "acquisitions": ("USD", "duration", _g(  # cash paid for businesses (Beneish M&A exception)
+        "PaymentsToAcquireBusinessesNetOfCashAcquired",
+        "PaymentsToAcquireBusinessesGross",
+    )),
     "dividends_paid": ("USD", "duration", _g(
         "PaymentsOfDividendsCommonStock",
         "PaymentsOfDividends",

@@ -895,19 +895,6 @@ cik,tickers,sector_model,scope,item,input,missing
 16918,STZ,standard,metric,ev_ebit,shares,shares_outstanding | diluted_shares | eps_diluted
 16918,STZ,standard,metric,piotroski_f,dilution,shares_outstanding | diluted_shares | eps_diluted
 93556,SWK,standard,metric,beneish_m,core,receivables
-1601712,SYF,standard,metric,beneish_m,core,receivables
-1601712,SYF,standard,metric,beneish_m,core,revenue
-1601712,SYF,standard,metric,beneish_m,core,current_assets
-1601712,SYF,standard,metric,beneish_m,core,ppe_net
-1601712,SYF,standard,metric,beneish_m,core,current_liabilities
-1601712,SYF,standard,metric,beneish_m,gross_profit,gross_profit
-1601712,SYF,standard,metric,beneish_m,sga,sga_expense
-1601712,SYF,standard,metric,gp_assets,gross_profit,gross_profit
-1601712,SYF,standard,metric,piotroski_f,liquidity,current_assets
-1601712,SYF,standard,metric,piotroski_f,liquidity,current_liabilities
-1601712,SYF,standard,metric,piotroski_f,gross_margin,gross_profit
-1601712,SYF,standard,metric,piotroski_f,asset_turnover,revenue
-1601712,SYF,standard,metric,roic_reinvestment,reinvestment,capex
 96021,SYY,standard,metric,beneish_m,core,receivables
 96021,SYY,standard,metric,beneish_m,sga,sga_expense
 732717,T,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
