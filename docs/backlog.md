@@ -55,6 +55,19 @@ Items deferred to after the milestone noted.
 - When a 10-Q restates the prior-year YTD (e.g. discontinued operations), TTM is rebuilt as
   current YTD + (FY - original prior YTD) x restatement ratio.
 - Tiers: flag = normal confidence and 30% <= MoS <= 60%; watch = low confidence or MoS > 60%.
+- Materiality: the TTM-only regime applies only if TTM acquisitions >= 10% of pre-event total
+  assets, or the disposed business >= 10% of revenue (from the revenue restatement in 10-Qs, or
+  for manual spin-offs the spun-off company's own revenue). CMCSA/Versant = 5%: normal treatment.
+- A 10-Q/10-K clears a pending corporate action only if its period ends >= 30 days after the
+  event (HON's Q2 10-Q, period ending one day after its spin 8-K, still consolidated aerospace).
+- Standard peers: GICS sub-industry (>= 4 valid) -> industry group (>= 8) -> sector (>= 8) ->
+  all. Small sub-industry groups can carry high medians (Systems Software 38.9x with n=4 put
+  GEN at 76% MoS; Specialty Chemicals 29.3x, n=6, put PPG at 62%).
+- FSLR sensitivity (`screener/sensitivities.py`, manual from filing text): Section 45X credits
+  are ~$1.79B of TTM EBIT ($1.81B) and ~$1.09B of the 3-yr average ($1.28B). Ex-credits MoS is
+  deeply negative. Refresh the figures with each FSLR filing.
+- FDX: the FedEx Freight spin 8-K (2026-06-01) is 123 days old, just past the 120-day pending
+  window, and no post-event 10-Q exists yet, so it gets normal treatment.
 
 ## Valuation: open items
 - Spin-offs can be announced under 8-K Item 8.01 rather than 2.01 (Comcast/Versant), so the

@@ -183,6 +183,9 @@ class Calc:
         m.update(ebit_ttm=ebit, ebit_basis=basis, ebit_period_basis=period_basis)
         m["ev_ebit"] = _div(m.get("enterprise_value"), ebit) if ebit and ebit > 0 else None
         m["earnings_yield"] = _div(ebit, m.get("enterprise_value")) if m.get("enterprise_value") else None
+        e0, e1 = self.ebit_fy(0)[0], self.ebit_fy(1)[0]
+        m["ebit_fy"], m["ebit_fy_prior"] = e0, e1
+        m["ebit_fy_change"] = (e0 - e1) / abs(e1) if e0 is not None and e1 else None
         years = [self.ebit_fy(b)[0] for b in range(3)]
         years = [y for y in years if y is not None]
         m["ebit_3y_n"] = len(years)
@@ -475,5 +478,10 @@ def compute(cd: CompanyData, model: str, price: float | None, price_date: str | 
         c.insurer()
     elif model == "reit":
         c.reit()
+    # Corporate-action materiality inputs: acquisitions vs pre-event assets; revenue restatement
+    # (a disposed business moved to discontinued operations shrinks restated revenue).
+    c.m["acquisitions_ttm_to_assets"] = _div(c.ttm("acquisitions"), cd.fy("total_assets"))
+    ratio = cd.ttm("revenue").restatement_ratio
+    c.m["revenue_restated_share_removed"] = 1 - ratio if ratio is not None else None
     c.m["fy_end"] = cd.fy_end()
     return c.m, c.notes

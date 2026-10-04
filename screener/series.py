@@ -27,6 +27,7 @@ class TTM:
     value: float | None
     period_end: str | None
     basis: str  # "ttm", "ttm_restated" (rebuilt on the restated basis), "fy" (no later 10-Q), "missing"
+    restatement_ratio: float | None = None  # restated / originally reported prior-year YTD
 
 
 @dataclass
@@ -78,15 +79,16 @@ class CompanyData:
                                    & (self.all_facts["period_end"] == p["period_end"])]
         first = float(originals.sort_values("filed").iloc[0]["value"]) if len(originals) else float(p["value"])
         restated_prior = float(p["value"])
+        ratio = restated_prior / first if first else None
         if abs(first - restated_prior) <= RESTATEMENT_TOLERANCE * max(abs(first), 1.0):
-            return TTM(fy_val + float(cur["value"]) - restated_prior, cur["period_end"], "ttm")
+            return TTM(fy_val + float(cur["value"]) - restated_prior, cur["period_end"], "ttm", ratio)
         # Restated (e.g. discontinued operations after a spin-off): the fiscal-year value is on
         # the old basis. Estimate the restated remainder of last year by scaling the original
         # remainder (FY - original prior YTD) by the restatement ratio of the prior YTD.
         if first == 0:
             return TTM(None, None, "missing")
         remainder = (fy_val - first) * (restated_prior / first)
-        return TTM(float(cur["value"]) + remainder, cur["period_end"], "ttm_restated")
+        return TTM(float(cur["value"]) + remainder, cur["period_end"], "ttm_restated", ratio)
 
     def instant_one_year_before(self, concept: str, ref_date: str) -> float | None:
         target = date.fromisoformat(ref_date) - timedelta(days=365)

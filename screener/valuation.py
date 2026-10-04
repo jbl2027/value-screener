@@ -4,7 +4,8 @@ Fair value methods (rules.MODEL_RULES[...]["fair_value_method"]):
   standard  peer-median EV/EBIT x min(TTM EBIT, 3-yr average EBIT) - net debt - preferred -
             minority, per share (TTM only, low confidence, after a corporate action until the
             next 10-K)
-            peers: GICS industry group -> sector -> all standard, first level with >= 8 valid
+            peers: GICS sub-industry (>= 4 valid) -> industry group (>= 8) -> sector (>= 8) ->
+            all standard
             (EBIT > 0, EV > 0, EV/EBIT <= 100); multiples winsorized 5/95 within the group
   reit      peer-median P/FFO x min(TTM FFO, 3-yr average FFO) per share; peers: GICS
             sub-industry if >= 5 valid, else all
@@ -46,10 +47,11 @@ def standard_peers(df: pd.DataFrame, eligible: pd.Series) -> pd.DataFrame:
                 & (std["ebit_ttm"] > 0) & (std["enterprise_value"] > 0)
                 & std["ev_ebit"].between(0, cfg["max_multiple"])]
     out = {}
+    last_level = cfg["peer_levels"][-1][0]
     for idx, row in std.iterrows():
-        for level in cfg["peer_levels"]:
+        for level, min_peers in cfg["peer_levels"]:
             peers = valid[valid[level] == row[level]]["ev_ebit"]
-            if len(peers) >= cfg["min_peers"] or level == cfg["peer_levels"][-1]:
+            if len(peers) >= min_peers or level == last_level:
                 out[idx] = {"peer_level": level, "peer_group": row[level], "peer_count": len(peers),
                             "peer_multiple": _winsorized_median(peers, cfg["winsorize"]) if len(peers) else None}
                 break
@@ -139,8 +141,21 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     # followed by a 10-Q. Annual history predates the event, so value on TTM only (low
     # confidence) until a 10-K covering a period after the event is filed.
     event, fy_end = g("event_filed"), g("fy_end")
-    post_action = (isinstance(event, str) and isinstance(fy_end, str) and event > fy_end
-                   and not _truthy(row.get("corporate_action_pending")))
+    in_window = (isinstance(event, str) and isinstance(fy_end, str) and event > fy_end
+                 and not _truthy(row.get("corporate_action_pending")))
+    post_action = False
+    if in_window:
+        acq, removed, spun = g("acquisitions_ttm_to_assets"), g("revenue_restated_share_removed"), g("disposed_revenue_share")
+        disposed = max([v for v in (removed, spun) if v is not None], default=None)
+        parts = []
+        if acq is not None:
+            parts.append(f"acquisitions {acq:.0%} of assets")
+        if disposed is not None:
+            parts.append(f"disposed {disposed:.0%} of revenue")
+        post_action = ((acq or 0) >= R.CORPORATE_ACTION_MIN_ACQ_TO_ASSETS
+                       or (disposed or 0) >= R.CORPORATE_ACTION_MIN_DISPOSED_REVENUE)
+        rec["corporate_action_materiality"] = (("material: " if post_action else "immaterial: ")
+                                               + (", ".join(parts) or "no measurable size"))
     if post_action:
         low.append(f"post-corporate-action ({row.get('event_source')} {event}): TTM only until next 10-K")
 
@@ -268,7 +283,8 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     if isinstance(row.get("excluded_reason"), str):
         status, reason = R.STATUS_EXCLUDED, row["excluded_reason"]
     elif _truthy(row.get("corporate_action_pending")):
-        status, reason = R.STATUS_CORPORATE_ACTION, f"{row.get('event_source')} filed {event}, no 10-Q since"
+        status, reason = (R.STATUS_CORPORATE_ACTION,
+                          f"{row.get('event_source')} filed {event}; no 10-Q/10-K yet covers a post-event period")
     elif missing:
         status, reason = R.STATUS_INSUFFICIENT, "; ".join(missing)
     elif not_applicable:
