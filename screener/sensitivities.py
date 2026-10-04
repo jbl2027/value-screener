@@ -15,6 +15,7 @@ EBIT_ADJUSTMENTS = {
         #   H1 2025 678,861; H1 2026 862,513 (10-Q filed 2026-07-30)
         "ttm_adjust": -(1_606_722 + 862_513 - 678_861) * 1_000,        # -1,790.4M
         "avg3_adjust": -(659_745 + 1_009_451 + 1_606_722) / 3 * 1_000,  # -1,092.0M
+        "fy_adjust": -1_606_722 * 1_000,                                 # FY2025, -1,606.7M
         "source": "FSLR 10-K 2026-02-24 and 10-Q 2026-07-30, government incentives note",
     },
 }
@@ -35,5 +36,8 @@ def apply_ebit_adjustments(metrics: pd.DataFrame) -> pd.DataFrame:
         ev, ebit = df.loc[m, "enterprise_value"], df.loc[m, "ebit_ttm"]
         df.loc[m, "ev_ebit"] = (ev / ebit).where(ebit > 0)
         df.loc[m, "earnings_yield"] = ebit / ev
+        if "operating_profitability" in df and "fy_adjust" in adj:
+            df.loc[m, "operating_profitability"] = (df.loc[m, "operating_profitability"]
+                                                    + adj["fy_adjust"] / df.loc[m, "total_assets_fy"])
         df.loc[m, "ebit_adjustment"] = f"{adj['note']}: EBIT {adj['label']} ({adj['source']})"
     return df

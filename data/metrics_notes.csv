@@ -546,6 +546,7 @@ cik,ticker,note
 2082247,FDXF,"f_score: missing roa_up,asset_turnover_up"
 2082247,FDXF,"m_score: missing gmi,sgai"
 2089271,HONA,gp_assets: missing gross profit or assets
+2089271,HONA,operating_profitability: missing EBIT or assets
 2089271,HONA,sloan_accruals: missing input
 2089271,HONA,"f_score: missing roa_pos,cfo_pos,roa_up,cfo_gt_ni,leverage_down,current_ratio_up,no_dilution,margin_up,asset_turnover_up"
 2089271,HONA,"m_score: missing dsri,gmi,aqi,sgi,depi,sgai,lvgi,tata"

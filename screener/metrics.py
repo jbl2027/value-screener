@@ -9,6 +9,7 @@ Definitions
   EV                 market cap + total debt + preferred + minority interest - cash - ST investments
   EV/EBIT            EV / TTM EBIT
   GP/A               gross profit_t / total assets_t                      (Novy-Marx)
+  Operating profit.  (EBIT_t + R&D_t) / total assets_t   (Ball, Gerakos, Linnainmaa & Nikolaev 2015)
   Sloan accruals     (NI_t - CFO_t - CFI_t) / average total assets(t, t-1)
   Piotroski F        9 binary tests, t vs t-1 (ROA on beginning assets); full score needs all 9.
                      Margin test uses operating margin when there is no COGS. Scaled score =
@@ -197,6 +198,14 @@ class Calc:
         self.m["gp_assets"] = _div(self.gross_profit(), self.cd.fy("total_assets"))
         if self.m["gp_assets"] is None:
             self.notes.append("gp_assets: missing gross profit or assets")
+        # Operating profitability (Ball, Gerakos, Linnainmaa & Nikolaev 2015):
+        # (operating income + R&D) / total assets, with the system's EBIT definition.
+        ebit, _ = self.ebit_fy(0)
+        rd = self.fy("rd_expense") or 0.0
+        self.m["total_assets_fy"] = self.cd.fy("total_assets")
+        self.m["operating_profitability"] = _div(ebit + rd, self.cd.fy("total_assets")) if ebit is not None else None
+        if self.m["operating_profitability"] is None:
+            self.notes.append("operating_profitability: missing EBIT or assets")
 
     def sloan(self) -> None:
         ni, cfo, cfi = self.cd.fy("net_income"), self.cd.fy("operating_cash_flow"), self.cd.fy("investing_cash_flow")

@@ -70,15 +70,13 @@ Items deferred to after the milestone noted.
 - FDX: the FedEx Freight spin 8-K (2026-06-01) is 123 days old, just past the 120-day pending
   window, and no post-event 10-Q exists yet, so it gets normal treatment.
 
-## Composite score (Milestone 7): open items
-- Ranking groups are SIC (2-digit major group -> division -> all), per the original spec, while
-  valuation peers are GICS. One-line switch in `screener/scoring.py` if GICS is preferred.
-- Missing components are excluded and weights renormalized (equivalent to imputing the mean of
-  the company's other scores). Alternative: impute 50 (neutral) to avoid rewarding gaps.
-- Productivity (GP/A) is missing for ~120 standard companies without COGS (services, utilities,
-  some financials); a substitute (e.g. operating margin or ROA) could fill it.
-- LLM component (20%) pending Milestone 8; composites are renormalized over the other 80%.
-- Composites are computed regardless of status (e.g. CLX on a stale 10-K); filter by status.
+## Composite score (Milestone 7): decisions applied
+- Ranking groups: GICS industry group -> sector -> all standard (min 8), matching valuation peers.
+- Missing components imputed at 50; `components_available` (of 7); < 5 -> low confidence.
+- Productivity = operating profitability (EBIT + R&D) / assets for all standard companies
+  (430 of 431 covered; FSLR's numerator excludes 45X credits).
+- Composite null for insufficient_data rows (component scores kept).
+- LLM component (20%) imputed at 50 until Milestone 8 scores exist.
 
 ## Valuation: open items
 - Spin-offs can be announced under 8-K Item 8.01 rather than 2.01 (Comcast/Versant), so the
