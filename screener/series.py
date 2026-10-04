@@ -17,6 +17,7 @@ from screener.tag_map import TAG_MAP
 ANNUAL_DAYS = (350, 380)
 YTD_DAYS = (80, 300)
 TOLERANCE = timedelta(days=10)
+RESTATEMENT_TOLERANCE = 0.02  # prior-year YTD restated by more than 2%: TTM mixes bases
 DURATION_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "duration"}
 INSTANT_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "instant"}
 
@@ -25,7 +26,7 @@ INSTANT_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "insta
 class TTM:
     value: float | None
     period_end: str | None
-    basis: str  # "ttm", "fy" (no later 10-Q), or "missing"
+    basis: str  # "ttm", "ttm_restated" (mixed bases), "fy" (no later 10-Q), or "missing"
 
 
 @dataclass
@@ -33,6 +34,7 @@ class CompanyData:
     cik: int
     as_of: str
     facts: pd.DataFrame                  # latest-known value per (concept, period)
+    all_facts: pd.DataFrame              # every version filed on or before as_of (originals too)
     annual: pd.DataFrame                 # index fy_end (ascending), columns concepts
     latest_bs_date: str | None
     latest_bs: dict[str, float] = field(default_factory=dict)
@@ -68,7 +70,16 @@ class CompanyData:
                   & ((f["duration_days"] - cur["duration_days"]).abs() <= 10)]
         if prior.empty:
             return TTM(fy_val, fy_end, "fy")
-        return TTM(fy_val + float(cur["value"]) - float(prior.iloc[-1]["value"]), cur["period_end"], "ttm")
+        p = prior.iloc[-1]
+        # If the prior-year YTD was restated (e.g. discontinued operations after a spin-off), the
+        # fiscal-year base from the last 10-K is on the old basis: the TTM mixes bases.
+        originals = self.all_facts[(self.all_facts["concept"] == concept)
+                                   & (self.all_facts["period_start"] == p["period_start"])
+                                   & (self.all_facts["period_end"] == p["period_end"])]
+        first = float(originals.sort_values("filed").iloc[0]["value"]) if len(originals) else float(p["value"])
+        restated = abs(first - float(p["value"])) > RESTATEMENT_TOLERANCE * max(abs(first), 1.0)
+        return TTM(fy_val + float(cur["value"]) - float(p["value"]), cur["period_end"],
+                   "ttm_restated" if restated else "ttm")
 
     def instant_one_year_before(self, concept: str, ref_date: str) -> float | None:
         target = date.fromisoformat(ref_date) - timedelta(days=365)
@@ -79,9 +90,9 @@ class CompanyData:
 
 
 def build_company(cik: int, facts: pd.DataFrame, as_of: str) -> CompanyData:
-    f = facts[facts["filed"] <= as_of].copy()
+    all_facts = facts[facts["filed"] <= as_of].copy()
     # Latest-known value per period (a restatement filed later replaces the original).
-    f = (f.sort_values(["filed", "accn"])
+    f = (all_facts.sort_values(["filed", "accn"])
           .groupby(["concept", "period_start", "period_end"], dropna=False, sort=False).tail(1))
 
     annual_dur = f[f["duration_days"].between(*ANNUAL_DAYS)]
@@ -115,5 +126,5 @@ def build_company(cik: int, facts: pd.DataFrame, as_of: str) -> CompanyData:
     if len(so):
         latest_bs["shares_outstanding"] = float(so.iloc[-1]["value"])
         shares_date = so.iloc[-1]["period_end"]
-    return CompanyData(cik=cik, as_of=as_of, facts=f, annual=annual,
+    return CompanyData(cik=cik, as_of=as_of, facts=f, all_facts=all_facts, annual=annual,
                        latest_bs_date=latest_bs_date, latest_bs=latest_bs, shares_date=shares_date)

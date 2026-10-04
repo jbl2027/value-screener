@@ -13,6 +13,7 @@ Secrets live in `.env` (gitignored).
 - `python scripts/build_fundamentals.py`: point-in-time fundamentals for the full universe. Writes `data/facts.parquet` (gitignored), `data/fundamentals_summary.csv` (per-company readiness and input bases), and `data/mapping_report.csv` (every missing input, by metric and fair value). Rules live in `screener/rules.py`.
 - `python scripts/update_prices.py [--verify N]`: daily closes for the universe from one Tiingo bulk IEX request (run after the US close). Appends to `data/prices.parquet` (gitignored). `--verify N` spot-checks N closes against the EOD endpoint.
 - `python scripts/compute_metrics.py [--as-of YYYY-MM-DD]`: Milestone 5 metrics for every company, point-in-time as of the latest price date. Writes `data/metrics.csv` and `data/metrics_notes.csv` (why any metric is missing). Definitions are documented at the top of `screener/metrics.py`.
+- `python scripts/compute_valuations.py`: Milestone 6 fair value, margin of safety, and status (flag / no_flag / disqualified / insufficient_data / not_applicable / corporate_action_pending / excluded) with confidence and reasons. Writes `data/valuations.csv`, `data/valuation_fits.csv` (regression R2 and peer medians), and `data/corporate_actions.csv`. Methods are documented at the top of `screener/valuation.py`.
 - `python scripts/explore_tags.py PATTERN TICKER...`: dev helper listing which XBRL tags a company uses.
 - `python scripts/extract_research.py`: regenerates `docs/research.md` from the research PDF.
 

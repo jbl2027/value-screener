@@ -44,7 +44,17 @@ Items deferred to after the milestone noted.
 - CLX: FY2026 10-K (filed 2026-08-07) not yet in companyfacts; marked stale.
 - New entities with short XBRL history: HONA (2026 spin-off), PSKY (2025 merger).
 
-## Metrics (Milestone 5): decisions pending for Milestone 6
+## Valuation (Milestone 6): open items
+- Proposed: route AXP (deposits 57% of liabilities) and RJF (78%) to the bank model.
+- Proposed: keep `corporate_action_pending` until the next 10-K (not 10-Q) after an Item 2.01
+  8-K. The 10-Q restates quarters for discontinued operations, but the fiscal-year base used by
+  TTM and the 3-yr average EBIT stays pre-transaction until the next 10-K (HON: spin-off
+  2026-06-29, cleared by a 10-Q, still flagged at 56% MoS on pre-spin EBIT). Currently these
+  get low confidence instead.
+- Insurer P/B ~ ROE regression is weak (R2 0.24, n=17), so insurer flags are low confidence.
+- 10-yr Treasury guard at 5.24% blocked 7 standard companies with MoS >= 30%.
+
+## Metrics (Milestone 5): decisions applied in Milestone 6
 - Piotroski: 134 standard companies have < 9 testable criteria (144 lack COGS, so no gross
   margin test). `f_score` is set only with all 9; `f_points`/`f_tests` hold partial results.
 - Beneish: strict `m_score` needs all 8 indices (234 of 434); `m_score_imputed` sets up to 2

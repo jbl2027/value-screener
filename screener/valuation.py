@@ -1,0 +1,249 @@
+"""Milestone 6: fair value, margin of safety, and status for every company.
+
+Fair value methods (rules.MODEL_RULES[...]["fair_value_method"]):
+  standard  peer-median EV/EBIT x 3-yr average EBIT - net debt - preferred - minority, per share
+            peers: GICS industry group -> sector -> all standard, first level with >= 8 valid
+            (EBIT > 0, EV > 0, EV/EBIT <= 100); multiples winsorized 5/95 within the group
+  reit      peer-median P/FFO x FFO per share; peers: GICS sub-industry if >= 5 valid, else all
+  bank      OLS P/TBV ~ ROTCE across banks; fair P/TBV at own ROTCE x TBV per share
+  insurer   OLS P/B ~ ROE across insurers; fair P/B at own ROE x book value per share
+Margin of safety = (fair value - price) / fair value.
+
+Status precedence: excluded > corporate_action_pending > insufficient_data > not_applicable >
+disqualified > flag / no_flag. Confidence (normal/low) is reported separately with reasons.
+"""
+import numpy as np
+import pandas as pd
+
+from screener import rules as R
+
+MIN_R2_NORMAL = 0.30  # regression fits below this make bank/insurer valuations low confidence
+
+
+def _truthy(v) -> bool:
+    """True for True/np.True_/'True'; False for False, NaN, None."""
+    if v is None or (isinstance(v, float) and np.isnan(v)) or v is pd.NA:
+        return False
+    return str(v).lower() == "true"
+
+
+def _winsorized_median(values: pd.Series, limits: tuple[float, float]) -> float:
+    lo, hi = values.quantile(limits[0]), values.quantile(limits[1])
+    return float(values.clip(lo, hi).median())
+
+
+def standard_peers(df: pd.DataFrame, eligible: pd.Series) -> pd.DataFrame:
+    """Per standard company: peer level, group, count, and winsorized median EV/EBIT."""
+    cfg = R.MODEL_RULES["standard"]["fair_value_method"]
+    std = df[df["sector_model"] == "standard"]
+    valid = std[eligible.reindex(std.index, fill_value=False)
+                & (std["ebit_ttm"] > 0) & (std["enterprise_value"] > 0)
+                & std["ev_ebit"].between(0, cfg["max_multiple"])]
+    out = {}
+    for idx, row in std.iterrows():
+        for level in cfg["peer_levels"]:
+            peers = valid[valid[level] == row[level]]["ev_ebit"]
+            if len(peers) >= cfg["min_peers"] or level == cfg["peer_levels"][-1]:
+                out[idx] = {"peer_level": level, "peer_group": row[level], "peer_count": len(peers),
+                            "peer_multiple": _winsorized_median(peers, cfg["winsorize"]) if len(peers) else None}
+                break
+    return pd.DataFrame.from_dict(out, orient="index")
+
+
+def reit_peers(df: pd.DataFrame, eligible: pd.Series) -> pd.DataFrame:
+    cfg = R.MODEL_RULES["reit"]["fair_value_method"]
+    reits = df[df["sector_model"] == "reit"]
+    valid = reits[eligible.reindex(reits.index, fill_value=False) & (reits["p_ffo"] > 0)]
+    out = {}
+    for idx, row in reits.iterrows():
+        peers = valid[valid["gics_sub_industry"] == row["gics_sub_industry"]]["p_ffo"]
+        level, group = "gics_sub_industry", row["gics_sub_industry"]
+        if len(peers) < cfg["min_peers"]:
+            peers, level, group = valid["p_ffo"], "sector_model", "reit"
+        out[idx] = {"peer_level": level, "peer_group": group, "peer_count": len(peers),
+                    "peer_multiple": float(peers.median()) if len(peers) else None}
+    return pd.DataFrame.from_dict(out, orient="index")
+
+
+def regression(df: pd.DataFrame, model: str, eligible: pd.Series) -> tuple[pd.DataFrame, dict]:
+    cfg = R.MODEL_RULES[model]["fair_value_method"]
+    x_col, y_col = cfg["x"], cfg["y"]
+    sub = df[df["sector_model"] == model]
+    fit_set = sub[eligible.reindex(sub.index, fill_value=False) & sub[x_col].notna() & (sub[y_col] > 0)]
+    fit = {"model": model, "y": y_col, "x": x_col, "n": len(fit_set)}
+    if len(fit_set) < 3:
+        return pd.DataFrame(index=sub.index), {**fit, "r2": None}
+    slope, intercept = np.polyfit(fit_set[x_col], fit_set[y_col], 1)
+    pred = intercept + slope * fit_set[x_col]
+    ss_res = float(((fit_set[y_col] - pred) ** 2).sum())
+    ss_tot = float(((fit_set[y_col] - fit_set[y_col].mean()) ** 2).sum())
+    r2 = 1 - ss_res / ss_tot if ss_tot else None
+    fit.update(intercept=float(intercept), slope=float(slope), r2=r2)
+    out = pd.DataFrame({"peer_level": "regression", "peer_group": model, "peer_count": len(fit_set),
+                        "fair_multiple": intercept + slope * sub[x_col]}, index=sub.index)
+    return out, fit
+
+
+def value_all(df: pd.DataFrame, summary: pd.DataFrame, corp: pd.DataFrame,
+              treasury_yield_pct: float) -> tuple[pd.DataFrame, list[dict]]:
+    df = df.copy()
+    df = df.merge(summary[["cik", "stale_10k", "has_10k", "latest_10k_filed"]], on="cik", how="left")
+    df = df.merge(corp, on="cik", how="left")
+    df["corporate_action_pending"] = df["corporate_action_pending"].astype("boolean").fillna(False)
+    df["excluded_reason"] = df["ticker"].map(R.MANUAL_EXCLUSIONS)
+    eligible = df["excluded_reason"].isna() & ~df["corporate_action_pending"]
+
+    peers = pd.concat([standard_peers(df, eligible), reit_peers(df, eligible)])
+    fits = []
+    for model in ("bank", "insurer"):
+        out, fit = regression(df, model, eligible)
+        peers = pd.concat([peers, out])
+        fits.append(fit)
+    df = df.join(peers)
+
+    treasury = treasury_yield_pct / 100
+    records = [_evaluate(row, treasury, {f["model"]: f for f in fits}) for _, row in df.iterrows()]
+    result = pd.concat([df, pd.DataFrame(records, index=df.index)], axis=1)
+    result["treasury_yield"] = treasury
+    return result, fits
+
+
+def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
+    model = row["sector_model"]
+    missing, dq, warnings, low = [], [], [], []
+    rec = {"method": R.MODEL_RULES[model]["fair_value_method"]["type"], "fair_value": None, "mos": None,
+           "base_value": None, "company_multiple": None}
+
+    def g(col):
+        v = row.get(col)
+        return None if v is None or (isinstance(v, float) and np.isnan(v)) else v
+
+    # ---- inputs ----
+    price, shares = g("price"), g("shares")
+    if price is None:
+        missing.append("price")
+    if shares is None:
+        missing.append("shares")
+    if not _truthy(row.get("has_10k")):
+        missing.append("10-K")
+    elif _truthy(row.get("stale_10k")):
+        missing.append("current 10-K (latest is stale)")
+
+    fair_value, not_applicable = None, None
+    if model == "standard":
+        rec["company_multiple"] = g("ev_ebit")
+        ebit3 = g("ebit_3y_avg")
+        rec["base_value"] = ebit3
+        if g("total_debt") is None:
+            missing.append(f"total_debt ({row.get('debt_problem')})")
+        if g("cash_like") is None:
+            missing.append("cash")
+        if ebit3 is None:
+            missing.append(f"ebit_3y_avg (only {int(g('ebit_3y_n') or 0)} years)")
+        elif ebit3 <= 0:
+            not_applicable = "3-yr average EBIT <= 0"
+        if g("peer_multiple") is None:
+            missing.append("peer multiple")
+        if not missing and not not_applicable:
+            claims = g("enterprise_value") - g("market_cap") - g("net_debt")  # preferred + minority
+            equity = g("peer_multiple") * ebit3 - g("net_debt") - claims
+            fair_value = equity / shares
+    elif model == "reit":
+        rec["company_multiple"] = g("p_ffo")
+        ffo = g("ffo_ttm")
+        rec["base_value"] = ffo
+        if ffo is None:
+            missing.append("ffo (net income, D&A, or gains on property sales)")
+        elif ffo <= 0:
+            not_applicable = "FFO <= 0"
+        if not missing and not not_applicable and g("peer_multiple") is not None:
+            fair_value = g("peer_multiple") * ffo / shares
+    else:
+        book_col, mult_col = ("tbv", "p_tbv") if model == "bank" else ("book_value", "p_b")
+        x_col = "rotce" if model == "bank" else "roe"
+        rec["company_multiple"] = g(mult_col)
+        book = g(book_col)
+        rec["base_value"] = book
+        if book is None:
+            missing.append(book_col)
+        elif book <= 0:
+            not_applicable = f"{book_col} <= 0"
+        if g(x_col) is None:
+            missing.append(x_col)
+        fit = fits.get(model, {})
+        if fit.get("r2") is None:
+            missing.append("regression fit")
+        elif fit["r2"] < MIN_R2_NORMAL:
+            low.append(f"weak regression (R2={fit['r2']:.2f})")
+        if not missing and not not_applicable:
+            fm = g("fair_multiple")
+            if fm is None or fm <= 0:
+                not_applicable = "regression predicts multiple <= 0"
+            else:
+                fair_value = fm * book / shares
+
+    # ---- disqualifiers (standard and REIT only) ----
+    if "beneish_m" in R.MODEL_RULES[model]["disqualifiers"]:
+        strict, imputed, acq = g("m_score"), g("m_score_imputed"), g("acquisitions_to_assets")
+        if strict is not None and strict > R.BENEISH_THRESHOLD:
+            if acq is not None and acq > R.BENEISH_MA_EXCEPTION:
+                warnings.append(f"beneish review: M={strict:.2f} but acquisitions {acq:.0%} of assets")
+            else:
+                dq.append(f"beneish M={strict:.2f} > {R.BENEISH_THRESHOLD}")
+        elif strict is None and imputed is not None and imputed > R.BENEISH_THRESHOLD:
+            warnings.append(f"beneish imputed M={imputed:.2f} > {R.BENEISH_THRESHOLD} (warning only)")
+    if "piotroski_f" in R.MODEL_RULES[model]["disqualifiers"]:
+        tests, ratio = g("f_tests"), g("f_ratio")
+        if tests is not None and tests >= R.PIOTROSKI_MIN_TESTS:
+            if ratio is not None and ratio <= R.PIOTROSKI_DQ_RATIO:
+                dq.append(f"piotroski {int(g('f_points'))}/{int(tests)} <= 1/3")
+        else:
+            warnings.append(f"f-score low confidence ({int(tests or 0)} tests)")
+            low.append("f-score low confidence")
+
+    # ---- confidence ----
+    if _truthy(row.get("captive_finance")):
+        low.append("captive finance")
+    if row.get("debt_confidence") == "low":
+        low.append(f"debt basis {row.get('debt_basis')}")
+    if model == "standard" and row.get("ebit_basis") == "pretax_income":
+        low.append("EBIT from pretax income only")
+    if model == "standard" and row.get("ebit_period_basis") == "ttm_restated":
+        low.append("TTM EBIT mixes restated quarters with an unrestated fiscal year")
+    item_201, last_10k = g("item_2_01_filed"), g("latest_10k_filed")
+    if isinstance(item_201, str) and isinstance(last_10k, str) and item_201 > last_10k:
+        low.append(f"8-K Item 2.01 on {item_201} after latest 10-K (annual history predates it)")
+
+    # ---- margin of safety and guard ----
+    if fair_value is not None and price:
+        rec["fair_value"] = fair_value
+        rec["mos"] = (fair_value - price) / fair_value if fair_value > 0 else None
+    ey = g("earnings_yield")
+    guard_ok = model != "standard" or (ey is not None and ey > treasury)
+    rec["treasury_guard_pass"] = guard_ok if model == "standard" else None
+
+    # ---- status ----
+    if isinstance(row.get("excluded_reason"), str):
+        status, reason = R.STATUS_EXCLUDED, row["excluded_reason"]
+    elif _truthy(row.get("corporate_action_pending")):
+        status, reason = R.STATUS_CORPORATE_ACTION, f"8-K Item 2.01 filed {row.get('item_2_01_filed')}"
+    elif missing:
+        status, reason = R.STATUS_INSUFFICIENT, "; ".join(missing)
+    elif not_applicable:
+        status, reason = R.STATUS_NOT_APPLICABLE, not_applicable
+    elif dq:
+        status, reason = R.STATUS_DISQUALIFIED, "; ".join(dq)
+    elif rec["mos"] is None:
+        status, reason = R.STATUS_NO_FLAG, "fair value <= 0"
+    elif rec["mos"] >= R.MOS_FLAG_THRESHOLD and guard_ok:
+        status, reason = R.STATUS_FLAG, f"MoS {rec['mos']:.0%}"
+    elif rec["mos"] >= R.MOS_FLAG_THRESHOLD:
+        status, reason = R.STATUS_NO_FLAG, f"MoS {rec['mos']:.0%} but earnings yield below 10-yr Treasury"
+    else:
+        status, reason = R.STATUS_NO_FLAG, f"MoS {rec['mos']:.0%}"
+
+    rec.update(status=status, status_reason=reason,
+               confidence=R.CONFIDENCE_LOW if low else R.CONFIDENCE_NORMAL,
+               confidence_reasons="; ".join(low), warnings="; ".join(warnings),
+               disqualify_reasons="; ".join(dq), missing_inputs="; ".join(missing))
+    return rec
