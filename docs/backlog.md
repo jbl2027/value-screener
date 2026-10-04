@@ -60,12 +60,13 @@ Items deferred to after the milestone noted.
   for manual spin-offs the spun-off company's own revenue). CMCSA/Versant = 5%: normal treatment.
 - A 10-Q/10-K clears a pending corporate action only if its period ends >= 30 days after the
   event (HON's Q2 10-Q, period ending one day after its spin 8-K, still consolidated aerospace).
-- Standard peers: GICS sub-industry (>= 4 valid) -> industry group (>= 8) -> sector (>= 8) ->
-  all. Small sub-industry groups can carry high medians (Systems Software 38.9x with n=4 put
-  GEN at 76% MoS; Specialty Chemicals 29.3x, n=6, put PPG at 62%).
-- FSLR sensitivity (`screener/sensitivities.py`, manual from filing text): Section 45X credits
-  are ~$1.79B of TTM EBIT ($1.81B) and ~$1.09B of the 3-yr average ($1.28B). Ex-credits MoS is
-  deeply negative. Refresh the figures with each FSLR filing.
+- Standard fair EV/EBIT = shrinkage blend w x sub-industry median + (1 - w) x anchor median,
+  w = n / (n + 8) (0 if n < 2), anchor = industry group (>= 8) -> sector (>= 8) -> all, capped
+  at 25x. The cap binds for 82 of 431 standard companies.
+- FSLR: primary EBIT excludes Section 45X credits (`screener/sensitivities.py`, manual from
+  filing text; ~$1.79B of $1.81B TTM EBIT); as-reported is the sensitivity. Note
+  `government_credit_dependent`. Refresh with each FSLR filing.
+- Manual corporate actions: CMCSA (Versant), BDX (Biosciences & Diagnostics/Waters), CTVA (Vylor).
 - FDX: the FedEx Freight spin 8-K (2026-06-01) is 123 days old, just past the 120-day pending
   window, and no post-event 10-Q exists yet, so it gets normal treatment.
 

@@ -1,12 +1,12 @@
 """Milestone 6: fair value, margin of safety, and status for every company.
 
 Fair value methods (rules.MODEL_RULES[...]["fair_value_method"]):
-  standard  peer-median EV/EBIT x min(TTM EBIT, 3-yr average EBIT) - net debt - preferred -
-            minority, per share (TTM only, low confidence, after a corporate action until the
-            next 10-K)
-            peers: GICS sub-industry (>= 4 valid) -> industry group (>= 8) -> sector (>= 8) ->
-            all standard
-            (EBIT > 0, EV > 0, EV/EBIT <= 100); multiples winsorized 5/95 within the group
+  standard  fair EV/EBIT x min(TTM EBIT, 3-yr average EBIT) - net debt - preferred - minority,
+            per share (TTM only, low confidence, after a material corporate action until the
+            next 10-K). Fair EV/EBIT = w x sub-industry median + (1 - w) x anchor median,
+            w = n / (n + 8), n = valid sub-industry peers (w = 0 if n < 2); anchor = industry
+            group (>= 8 valid) -> sector (>= 8) -> all standard; capped at 25x. Valid = EBIT > 0,
+            EV > 0, EV/EBIT <= 100; medians winsorized 5/95 within each group
   reit      peer-median P/FFO x min(TTM FFO, 3-yr average FFO) per share; peers: GICS
             sub-industry if >= 5 valid, else all
   bank      OLS P/TBV ~ ROTCE across banks; fair P/TBV at own ROTCE x TBV per share
@@ -40,21 +40,35 @@ def _winsorized_median(values: pd.Series, limits: tuple[float, float]) -> float:
 
 
 def standard_peers(df: pd.DataFrame, eligible: pd.Series) -> pd.DataFrame:
-    """Per standard company: peer level, group, count, and winsorized median EV/EBIT."""
+    """Per standard company: shrinkage-blended, capped fair EV/EBIT with its components."""
     cfg = R.MODEL_RULES["standard"]["fair_value_method"]
     std = df[df["sector_model"] == "standard"]
     valid = std[eligible.reindex(std.index, fill_value=False)
                 & (std["ebit_ttm"] > 0) & (std["enterprise_value"] > 0)
                 & std["ev_ebit"].between(0, cfg["max_multiple"])]
     out = {}
-    last_level = cfg["peer_levels"][-1][0]
     for idx, row in std.iterrows():
-        for level, min_peers in cfg["peer_levels"]:
-            peers = valid[valid[level] == row[level]]["ev_ebit"]
-            if len(peers) >= min_peers or level == last_level:
-                out[idx] = {"peer_level": level, "peer_group": row[level], "peer_count": len(peers),
-                            "peer_multiple": _winsorized_median(peers, cfg["winsorize"]) if len(peers) else None}
+        sub = valid[valid[cfg["sub_level"]] == row[cfg["sub_level"]]]["ev_ebit"]
+        n = len(sub)
+        sub_median = _winsorized_median(sub, cfg["winsorize"]) if n else None
+        for level in cfg["anchor_levels"]:
+            anchor = valid[valid[level] == row[level]]["ev_ebit"]
+            if len(anchor) >= cfg["anchor_min"] or level == cfg["anchor_levels"][-1]:
                 break
+        anchor_median = _winsorized_median(anchor, cfg["winsorize"]) if len(anchor) else None
+        w = n / (n + cfg["shrinkage_k"]) if n >= cfg["min_sub_peers"] else 0.0
+        blended = None
+        if anchor_median is not None:
+            blended = w * sub_median + (1 - w) * anchor_median if w else anchor_median
+        capped = blended is not None and blended > cfg["max_fair_multiple"]
+        out[idx] = {
+            "peer_level": "shrinkage", "peer_group": f"{row[cfg['sub_level']]} | {row[level]}",
+            "peer_count": n + len(anchor), "peer_n_sub": n, "peer_w": w,
+            "peer_median_sub": sub_median, "peer_median_anchor": anchor_median,
+            "peer_anchor_level": level, "peer_anchor_group": row[level], "peer_anchor_n": len(anchor),
+            "peer_blended": blended, "peer_cap_applied": capped,
+            "peer_multiple": min(blended, cfg["max_fair_multiple"]) if blended is not None else None,
+        }
     return pd.DataFrame.from_dict(out, orient="index")
 
 
@@ -244,6 +258,9 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
         else:
             warnings.append(f"f-score low confidence ({int(tests or 0)} tests)")
             low.append("f-score low confidence")
+
+    if isinstance(row.get("ebit_adjustment"), str):
+        warnings.append(row["ebit_adjustment"])
 
     # ---- confidence ----
     if _truthy(row.get("captive_finance")):

@@ -20,7 +20,7 @@ from screener.corporate_actions import check  # noqa: E402
 from screener.fred import latest  # noqa: E402
 from screener.fundamentals import extract_facts  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
-from screener.sensitivities import EBIT_SENSITIVITIES  # noqa: E402
+from screener.sensitivities import EBIT_ADJUSTMENTS, apply_ebit_adjustments  # noqa: E402
 from screener.series import build_company  # noqa: E402
 from screener.valuation import value_all  # noqa: E402
 
@@ -28,7 +28,10 @@ OUTPUT_COLUMNS = [
     "as_of", "cik", "ticker", "name", "sector_model", "gics_sector", "gics_industry_group",
     "status", "status_reason", "confidence", "confidence_reasons", "warnings", "disqualify_reasons",
     "missing_inputs", "price", "fair_value", "mos", "method", "peer_level", "peer_group",
-    "peer_count", "peer_multiple", "fair_multiple", "company_multiple", "base_value", "base_basis",
+    "peer_count", "peer_multiple", "peer_n_sub", "peer_w", "peer_median_sub", "peer_median_anchor",
+    "peer_anchor_level", "peer_anchor_group", "peer_anchor_n", "peer_blended", "peer_cap_applied",
+    "fair_multiple", "company_multiple", "base_value", "base_basis", "ebit_adjustment",
+    "ebit_ttm_reported", "ebit_3y_avg_reported",
     "shares", "earnings_yield", "treasury_yield", "treasury_guard_pass", "m_score",
     "m_score_imputed", "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled",
     "status_without_dq", "beneish_top_index", "captive_finance", "corporate_action_pending",
@@ -53,30 +56,31 @@ def disposed_revenue_share(parent_cik: int, spun_cik: int, sec: SECClient, as_of
 
 
 def sensitivities(result: pd.DataFrame) -> pd.DataFrame:
+    """Value adjusted companies on their as-reported EBIT (the primary uses adjusted EBIT)."""
     rows = []
-    for ticker, s in EBIT_SENSITIVITIES.items():
+    for ticker, s in EBIT_ADJUSTMENTS.items():
         r = result[result["ticker"] == ticker]
         if r.empty:
             continue
         r = r.iloc[0]
-        ttm, avg3 = r["ebit_ttm"] + s["ttm_adjust"], r["ebit_3y_avg"] + s["avg3_adjust"]
+        ttm, avg3 = r["ebit_ttm_reported"], r["ebit_3y_avg_reported"]
         base = min(ttm, avg3)
         claims = r["enterprise_value"] - r["market_cap"] - r["net_debt"]
         fv = (r["peer_multiple"] * base - r["net_debt"] - claims) / r["shares"]
         rows.append({
-            "ticker": ticker, "sensitivity": s["label"], "source": s["source"],
-            "ebit_ttm": r["ebit_ttm"], "ebit_ttm_adj": ttm, "ebit_3y_avg": r["ebit_3y_avg"],
-            "ebit_3y_avg_adj": avg3, "ev_ebit": r["ev_ebit"], "ev_ebit_adj": r["enterprise_value"] / ttm,
-            "earnings_yield_adj": ttm / r["enterprise_value"], "peer_multiple": r["peer_multiple"],
-            "fair_value": r["fair_value"], "fair_value_adj": fv, "price": r["price"],
-            "mos": r["mos"], "mos_adj": (fv - r["price"]) / fv if fv > 0 else None,
-            "status": r["status"],
+            "ticker": ticker, "primary_basis": s["label"], "sensitivity": "as-reported EBIT",
+            "source": s["source"], "ebit_ttm": r["ebit_ttm"], "ebit_ttm_reported": ttm,
+            "ebit_3y_avg": r["ebit_3y_avg"], "ebit_3y_avg_reported": avg3,
+            "ev_ebit": r["ev_ebit"], "ev_ebit_reported": r["ev_ebit_reported"],
+            "fair_multiple": r["peer_multiple"], "fair_value": r["fair_value"],
+            "fair_value_reported": fv, "price": r["price"], "mos": r["mos"],
+            "mos_reported": (fv - r["price"]) / fv if fv > 0 else None, "status": r["status"],
         })
     return pd.DataFrame(rows)
 
 
 def main() -> None:
-    metrics = pd.read_csv(DATA_DIR / "metrics.csv")
+    metrics = apply_ebit_adjustments(pd.read_csv(DATA_DIR / "metrics.csv"))
     summary = pd.read_csv(DATA_DIR / "fundamentals_summary.csv")
     as_of = metrics["as_of"].iloc[0]
 
@@ -188,16 +192,17 @@ def main() -> None:
         print(t.round(3).to_string())
 
     if len(sens):
-        print("\n=== Sensitivities (status unchanged) ===")
+        print("\n=== EBIT adjustments: primary vs as-reported sensitivity ===")
+
+        def pct(v):
+            return f"{v:.0%}" if v is not None and v == v else "n/a (fair value <= 0)"
+
         for s in sens.itertuples():
-            print(f"{s.ticker} {s.sensitivity} ({s.source})")
-            print(f"  TTM EBIT {s.ebit_ttm / 1e6:,.0f}M -> {s.ebit_ttm_adj / 1e6:,.0f}M; "
-                  f"3-yr avg {s.ebit_3y_avg / 1e6:,.0f}M -> {s.ebit_3y_avg_adj / 1e6:,.0f}M")
-            print(f"  EV/EBIT {s.ev_ebit:.1f}x -> {s.ev_ebit_adj:.1f}x; earnings yield -> {s.earnings_yield_adj:.1%} "
-                  f"(peer median {s.peer_multiple:.1f}x)")
-            mos_adj = f"{s.mos_adj:.0%}" if s.mos_adj is not None and s.mos_adj == s.mos_adj else "n/a"
-            print(f"  Fair value ${s.fair_value:,.2f} -> ${s.fair_value_adj:,.2f}; price ${s.price:,.2f}; "
-                  f"MoS {s.mos:.0%} -> {mos_adj}")
+            print(f"{s.ticker}: primary = {s.primary_basis} ({s.source}); status {s.status}")
+            print(f"  TTM EBIT primary {s.ebit_ttm / 1e6:,.0f}M vs reported {s.ebit_ttm_reported / 1e6:,.0f}M; "
+                  f"3-yr avg {s.ebit_3y_avg / 1e6:,.0f}M vs {s.ebit_3y_avg_reported / 1e6:,.0f}M")
+            print(f"  Fair EV/EBIT {s.fair_multiple:.1f}x; fair value ${s.fair_value:,.2f} (MoS {pct(s.mos)}) vs "
+                  f"as-reported ${s.fair_value_reported:,.2f} (MoS {pct(s.mos_reported)}); price ${s.price:,.2f}")
 
 
 if __name__ == "__main__":

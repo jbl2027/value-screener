@@ -36,14 +36,16 @@ MOS_EXTREME = 0.60                      # MoS above this goes to "watch" (extrem
 # spun-off company's CIK or None). The spun-off company's revenue measures materiality.
 MANUAL_CORPORATE_ACTIONS = {
     "CMCSA": ("2026-01-05", "Versant spin-off completed 2026-01-01 (8-K Item 8.01)", 2067876),
+    # Biosciences & Diagnostic Solutions spun off and combined with Waters (no standalone
+    # filer); size comes from the revenue restatement in BDX's 10-Qs.
+    "BDX": ("2026-02-09", "Biosciences & Diagnostics spin-off/combination with Waters (8-K Item 8.01)", None),
+    "CTVA": ("2026-10-01", "Vylor seed business separation completed (8-K Item 8.01)", 2128626),
 }
 # Post-corporate-action regime applies only to material transactions.
 CORPORATE_ACTION_MIN_ACQ_TO_ASSETS = 0.10   # acquisitions (TTM cash) / pre-event total assets
 CORPORATE_ACTION_MIN_DISPOSED_REVENUE = 0.10  # disposed business / revenue
 
-MANUAL_EXCLUSIONS = {
-    "CTVA": "2026 separation: price reflects post-separation company, financials are pre-separation",
-}
+MANUAL_EXCLUSIONS: dict[str, str] = {}
 
 # Not reporting these is normal and means zero (e.g. AAPL reports no goodwill line).
 ABSENT_MEANS_ZERO = {
@@ -167,17 +169,18 @@ MODEL_RULES: dict[str, dict] = {
     },
 }
 MODEL_RULES["standard"]["fair_value_method"] = {
-    # Fair value = peer-median EV/EBIT x 3-yr average EBIT, minus net debt, per share.
-    # Peers: first level with enough valid EV/EBITs: GICS sub-industry (>= 4), industry group
-    # (>= 8), sector (>= 8), else all standard-model companies.
+    # Fair value = fair EV/EBIT x min(TTM, 3-yr average EBIT), minus net debt, per share.
+    # Fair EV/EBIT = shrinkage blend, capped:
+    #   w = n / (n + shrinkage_k) with n = valid peers in the GICS sub-industry (w = 0 if n < 2)
+    #   fair = w x sub-industry median + (1 - w) x anchor median, capped at max_fair_multiple
+    #   anchor = industry group if >= anchor_min valid peers, else sector, else all standard
     # Valid = EBIT > 0 and EV/EBIT <= max_multiple (higher means near-zero EBIT relative to EV).
-    # Multiples are winsorized at the 5th/95th percentile within the group before the median
-    # (note: this cannot change a median; kept as specified). Peer level/name/count are logged.
-    # A negative 3-yr average EBIT gives status not_applicable (logged), not insufficient_data.
-    "type": "peer_median_multiple", "multiple": "ev_ebit", "base": "ebit_3y_avg",
-    "peer_levels": [("gics_sub_industry", 4), ("gics_industry_group", 8), ("gics_sector", 8),
-                    ("sector_model", 1)],
-    "max_multiple": 100, "winsorize": (0.05, 0.95),
+    # Multiples are winsorized at the 5th/95th percentile within each group before the median.
+    # Logged per company: n, w, both medians, anchor level, and whether the cap applied.
+    "type": "shrinkage_peer_multiple", "multiple": "ev_ebit", "base": "min(ebit_ttm, ebit_3y_avg)",
+    "sub_level": "gics_sub_industry", "min_sub_peers": 2, "shrinkage_k": 8,
+    "anchor_levels": ["gics_industry_group", "gics_sector", "sector_model"], "anchor_min": 8,
+    "max_fair_multiple": 25.0, "max_multiple": 100, "winsorize": (0.05, 0.95),
 }
 
 
