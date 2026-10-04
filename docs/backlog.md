@@ -44,15 +44,24 @@ Items deferred to after the milestone noted.
 - CLX: FY2026 10-K (filed 2026-08-07) not yet in companyfacts; marked stale.
 - New entities with short XBRL history: HONA (2026 spin-off), PSKY (2025 merger).
 
-## Valuation (Milestone 6): open items
-- Proposed: route AXP (deposits 57% of liabilities) and RJF (78%) to the bank model.
-- Proposed: keep `corporate_action_pending` until the next 10-K (not 10-Q) after an Item 2.01
-  8-K. The 10-Q restates quarters for discontinued operations, but the fiscal-year base used by
-  TTM and the 3-yr average EBIT stays pre-transaction until the next 10-K (HON: spin-off
-  2026-06-29, cleared by a 10-Q, still flagged at 56% MoS on pre-spin EBIT). Currently these
-  get low confidence instead.
-- Insurer P/B ~ ROE regression is weak (R2 0.24, n=17), so insurer flags are low confidence.
-- 10-yr Treasury guard at 5.24% blocked 7 standard companies with MoS >= 30%.
+## Valuation (Milestone 6): decisions applied
+- AXP, RJF, SYF routed to the bank model.
+- Fair value base = min(TTM, 3-yr average) for EBIT (standard) and FFO (REIT).
+- Post-corporate-action regime: event (8-K Item 2.01, or rules.MANUAL_CORPORATE_ACTIONS) after
+  the latest 10-K's fiscal year end and already followed by a 10-Q -> TTM only, low confidence,
+  until a 10-K covering a fiscal year that ends after the event. (Interpretation: "next 10-K"
+  = first 10-K whose fiscal year ends after the event, since a 10-K filed shortly after the
+  event still covers the pre-event year.)
+- When a 10-Q restates the prior-year YTD (e.g. discontinued operations), TTM is rebuilt as
+  current YTD + (FY - original prior YTD) x restatement ratio.
+- Tiers: flag = normal confidence and 30% <= MoS <= 60%; watch = low confidence or MoS > 60%.
+
+## Valuation: open items
+- Spin-offs can be announced under 8-K Item 8.01 rather than 2.01 (Comcast/Versant), so the
+  automatic scan misses them; CMCSA is in MANUAL_CORPORATE_ACTIONS. Possible fix: scan the text
+  of Item 8.01 8-Ks for completed separations/distributions.
+- Insurer P/B ~ ROE regression is weak (R2 0.24, n=17), so insurer valuations are low
+  confidence (watch at most).
 
 ## Metrics (Milestone 5): decisions applied in Milestone 6
 - Piotroski: 134 standard companies have < 9 testable criteria (144 lack COGS, so no gross

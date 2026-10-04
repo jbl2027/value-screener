@@ -47,7 +47,7 @@ cik,tickers,sector_model,error,fact_rows,has_10k,latest_10k_filed,fy_end,latest_
 8818,AVY,standard,,1961,True,2026-02-25,2025-12-31,0000008818-26-000015,False,True,,,pretax_income+interest_expense,long_term_total,normal,3199000000.0,,,shares_outstanding
 1410636,AWK,standard,,1857,True,2026-02-18,2025-12-31,0001410636-26-000034,False,True,,beneish_m gp_assets piotroski_f,operating_income,long_term_total,normal,15891000000.0,,,shares_outstanding
 1069183,AXON,standard,,2196,True,2026-02-25,2025-12-31,0001628280-26-011360,False,True,,beneish_m,operating_income,long_term_total,normal,1810722000.0,,,shares_outstanding
-4962,AXP,standard,,1610,True,2026-02-06,2025-12-31,0000004962-26-000080,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,long_term_total,normal,57758000000.0,,,shares_outstanding
+4962,AXP,bank,,1610,True,2026-02-06,2025-12-31,0000004962-26-000080,False,True,,,pretax_income+interest_expense,long_term_total,normal,57758000000.0,,,shares_outstanding
 866787,AZO,standard,,1796,True,2025-10-27,2025-08-30,0001104659-25-102611,False,True,,,operating_income,total_all,normal,8848600000.0,,,shares_outstanding
 12927,BA,standard,,2415,True,2026-01-30,2025-12-31,0001628280-26-004357,False,True,,beneish_m,operating_income,long_term_total,normal,53848000000.0,,,shares_outstanding
 70858,BAC,bank,,1500,True,2026-02-25,2025-12-31,0000070858-26-000157,False,True,,,pretax_income+interest_expense,long_term_total,normal,338216000000.0,,,shares_outstanding
@@ -387,7 +387,7 @@ cik,tickers,sector_model,error,fact_rows,has_10k,latest_10k_filed,fy_end,latest_
 910606,REG,reit,,1181,True,2026-02-13,2025-12-31,0001193125-26-051668,False,True,,beneish_m piotroski_f,operating_income,long_term_total,normal,4739301000.0,,,shares_outstanding
 872589,REGN,standard,,2030,True,2026-02-04,2025-12-31,0000872589-26-000008,False,True,,beneish_m gp_assets piotroski_f,operating_income,noncurrent_only,low,1985900000.0,0.022055491213052017,,diluted_shares
 1281761,RF,bank,,1427,True,2026-02-24,2025-12-31,0001281761-26-000019,False,True,,,operating_income,long_term_total,normal,4884000000.0,,,shares_outstanding
-720005,RJF,standard,,1725,True,2025-11-25,2025-09-30,0000720005-25-000093,False,True,,beneish_m gp_assets piotroski_f,pretax_income+interest_expense,notes_total,low,3520000000.0,0.007954545454545454,,shares_outstanding
+720005,RJF,bank,,1725,True,2025-11-25,2025-09-30,0000720005-25-000093,False,True,,,pretax_income+interest_expense,notes_total,low,3520000000.0,0.007954545454545454,,shares_outstanding
 1037038,RL,standard,,2143,True,2026-05-21,2026-03-28,0001628280-26-037074,False,True,,roic_reinvestment,operating_income,total_all,normal,1238900000.0,,,diluted_shares
 943819,RMD,standard,,2202,True,2026-08-13,2026-06-30,0000943819-26-000047,False,True,,,operating_income,total_all,normal,659365000.0,,,shares_outstanding
 1024478,ROK,standard,,2279,True,2025-11-12,2025-09-30,0001024478-25-000116,False,True,,,operating_income,long_term_total,normal,3224000000.0,,,shares_outstanding

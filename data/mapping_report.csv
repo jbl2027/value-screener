@@ -100,15 +100,6 @@ cik,tickers,sector_model,scope,item,input,missing
 1410636,AWK,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 1410636,AWK,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 1069183,AXON,standard,metric,beneish_m,core,receivables
-4962,AXP,standard,metric,beneish_m,core,receivables
-4962,AXP,standard,metric,beneish_m,core,current_assets
-4962,AXP,standard,metric,beneish_m,core,current_liabilities
-4962,AXP,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-4962,AXP,standard,metric,beneish_m,sga,sga_expense
-4962,AXP,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-4962,AXP,standard,metric,piotroski_f,liquidity,current_assets
-4962,AXP,standard,metric,piotroski_f,liquidity,current_liabilities
-4962,AXP,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 12927,BA,standard,metric,beneish_m,sga,sga_expense | selling_marketing_expense
 38777,BEN,standard,metric,beneish_m,core,receivables
 38777,BEN,standard,metric,beneish_m,core,current_assets
@@ -841,15 +832,6 @@ cik,tickers,sector_model,scope,item,input,missing
 872589,REGN,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
 872589,REGN,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
 872589,REGN,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
-720005,RJF,standard,metric,beneish_m,core,receivables
-720005,RJF,standard,metric,beneish_m,core,current_assets
-720005,RJF,standard,metric,beneish_m,core,current_liabilities
-720005,RJF,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue
-720005,RJF,standard,metric,beneish_m,sga,sga_expense
-720005,RJF,standard,metric,gp_assets,gross_profit,gross_profit | cost_of_revenue
-720005,RJF,standard,metric,piotroski_f,liquidity,current_assets
-720005,RJF,standard,metric,piotroski_f,liquidity,current_liabilities
-720005,RJF,standard,metric,piotroski_f,gross_margin,gross_profit | cost_of_revenue
 1037038,RL,standard,metric,roic_reinvestment,reinvestment,capex
 882835,ROP,standard,metric,roic_reinvestment,reinvestment,capex
 101829,RTX,standard,metric,beneish_m,gross_profit,gross_profit | cost_of_revenue

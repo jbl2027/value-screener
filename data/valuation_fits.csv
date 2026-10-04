@@ -1,5 +1,5 @@
 model,y,x,n,intercept,slope,r2,peer_level,sector_model,peer_group,peer_count,peer_multiple,companies,as_of
-bank,p_tbv,rotce,21.0,-0.6869471776811596,16.202184417539787,0.8418114978444186,regression,,,,,,2026-10-02
+bank,p_tbv,rotce,23.0,-0.8942188825469477,17.45733804138568,0.8638472369930619,regression,,,,,,2026-10-02
 insurer,p_b,roe,17.0,1.1638479021207573,3.37517632983343,0.24386311770658764,regression,,,,,,2026-10-02
 ,,,,,,,sector_model,reit,reit,15.0,14.103202024190017,28.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Capital Goods,49.0,23.07602506275862,57.0,2026-10-02
@@ -7,12 +7,12 @@ insurer,p_b,roe,17.0,1.1638479021207573,3.37517632983343,0.24386311770658764,reg
 ,,,,,,,gics_industry_group,standard,Consumer Discretionary Distribution & Retail,13.0,17.126707887693318,14.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Consumer Durables & Apparel,10.0,11.36552814954452,11.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Consumer Services,16.0,15.35485471461379,18.0,2026-10-02
-,,,,,,,gics_industry_group,standard,Consumer Staples Distribution & Retail,8.0,18.548066226775475,8.0,2026-10-02
+,,,,,,,gics_industry_group,standard,Consumer Staples Distribution & Retail,8.0,19.54581823292968,8.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Energy,21.0,13.647932131495228,21.0,2026-10-02
-,,,,,,,gics_industry_group,standard,Financial Services,25.0,18.24962619530571,31.0,2026-10-02
+,,,,,,,gics_industry_group,standard,Financial Services,23.0,18.75135154666629,29.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,"Food, Beverage & Tobacco",15.0,20.478170246618934,18.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Health Care Equipment & Services,34.0,19.15690843447222,36.0,2026-10-02
-,,,,,,,gics_industry_group,standard,Materials,18.0,17.64856170703036,25.0,2026-10-02
+,,,,,,,gics_industry_group,standard,Materials,19.0,17.837972416383415,25.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Media & Entertainment,12.0,20.61091859220611,16.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,"Pharmaceuticals, Biotechnology & Life Sciences",19.0,27.289499478195804,24.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Semiconductors & Semiconductor Equipment,17.0,40.90504470681074,20.0,2026-10-02
@@ -21,7 +21,7 @@ insurer,p_b,roe,17.0,1.1638479021207573,3.37517632983343,0.24386311770658764,reg
 ,,,,,,,gics_industry_group,standard,Transportation,14.0,21.38681749108242,14.0,2026-10-02
 ,,,,,,,gics_industry_group,standard,Utilities,29.0,21.653684795060244,31.0,2026-10-02
 ,,,,,,,gics_sector,standard,Communication Services,15.0,17.092597470719266,4.0,2026-10-02
-,,,,,,,gics_sector,standard,Consumer Discretionary,41.0,14.84301715093082,4.0,2026-10-02
+,,,,,,,gics_sector,standard,Consumer Discretionary,41.0,15.096725065115464,4.0,2026-10-02
 ,,,,,,,gics_sector,standard,Consumer Staples,30.0,19.385773261971607,7.0,2026-10-02
-,,,,,,,gics_sector,standard,Financials,30.0,17.404340057101543,6.0,2026-10-02
-,,,,,,,sector_model,standard,standard,377.0,20.17172708748885,2.0,2026-10-02
+,,,,,,,gics_sector,standard,Financials,28.0,18.231772466565058,6.0,2026-10-02
+,,,,,,,sector_model,standard,standard,376.0,20.237858049220833,2.0,2026-10-02

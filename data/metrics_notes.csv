@@ -2,10 +2,6 @@ cik,ticker,note
 2969,APD,"debt: latest quarter unresolved, used fiscal year end"
 2969,APD,ev_ebit: EBIT <= 0
 4904,AEP,m_score: missing sgai
-4962,AXP,gp_assets: missing gross profit or assets
-4962,AXP,f_score: missing current_ratio_up
-4962,AXP,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
-4962,AXP,"reinvestment: working capital unavailable, change assumed 0"
 4977,AFL,"debt: latest quarter unresolved, used fiscal year end"
 5272,AIG,"debt: latest quarter unresolved, used fiscal year end"
 8670,ADP,reinvestment_rate: missing capex or D&A
@@ -49,7 +45,6 @@ cik,ticker,note
 49071,HUM,m_score: missing gmi
 49826,ITW,m_score: missing sgai
 50863,INTC,ev_ebit: EBIT <= 0
-51253,IFF,ev_ebit: EBIT <= 0
 51434,IP,ev_ebit: EBIT <= 0
 51434,IP,m_score: missing dsri
 55785,KMB,m_score: missing sgai
@@ -131,10 +126,6 @@ cik,ticker,note
 715957,D,gp_assets: missing gross profit or assets
 715957,D,"m_score: missing gmi,sgai"
 715957,D,reinvestment_rate: missing capex or D&A
-720005,RJF,gp_assets: missing gross profit or assets
-720005,RJF,f_score: missing current_ratio_up
-720005,RJF,"m_score: missing dsri,gmi,aqi,sgai,lvgi"
-720005,RJF,"reinvestment: working capital unavailable, change assumed 0"
 723531,PAYX,m_score: missing dsri
 726728,O,f_score: missing current_ratio_up
 726728,O,"m_score: missing dsri,gmi,aqi,depi,sgai,lvgi"

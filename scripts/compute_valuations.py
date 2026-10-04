@@ -25,11 +25,13 @@ OUTPUT_COLUMNS = [
     "as_of", "cik", "ticker", "name", "sector_model", "gics_sector", "gics_industry_group",
     "status", "status_reason", "confidence", "confidence_reasons", "warnings", "disqualify_reasons",
     "missing_inputs", "price", "fair_value", "mos", "method", "peer_level", "peer_group",
-    "peer_count", "peer_multiple", "fair_multiple", "company_multiple", "base_value", "shares",
-    "earnings_yield", "treasury_yield", "treasury_guard_pass", "m_score", "m_score_imputed",
-    "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled", "captive_finance",
-    "corporate_action_pending", "item_2_01_filed", "cleared_by",
+    "peer_count", "peer_multiple", "fair_multiple", "company_multiple", "base_value", "base_basis",
+    "shares", "earnings_yield", "treasury_yield", "treasury_guard_pass", "m_score",
+    "m_score_imputed", "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled",
+    "status_without_dq", "beneish_top_index", "captive_finance", "corporate_action_pending",
+    "event_filed", "event_source", "first_periodic_after",
 ]
+BASELINE = DATA_DIR / "valuations.csv"
 
 
 def main() -> None:
@@ -39,9 +41,11 @@ def main() -> None:
 
     print(f"As of {as_of}. Checking 8-K Item 2.01 filings (last {R.CORPORATE_ACTION_LOOKBACK_DAYS} days)...")
     sec = SECClient()
+    manual = {int(metrics.loc[metrics["ticker"] == t, "cik"].iloc[0]): ev
+              for t, ev in R.MANUAL_CORPORATE_ACTIONS.items() if (metrics["ticker"] == t).any()}
     with ThreadPoolExecutor(max_workers=4) as pool:
-        corp = list(pool.map(lambda c: check(int(c), sec, as_of, R.CORPORATE_ACTION_LOOKBACK_DAYS),
-                             metrics["cik"]))
+        corp = list(pool.map(lambda c: check(int(c), sec, as_of, R.CORPORATE_ACTION_LOOKBACK_DAYS,
+                                             manual.get(int(c))), metrics["cik"]))
     corp = pd.DataFrame(corp)
     corp.to_csv(DATA_DIR / "corporate_actions.csv", index=False)
 
@@ -50,6 +54,7 @@ def main() -> None:
           f"-> standard model needs EV/EBIT < {100 / t_yield:.1f}x to flag")
 
     result, fits = value_all(metrics, summary, corp, t_yield)
+    baseline = pd.read_csv(BASELINE) if BASELINE.exists() else None
     result[OUTPUT_COLUMNS].sort_values(["status", "mos"], ascending=[True, False]).to_csv(
         DATA_DIR / "valuations.csv", index=False)
 
@@ -84,11 +89,18 @@ def main() -> None:
             print(sub.sort_values("mos", ascending=False)[cols].round(3).to_string(index=False))
 
     show(R.STATUS_FLAG, ["ticker", "sector_model", "price", "fair_value", "mos", "company_multiple",
-                         "peer_multiple", "fair_multiple", "earnings_yield", "confidence",
-                         "confidence_reasons", "warnings"], "FLAGS")
-    show(R.STATUS_DISQUALIFIED, ["ticker", "sector_model", "mos", "disqualify_reasons"], "Disqualified")
+                         "peer_multiple", "fair_multiple", "base_basis", "warnings"], "FLAGS")
+    show(R.STATUS_WATCH, ["ticker", "sector_model", "price", "fair_value", "mos", "status_reason",
+                          "confidence_reasons", "warnings"], "WATCH")
+    show(R.STATUS_DISQUALIFIED, ["ticker", "sector_model", "mos", "status_without_dq", "disqualify_reasons",
+                                 "beneish_top_index"], "Disqualified")
     show(R.STATUS_NOT_APPLICABLE, ["ticker", "sector_model", "status_reason"], "Not applicable")
-    show(R.STATUS_CORPORATE_ACTION, ["ticker", "item_2_01_filed", "status_reason"], "Corporate action pending")
+    show(R.STATUS_CORPORATE_ACTION, ["ticker", "event_filed", "status_reason"], "Corporate action pending")
+    post = result[result["confidence_reasons"].str.contains("post-corporate-action", na=False)]
+    print(f"\n=== Post-corporate-action regime, TTM only ({len(post)}) ===")
+    if len(post):
+        print(post[["ticker", "status", "mos", "event_filed", "event_source", "first_periodic_after",
+                    "base_basis"]].round(3).to_string(index=False))
     show(R.STATUS_EXCLUDED, ["ticker", "status_reason"], "Excluded")
     show(R.STATUS_INSUFFICIENT, ["ticker", "sector_model", "missing_inputs"], "Insufficient data")
 
@@ -97,6 +109,24 @@ def main() -> None:
           + (" ".join(guard["ticker"]) or "none"))
     review = result[result["warnings"].str.contains("beneish review", na=False)]
     print("Beneish M&A review warnings: " + (" ".join(review["ticker"]) or "none"))
+
+    if baseline is not None:
+        print("\n=== Change vs previous run ===")
+        before = baseline["status"].value_counts().to_dict()
+        after = result["status"].value_counts().to_dict()
+        for s in sorted(set(before) | set(after)):
+            print(f"  {s:26s} {before.get(s, 0):4d} -> {after.get(s, 0):4d}")
+        prev = baseline.set_index("ticker")
+        cur = result.set_index("ticker")
+        top_before = baseline[baseline["status"] == R.STATUS_FLAG].nlargest(10, "mos")
+        top_after = result[result["status"].isin([R.STATUS_FLAG, R.STATUS_WATCH])].nlargest(10, "mos")
+        print("\nTop-10 MoS before (flags):")
+        print(top_before[["ticker", "mos"]].assign(now_status=lambda d: d["ticker"].map(cur["status"]),
+                                                   now_mos=lambda d: d["ticker"].map(cur["mos"]))
+              .round(3).to_string(index=False))
+        print("\nTop-10 MoS now (flag + watch):")
+        print(top_after[["ticker", "status", "mos", "base_basis"]]
+              .assign(prev_mos=lambda d: d["ticker"].map(prev["mos"])).round(3).to_string(index=False))
 
 
 if __name__ == "__main__":

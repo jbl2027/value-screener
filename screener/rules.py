@@ -10,7 +10,8 @@ ABSENT_MEANS_ZERO count as available (value 0) when a company doesn't report the
 from screener.debt import DebtResult, resolve_debt
 
 # ---- Statuses produced by Milestone 6 ----
-STATUS_FLAG = "flag"                    # MoS >= 30% and not disqualified
+STATUS_FLAG = "flag"                    # normal confidence, 30% <= MoS <= 60%, not disqualified
+STATUS_WATCH = "watch"                  # would flag but low confidence, or MoS > 60%
 STATUS_NO_FLAG = "no_flag"
 STATUS_DISQUALIFIED = "disqualified"    # Beneish / F-Score rule tripped (where applicable)
 STATUS_INSUFFICIENT = "insufficient_data"  # a fair-value / MoS input is missing; never flagged
@@ -28,6 +29,13 @@ PIOTROSKI_MIN_TESTS = 7                 # fewer testable criteria: no DQ, F-Scor
 PIOTROSKI_DQ_RATIO = 1 / 3              # disqualify if points / tests run <= 1/3
 CORPORATE_ACTION_LOOKBACK_DAYS = 120    # 8-K Item 2.01 within this window and no 10-Q since
 TREASURY_SERIES = "DGS10"               # standard model: flag only if EBIT/EV > 10-yr Treasury
+
+MOS_EXTREME = 0.60                      # MoS above this goes to "watch" (extreme_mos_review)
+
+# Corporate actions the 8-K Item 2.01 scan misses (event date = 8-K filing date).
+MANUAL_CORPORATE_ACTIONS = {
+    "CMCSA": ("2026-01-05", "Versant spin-off completed 2026-01-01 (8-K Item 8.01)"),
+}
 
 MANUAL_EXCLUSIONS = {
     "CTVA": "2026 separation: price reflects post-separation company, financials are pre-separation",

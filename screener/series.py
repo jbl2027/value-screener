@@ -17,7 +17,7 @@ from screener.tag_map import TAG_MAP
 ANNUAL_DAYS = (350, 380)
 YTD_DAYS = (80, 300)
 TOLERANCE = timedelta(days=10)
-RESTATEMENT_TOLERANCE = 0.02  # prior-year YTD restated by more than 2%: TTM mixes bases
+RESTATEMENT_TOLERANCE = 0.02  # prior-year YTD restated by more than 2%: rebuild TTM on new basis
 DURATION_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "duration"}
 INSTANT_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "instant"}
 
@@ -26,7 +26,7 @@ INSTANT_CONCEPTS = {c for c, (_, ptype, _) in TAG_MAP.items() if ptype == "insta
 class TTM:
     value: float | None
     period_end: str | None
-    basis: str  # "ttm", "ttm_restated" (mixed bases), "fy" (no later 10-Q), or "missing"
+    basis: str  # "ttm", "ttm_restated" (rebuilt on the restated basis), "fy" (no later 10-Q), "missing"
 
 
 @dataclass
@@ -77,9 +77,16 @@ class CompanyData:
                                    & (self.all_facts["period_start"] == p["period_start"])
                                    & (self.all_facts["period_end"] == p["period_end"])]
         first = float(originals.sort_values("filed").iloc[0]["value"]) if len(originals) else float(p["value"])
-        restated = abs(first - float(p["value"])) > RESTATEMENT_TOLERANCE * max(abs(first), 1.0)
-        return TTM(fy_val + float(cur["value"]) - float(p["value"]), cur["period_end"],
-                   "ttm_restated" if restated else "ttm")
+        restated_prior = float(p["value"])
+        if abs(first - restated_prior) <= RESTATEMENT_TOLERANCE * max(abs(first), 1.0):
+            return TTM(fy_val + float(cur["value"]) - restated_prior, cur["period_end"], "ttm")
+        # Restated (e.g. discontinued operations after a spin-off): the fiscal-year value is on
+        # the old basis. Estimate the restated remainder of last year by scaling the original
+        # remainder (FY - original prior YTD) by the restatement ratio of the prior YTD.
+        if first == 0:
+            return TTM(None, None, "missing")
+        remainder = (fy_val - first) * (restated_prior / first)
+        return TTM(float(cur["value"]) + remainder, cur["period_end"], "ttm_restated")
 
     def instant_one_year_before(self, concept: str, ref_date: str) -> float | None:
         target = date.fromisoformat(ref_date) - timedelta(days=365)

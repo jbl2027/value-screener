@@ -1,16 +1,22 @@
 """Milestone 6: fair value, margin of safety, and status for every company.
 
 Fair value methods (rules.MODEL_RULES[...]["fair_value_method"]):
-  standard  peer-median EV/EBIT x 3-yr average EBIT - net debt - preferred - minority, per share
+  standard  peer-median EV/EBIT x min(TTM EBIT, 3-yr average EBIT) - net debt - preferred -
+            minority, per share (TTM only, low confidence, after a corporate action until the
+            next 10-K)
             peers: GICS industry group -> sector -> all standard, first level with >= 8 valid
             (EBIT > 0, EV > 0, EV/EBIT <= 100); multiples winsorized 5/95 within the group
-  reit      peer-median P/FFO x FFO per share; peers: GICS sub-industry if >= 5 valid, else all
+  reit      peer-median P/FFO x min(TTM FFO, 3-yr average FFO) per share; peers: GICS
+            sub-industry if >= 5 valid, else all
   bank      OLS P/TBV ~ ROTCE across banks; fair P/TBV at own ROTCE x TBV per share
   insurer   OLS P/B ~ ROE across insurers; fair P/B at own ROE x book value per share
 Margin of safety = (fair value - price) / fair value.
 
 Status precedence: excluded > corporate_action_pending > insufficient_data > not_applicable >
-disqualified > flag / no_flag. Confidence (normal/low) is reported separately with reasons.
+disqualified > flag / watch / no_flag.
+  flag   normal confidence and 30% <= MoS <= 60% (and the Treasury guard passes)
+  watch  would pass but low confidence, or MoS > 60% (extreme_mos_review)
+Disqualified rows also record status_without_dq and the top Beneish contributor.
 """
 import numpy as np
 import pandas as pd
@@ -129,35 +135,58 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     elif _truthy(row.get("stale_10k")):
         missing.append("current 10-K (latest is stale)")
 
+    # Post-corporate-action regime: an event after the latest 10-K's fiscal year end, already
+    # followed by a 10-Q. Annual history predates the event, so value on TTM only (low
+    # confidence) until a 10-K covering a period after the event is filed.
+    event, fy_end = g("event_filed"), g("fy_end")
+    post_action = (isinstance(event, str) and isinstance(fy_end, str) and event > fy_end
+                   and not _truthy(row.get("corporate_action_pending")))
+    if post_action:
+        low.append(f"post-corporate-action ({row.get('event_source')} {event}): TTM only until next 10-K")
+
     fair_value, not_applicable = None, None
     if model == "standard":
         rec["company_multiple"] = g("ev_ebit")
-        ebit3 = g("ebit_3y_avg")
-        rec["base_value"] = ebit3
+        ttm, avg3 = g("ebit_ttm"), g("ebit_3y_avg")
         if g("total_debt") is None:
             missing.append(f"total_debt ({row.get('debt_problem')})")
         if g("cash_like") is None:
             missing.append("cash")
-        if ebit3 is None:
-            missing.append(f"ebit_3y_avg (only {int(g('ebit_3y_n') or 0)} years)")
-        elif ebit3 <= 0:
-            not_applicable = "3-yr average EBIT <= 0"
+        if post_action:
+            base, basis = ttm, "ttm (post-corporate-action)"
+            if ttm is None:
+                missing.append("ebit_ttm")
+        else:
+            # Conservative base: the lower of TTM and 3-yr average EBIT.
+            if avg3 is None:
+                missing.append(f"ebit_3y_avg (only {int(g('ebit_3y_n') or 0)} years)")
+            base, basis = _conservative_min(ttm, avg3, "ebit")
+        if base is not None and base <= 0:
+            not_applicable = ("3-yr average EBIT <= 0" if avg3 is not None and avg3 <= 0 and not post_action
+                              else "TTM EBIT <= 0")
+        rec.update(base_value=base, base_basis=basis)
         if g("peer_multiple") is None:
             missing.append("peer multiple")
         if not missing and not not_applicable:
             claims = g("enterprise_value") - g("market_cap") - g("net_debt")  # preferred + minority
-            equity = g("peer_multiple") * ebit3 - g("net_debt") - claims
+            equity = g("peer_multiple") * base - g("net_debt") - claims
             fair_value = equity / shares
     elif model == "reit":
         rec["company_multiple"] = g("p_ffo")
-        ffo = g("ffo_ttm")
-        rec["base_value"] = ffo
-        if ffo is None:
+        ttm, avg3 = g("ffo_ttm"), g("ffo_3y_avg")
+        if ttm is None:
             missing.append("ffo (net income, D&A, or gains on property sales)")
-        elif ffo <= 0:
+        if post_action:
+            base, basis = ttm, "ttm (post-corporate-action)"
+        else:
+            base, basis = _conservative_min(ttm, avg3, "ffo")
+            if ttm is not None and avg3 is None:
+                low.append("FFO 3-yr average unavailable (TTM only)")
+        rec.update(base_value=base, base_basis=basis)
+        if base is not None and base <= 0:
             not_applicable = "FFO <= 0"
         if not missing and not not_applicable and g("peer_multiple") is not None:
-            fair_value = g("peer_multiple") * ffo / shares
+            fair_value = g("peer_multiple") * base / shares
     else:
         book_col, mult_col = ("tbv", "p_tbv") if model == "bank" else ("book_value", "p_b")
         x_col = "rotce" if model == "bank" else "roe"
@@ -209,10 +238,7 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     if model == "standard" and row.get("ebit_basis") == "pretax_income":
         low.append("EBIT from pretax income only")
     if model == "standard" and row.get("ebit_period_basis") == "ttm_restated":
-        low.append("TTM EBIT mixes restated quarters with an unrestated fiscal year")
-    item_201, last_10k = g("item_2_01_filed"), g("latest_10k_filed")
-    if isinstance(item_201, str) and isinstance(last_10k, str) and item_201 > last_10k:
-        low.append(f"8-K Item 2.01 on {item_201} after latest 10-K (annual history predates it)")
+        low.append("TTM EBIT rebuilt from restated quarters (prior-year remainder scaled)")
 
     # ---- margin of safety and guard ----
     if fair_value is not None and price:
@@ -223,27 +249,67 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     rec["treasury_guard_pass"] = guard_ok if model == "standard" else None
 
     # ---- status ----
+    def screen_tier() -> tuple[str, str]:
+        """flag / watch / no_flag from MoS, guard, and confidence (ignoring disqualifiers)."""
+        mos = rec["mos"]
+        if mos is None:
+            return R.STATUS_NO_FLAG, "fair value <= 0"
+        if mos < R.MOS_FLAG_THRESHOLD:
+            return R.STATUS_NO_FLAG, f"MoS {mos:.0%}"
+        if not guard_ok:
+            return R.STATUS_NO_FLAG, f"MoS {mos:.0%} but earnings yield below 10-yr Treasury"
+        if mos > R.MOS_EXTREME:
+            return R.STATUS_WATCH, f"extreme_mos_review (MoS {mos:.0%})"
+        if low:
+            return R.STATUS_WATCH, f"low confidence (MoS {mos:.0%})"
+        return R.STATUS_FLAG, f"MoS {mos:.0%}"
+
+    tier, tier_reason = screen_tier() if not missing and not not_applicable else (None, None)
     if isinstance(row.get("excluded_reason"), str):
         status, reason = R.STATUS_EXCLUDED, row["excluded_reason"]
     elif _truthy(row.get("corporate_action_pending")):
-        status, reason = R.STATUS_CORPORATE_ACTION, f"8-K Item 2.01 filed {row.get('item_2_01_filed')}"
+        status, reason = R.STATUS_CORPORATE_ACTION, f"{row.get('event_source')} filed {event}, no 10-Q since"
     elif missing:
         status, reason = R.STATUS_INSUFFICIENT, "; ".join(missing)
     elif not_applicable:
         status, reason = R.STATUS_NOT_APPLICABLE, not_applicable
     elif dq:
         status, reason = R.STATUS_DISQUALIFIED, "; ".join(dq)
-    elif rec["mos"] is None:
-        status, reason = R.STATUS_NO_FLAG, "fair value <= 0"
-    elif rec["mos"] >= R.MOS_FLAG_THRESHOLD and guard_ok:
-        status, reason = R.STATUS_FLAG, f"MoS {rec['mos']:.0%}"
-    elif rec["mos"] >= R.MOS_FLAG_THRESHOLD:
-        status, reason = R.STATUS_NO_FLAG, f"MoS {rec['mos']:.0%} but earnings yield below 10-yr Treasury"
     else:
-        status, reason = R.STATUS_NO_FLAG, f"MoS {rec['mos']:.0%}"
+        status, reason = tier, tier_reason
 
     rec.update(status=status, status_reason=reason,
                confidence=R.CONFIDENCE_LOW if low else R.CONFIDENCE_NORMAL,
                confidence_reasons="; ".join(low), warnings="; ".join(warnings),
                disqualify_reasons="; ".join(dq), missing_inputs="; ".join(missing))
+    if dq:  # diagnostics: what would have happened without the disqualification
+        rec["status_without_dq"] = tier
+        rec["beneish_top_index"] = _beneish_top_index(row.get("m_detail"))
     return rec
+
+
+def _conservative_min(ttm, avg3, label: str) -> tuple[float | None, str | None]:
+    if ttm is None and avg3 is None:
+        return None, None
+    if ttm is None:
+        return avg3, f"{label}_3y_avg (no TTM)"
+    if avg3 is None:
+        return ttm, f"{label}_ttm (no 3-yr average)"
+    return (ttm, f"min = {label}_ttm") if ttm <= avg3 else (avg3, f"min = {label}_3y_avg")
+
+
+def _beneish_top_index(detail) -> str | None:
+    """The index adding most to the M-Score relative to neutral: weight x (index - 1)."""
+    from screener.metrics import BENEISH_WEIGHTS
+    if not isinstance(detail, str):
+        return None
+    contrib = {}
+    for part in detail.split():
+        name, _, val = part.partition("=")
+        if val not in ("", "-") and name in BENEISH_WEIGHTS:
+            neutral = 0.0 if name == "tata" else 1.0
+            contrib[name] = BENEISH_WEIGHTS[name] * (float(val) - neutral)
+    if not contrib:
+        return None
+    top = max(contrib, key=contrib.get)
+    return f"{top.upper()} (+{contrib[top]:.2f})"

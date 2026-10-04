@@ -27,7 +27,8 @@ Definitions
   Banks              TBV = equity - preferred - goodwill - intangibles; P/TBV = market cap / TBV;
                      ROTCE = TTM NI / average TCE (now, 1 year ago)
   Insurers           book value = equity - preferred; P/B; ROE = TTM NI / average equity
-  REITs              FFO = TTM (NI + D&A - gains on property sales); P/FFO = market cap / FFO
+  REITs              FFO = TTM (NI + D&A - gains on property sales); P/FFO = market cap / FFO;
+                     ffo_3y_avg = average of the last 3 fiscal-year FFOs
 """
 import math
 from datetime import date
@@ -436,6 +437,13 @@ class Calc:
         ni, da = self.ttm("net_income"), self.ttm("depreciation_amortization")
         gains = self.cd.ttm("gain_on_property_sales").value  # absence is NOT zero (rule)
         m["ffo_ttm"] = ni + da - gains if None not in (ni, da, gains) else None
+        years = []
+        for back in range(3):
+            parts = [self.cd.fy("net_income", back), self.cd.fy("depreciation_amortization", back),
+                     self.cd.fy("gain_on_property_sales", back)]
+            if None not in parts:
+                years.append(parts[0] + parts[1] - parts[2])
+        m["ffo_3y_avg"] = sum(years) / 3 if len(years) == 3 else None
         m["p_ffo"] = _div(m.get("market_cap"), m["ffo_ttm"]) if m["ffo_ttm"] and m["ffo_ttm"] > 0 else None
         if m["ffo_ttm"] is None:
             self.notes.append("p_ffo: missing " + ",".join(
