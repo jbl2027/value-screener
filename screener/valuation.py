@@ -321,6 +321,24 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     return rec
 
 
+def apply_qualitative_gate(result: pd.DataFrame, llm: pd.DataFrame | None) -> pd.DataFrame:
+    """Move flag -> watch when the 10-K review found a new serious/existential company-specific
+    risk or a new unusual CAM (Milestone 8). Other statuses are unchanged."""
+    result = result.copy()
+    result["qualitative_gate"] = False
+    result["qualitative_reasons"] = None
+    if llm is None or llm.empty:
+        return result
+    gated = llm[llm["qualitative_gate"].astype(str).str.lower() == "true"].set_index("cik")["gate_reasons"]
+    hit = result["cik"].isin(gated.index)
+    result.loc[hit, "qualitative_gate"] = True
+    result.loc[hit, "qualitative_reasons"] = result.loc[hit, "cik"].map(gated)
+    move = hit & (result["status"] == R.STATUS_FLAG)
+    result.loc[move, "status"] = R.STATUS_WATCH
+    result.loc[move, "status_reason"] = "qualitative_risk: " + result.loc[move, "qualitative_reasons"]
+    return result
+
+
 def _conservative_min(ttm, avg3, label: str) -> tuple[float | None, str | None]:
     if ttm is None and avg3 is None:
         return None, None

@@ -12,11 +12,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from screener.config import DATA_DIR  # noqa: E402
 from screener.scoring import COMPONENT_METRICS, WEIGHTS, score_all  # noqa: E402
+from screener.llm import PROMPT_VERSION  # noqa: E402
 from screener.sensitivities import apply_ebit_adjustments  # noqa: E402
 
 RAW = {"valuation": "valuation_raw", "productivity": "productivity_raw", "earnings_quality": "sloan_accruals",
        "momentum": "f_used", "llm": "llm_score", "growth": "growth_metric", "shareholder_yield": "shareholder_yield"}
-LLM_PATH = DATA_DIR / "llm_scores.csv"
+LLM_PATH = DATA_DIR / f"llm_scores_{PROMPT_VERSION}.csv"  # full-universe run of the current prompt
 
 
 def main() -> None:

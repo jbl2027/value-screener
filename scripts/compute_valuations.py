@@ -22,7 +22,8 @@ from screener.fundamentals import extract_facts  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
 from screener.sensitivities import EBIT_ADJUSTMENTS, apply_ebit_adjustments  # noqa: E402
 from screener.series import build_company  # noqa: E402
-from screener.valuation import value_all  # noqa: E402
+from screener.llm import PROMPT_VERSION  # noqa: E402
+from screener.valuation import apply_qualitative_gate, value_all  # noqa: E402
 
 OUTPUT_COLUMNS = [
     "as_of", "cik", "ticker", "name", "sector_model", "gics_sector", "gics_industry_group",
@@ -36,6 +37,7 @@ OUTPUT_COLUMNS = [
     "m_score_imputed", "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled",
     "status_without_dq", "beneish_top_index", "captive_finance", "corporate_action_pending",
     "event_filed", "event_source", "first_periodic_after", "corporate_action_materiality",
+    "qualitative_gate", "qualitative_reasons",
     "ebit_ttm", "ebit_3y_avg", "ebit_fy", "ebit_fy_prior", "ebit_fy_change",
 ]
 BASELINE = DATA_DIR / "valuations.csv"
@@ -101,6 +103,8 @@ def main() -> None:
           f"-> standard model needs EV/EBIT < {100 / t_yield:.1f}x to flag")
 
     result, fits = value_all(metrics, summary, corp, t_yield)
+    llm_path = DATA_DIR / f"llm_scores_{PROMPT_VERSION}.csv"
+    result = apply_qualitative_gate(result, pd.read_csv(llm_path) if llm_path.exists() else None)
     baseline = pd.read_csv(BASELINE) if BASELINE.exists() else None
     sens = sensitivities(result)
     sens.to_csv(DATA_DIR / "sensitivities.csv", index=False)

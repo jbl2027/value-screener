@@ -1,13 +1,18 @@
 """Milestone 8: Gemini qualitative scoring of 10-K text with a strict rubric and JSON output.
 
-Inputs per company: current Risk Factors, MD&A, and Critical Audit Matters, plus the
-year-over-year Risk Factors change (added/removed sentences and a cosine similarity computed
-here, in the spirit of "Lazy Prices"; the LLM judges the content of the change, not its size).
+Inputs per company: current Risk Factors, MD&A, and Critical Audit Matters; last year's CAMs;
+and the year-over-year Risk Factors change (added/removed sentences, share of sentences new or
+reworded, cosine similarity), computed here in the spirit of "Lazy Prices".
 
-The model scores moat, management candor, and risk-factor change on 1-10 rubrics and lists CAM
-topics. Every score must cite verbatim quotes; quotes are verified against the source text.
-The composite input `llm_score` (0-100) is computed here from the rubric scores, not chosen by
-the model.
+The model scores moat and management candor on 1-10 rubrics, and classifies (but does not score)
+new risk factors and CAMs. Risk-change and CAM scores are computed here from those
+classifications, as is the composite input `llm_score` (0-100). Every judgment cites verbatim
+quotes, which are verified against the text sent to the model.
+
+Prompt v2 changes from v1: moat scaled by share of revenue affected by a lost advantage; risk
+change and CAM scores computed from classified items; CAMs compared with the prior year and
+judged routine/unusual for the industry; llm_score weights moat 35, risk change 30, CAM 20,
+candor 15; qualitative status gate.
 """
 import json
 import math
@@ -20,31 +25,46 @@ import requests
 from screener.config import require
 
 MODEL = "gemini-3.8-flash"   # pinned; listed by the API on 2026-10-04 as the newest stable Flash
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
 # Input caps (characters). ~4 characters per token.
 CAP = {"risk_factors": 80_000, "mdna": 120_000, "cam": 20_000, "added": 40_000, "removed": 20_000}
 
+LLM_WEIGHTS = {"moat": 0.35, "risk_change": 0.30, "cam": 0.20, "candor": 0.15}
+# Risk-change deductions from 10 per new risk, by (scope, severity).
+RISK_DEDUCTIONS = {("company_specific", "moderate"): 2, ("company_specific", "serious"): 4,
+                   ("company_specific", "existential"): 8, ("industry_wide", "moderate"): 1,
+                   ("industry_wide", "serious"): 2, ("industry_wide", "existential"): 4}
+# CAM deductions from 10.
+CAM_NEW_UNUSUAL, CAM_NEW_ROUTINE, CAM_CONTINUING_UNUSUAL = 3, 1, 1
+GATE_SEVERITIES = {"serious", "existential"}
+
 SYSTEM = """You are a forensic accountant reviewing a company's annual report (Form 10-K) for an \
-investment screening tool. Use ONLY the text provided. Do not use outside knowledge about the \
-company, its stock, or its industry. Be skeptical and literal: score what the text shows, not \
-what the company claims about itself. Every score needs 1-3 verbatim quotes (each under 30 \
-words) copied exactly from the provided text. If the text is insufficient to judge an item, \
-give it a 5 and set sections_adequate to false with a note."""
+investment screening tool. Use ONLY the text provided, with one exception: when judging whether \
+a critical audit matter is unusual for the company's industry, you may use general knowledge of \
+which audit matters are typical for that industry. Be skeptical and literal: score what the text \
+shows, not what the company claims about itself. Support each judgment with verbatim quotes \
+(each under 30 words) copied exactly from the provided text."""
 
-RUBRIC = """Score each item using these anchors (integers 1-10).
+RUBRIC = """Follow these instructions exactly.
 
-MOAT DURABILITY (from Risk Factors and MD&A): durability of competitive advantage.
+1. MOAT DURABILITY (integer 1-10, from Risk Factors and MD&A). Judge the business as a \
+revenue-weighted whole; for diversified companies, weigh each business by its share of revenue.
  9-10: specific evidence of durable advantages (network effects, high switching costs, \
 regulatory licenses, structural cost advantage, essential patents) with stable or rising \
 pricing power and no material share loss.
  7-8: clear advantages, some competitive pressure.
  4-6: generic or unsupported claims; moderate competition; signs of commoditization.
  2-3: intense competition, pricing pressure, share loss, low barriers to entry.
- 1: a key advantage is disclosed as lost or ending (patent cliff, loss of major customer or license).
+ 1: only when advantages covering the MAJORITY of revenue are disclosed as lost or ending.
+Lost advantages (patent expiry, loss of a license or major customer) must be scaled by the share \
+of total revenue they affect, using the company's own figures where given. Report that share in \
+revenue_share_affected_by_lost_advantage (0-1, or null if none). A loss affecting 25-50% of \
+revenue supports 2-3. A loss affecting under ~15% of revenue lowers the score by at most 1-2 \
+points from what the rest of the business supports.
 
-MANAGEMENT CANDOR (from MD&A): directness about bad news.
+2. MANAGEMENT CANDOR (integer 1-10, from MD&A): directness about bad news.
  9-10: plainly explains negative results and their causes, quantifies headwinds, uses active \
 voice, acknowledges its own mistakes.
  7-8: mostly direct, some boilerplate.
@@ -53,44 +73,64 @@ voice, acknowledges its own mistakes.
 non-GAAP measures without explaining GAAP results.
  1: statements contradicted by figures in the same text.
 
-RISK FACTOR CHANGE (from the added and removed Risk Factors text vs last year; 10 = benign).
- 9-10: changes are editorial, updates of dates or figures, or removal of risks; nothing new and material.
- 7-8: new risks are general or industry-wide (macro, tariffs, AI regulation).
- 4-6: new company-specific risks of moderate severity (new litigation, customer concentration, \
-a regulatory inquiry, a restructuring).
- 2-3: serious new company-specific risks (material weakness, going-concern language, a major \
-investigation, covenant pressure, loss of a key customer or supplier).
- 1: new risks that threaten the business's survival.
+3. NEW RISK FACTORS (classify; do not score). From the ADDED OR REWORDED sentences, list each \
+genuinely new or materially expanded risk (ignore editorial rewording, updated dates or figures, \
+and risks that merely moved). For each give:
+ severity: minor (little plausible financial impact), moderate (could dent results), serious \
+(material weakness, going-concern language, major investigation or litigation, covenant \
+pressure, loss of a key customer or supplier, a large impairment), existential (threatens the \
+business's survival).
+ scope: industry_wide (affects peers similarly: macro, tariffs, sector regulation) or \
+company_specific.
+ evidence: one verbatim quote from the added text.
+Set assessable to false only if last year's Risk Factors were not provided.
 
-CRITICAL AUDIT MATTERS (from the auditor's report): list each CAM topic in a few words. Set \
-revenue_recognition true if any CAM concerns revenue recognition (e.g. variable consideration, \
-multiple performance obligations, percentage of completion). Set goodwill_or_intangible_impairment \
-true if any CAM concerns goodwill or intangible asset impairment testing."""
+4. CRITICAL AUDIT MATTERS (classify; do not score). For each CAM in the current auditor's report:
+ topic (a few words), category, new_vs_prior_year (true if no comparable CAM appears in the prior \
+year's report), unusual_for_industry (true if this kind of CAM is not typical for companies in \
+this industry; goodwill impairment, revenue recognition, reserves, and income taxes are routine \
+for most industries), and a one-sentence rationale. Set prior_year_available to false if the \
+prior year's CAM text was not provided."""
 
-ITEM = {"type": "OBJECT", "properties": {
+QUOTED = {"type": "OBJECT", "properties": {
     "score": {"type": "INTEGER"}, "rationale": {"type": "STRING"},
     "evidence": {"type": "ARRAY", "items": {"type": "STRING"}}},
     "required": ["score", "rationale", "evidence"]}
+CAM_CATEGORIES = ["goodwill_intangibles_impairment", "revenue_recognition", "loss_contingencies_litigation",
+                  "reserves_and_estimates", "income_taxes", "business_combination", "fair_value_measurement",
+                  "regulatory_accounting", "inventory_valuation", "other"]
 SCHEMA = {"type": "OBJECT", "properties": {
-    "moat": ITEM,
-    "management_candor": ITEM,
+    "moat": {"type": "OBJECT", "properties": {
+        "score": {"type": "INTEGER"},
+        "revenue_share_affected_by_lost_advantage": {"type": "NUMBER", "nullable": True},
+        "rationale": {"type": "STRING"}, "evidence": {"type": "ARRAY", "items": {"type": "STRING"}}},
+        "required": ["score", "revenue_share_affected_by_lost_advantage", "rationale", "evidence"]},
+    "management_candor": QUOTED,
     "risk_factor_change": {"type": "OBJECT", "properties": {
-        "score": {"type": "INTEGER"}, "rationale": {"type": "STRING"},
-        "new_risks": {"type": "ARRAY", "items": {"type": "STRING"}},
-        "evidence": {"type": "ARRAY", "items": {"type": "STRING"}}},
-        "required": ["score", "rationale", "new_risks", "evidence"]},
+        "assessable": {"type": "BOOLEAN"},
+        "new_risks": {"type": "ARRAY", "items": {"type": "OBJECT", "properties": {
+            "risk": {"type": "STRING"},
+            "severity": {"type": "STRING", "enum": ["minor", "moderate", "serious", "existential"]},
+            "scope": {"type": "STRING", "enum": ["industry_wide", "company_specific"]},
+            "evidence": {"type": "STRING"}},
+            "required": ["risk", "severity", "scope", "evidence"]}},
+        "rationale": {"type": "STRING"}},
+        "required": ["assessable", "new_risks", "rationale"]},
     "critical_audit_matters": {"type": "OBJECT", "properties": {
-        "topics": {"type": "ARRAY", "items": {"type": "STRING"}},
-        "revenue_recognition": {"type": "BOOLEAN"},
-        "goodwill_or_intangible_impairment": {"type": "BOOLEAN"},
+        "prior_year_available": {"type": "BOOLEAN"},
+        "cams": {"type": "ARRAY", "items": {"type": "OBJECT", "properties": {
+            "topic": {"type": "STRING"},
+            "category": {"type": "STRING", "enum": CAM_CATEGORIES},
+            "new_vs_prior_year": {"type": "BOOLEAN"},
+            "unusual_for_industry": {"type": "BOOLEAN"},
+            "rationale": {"type": "STRING"}},
+            "required": ["topic", "category", "new_vs_prior_year", "unusual_for_industry", "rationale"]}},
         "evidence": {"type": "ARRAY", "items": {"type": "STRING"}}},
-        "required": ["topics", "revenue_recognition", "goodwill_or_intangible_impairment", "evidence"]},
+        "required": ["prior_year_available", "cams", "evidence"]},
     "data_quality": {"type": "OBJECT", "properties": {
         "sections_adequate": {"type": "BOOLEAN"}, "notes": {"type": "STRING"}},
         "required": ["sections_adequate", "notes"]},
 }, "required": ["moat", "management_candor", "risk_factor_change", "critical_audit_matters", "data_quality"]}
-
-CAM_PENALTY = 10  # points off llm_score when the CAM risk flag is set
 
 
 # ---- year-over-year risk factor change ----
@@ -105,7 +145,8 @@ def _norm(s: str) -> str:
 
 
 def risk_change(current: str, prior: str) -> dict:
-    """Cosine similarity of word counts, plus sentences added and removed (normalized match)."""
+    """Share of sentences new or reworded (normalized match), the added/removed sentences, and
+    cosine similarity of word counts (kept for reference; it barely moves between years)."""
     def vec(t):
         return Counter(re.findall(r"[a-z']+", t.lower()))
     a, b = vec(current), vec(prior)
@@ -120,22 +161,25 @@ def risk_change(current: str, prior: str) -> dict:
 
 
 # ---- prompt ----
-def build_prompt(name: str, ticker: str, filed: str, sections: dict, change: dict | None) -> str:
+def build_prompt(name: str, ticker: str, sub_industry: str, filed: str, sections: dict,
+                 change: dict | None, prior_cam: str | None) -> str:
     def cap(text, key):
         return text if len(text) <= CAP[key] else text[:CAP[key]] + "\n[... truncated ...]"
-    if change and change["similarity"] is not None:
-        rf_change = (f"Cosine similarity of this year's Risk Factors to last year's: {change['similarity']:.3f} "
-                     f"({change['added_share']:.0%} of sentences are new or reworded).\n\n"
-                     f"ADDED OR REWORDED SENTENCES:\n{cap(chr(10).join(change['added']), 'added')}\n\n"
-                     f"REMOVED SENTENCES:\n{cap(chr(10).join(change['removed']), 'removed')}")
+    if change and change["added_share"] is not None:
+        rf_change = (f"{change['added_share']:.0%} of this year's Risk Factors sentences are new or reworded "
+                     f"versus last year.\n\nADDED OR REWORDED SENTENCES:\n{cap(chr(10).join(change['added']), 'added')}"
+                     f"\n\nREMOVED SENTENCES:\n{cap(chr(10).join(change['removed']), 'removed')}")
     else:
-        rf_change = "Last year's Risk Factors were not available; judge risk factor change as 5 and say so."
-    return (f"Company: {name} ({ticker}). Form 10-K filed {filed}.\n\n{RUBRIC}\n\n"
+        rf_change = "Last year's Risk Factors were not available. Set assessable to false."
+    return (f"Company: {name} ({ticker}). GICS sub-industry: {sub_industry}. Form 10-K filed {filed}.\n\n"
+            f"{RUBRIC}\n\n"
             f"===== RISK FACTORS (current year) =====\n{cap(sections['risk_factors'], 'risk_factors')}\n\n"
             f"===== RISK FACTORS: CHANGE VS PRIOR YEAR =====\n{rf_change}\n\n"
             f"===== MD&A =====\n{cap(sections['mdna'], 'mdna')}\n\n"
-            f"===== AUDITOR'S REPORT: CRITICAL AUDIT MATTERS =====\n"
-            f"{cap(sections['cam'], 'cam') or '(not found in the filing text)'}")
+            f"===== AUDITOR'S REPORT: CRITICAL AUDIT MATTERS (current year) =====\n"
+            f"{cap(sections['cam'], 'cam') or '(not found in the filing text)'}\n\n"
+            f"===== AUDITOR'S REPORT: CRITICAL AUDIT MATTERS (prior year) =====\n"
+            f"{cap(prior_cam, 'cam') if prior_cam else '(not available)'}")
 
 
 # ---- Gemini call ----
@@ -151,7 +195,7 @@ class Gemini:
         self.session = requests.Session()
         self.session.headers.update({"x-goog-api-key": require("GEMINI_KEY"), "Content-Type": "application/json"})
 
-    def _pace(self, est_tokens: int) -> None:
+    def _pace(self) -> None:
         # Space calls by requests/minute and by the previous call's tokens against tokens/minute.
         wait = max(self.min_interval, 60 * self.last_tokens / self.tpm) - (time.monotonic() - self.last_call)
         if wait > 0:
@@ -163,7 +207,7 @@ class Gemini:
                 "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
                                      "responseSchema": SCHEMA}}
         for attempt in range(self.max_retries):
-            self._pace(len(prompt) // 4)
+            self._pace()
             self.last_call = time.monotonic()
             resp = self.session.post(API.format(model=self.model), json=body, timeout=300)
             if resp.status_code == 429 and "PerDay" in resp.text:
@@ -192,11 +236,17 @@ def _norm_quote(s: str) -> str:
     return re.sub(r"\s+", " ", s)
 
 
+def _quotes(result: dict) -> list[str]:
+    q = list(result["moat"]["evidence"]) + list(result["management_candor"]["evidence"])
+    q += [r["evidence"] for r in result["risk_factor_change"]["new_risks"]]
+    q += list(result["critical_audit_matters"]["evidence"])
+    return q
+
+
 def verify_evidence(result: dict, source: str) -> tuple[int, int]:
     """(verified, total) quotes found verbatim (normalized) in the text sent to the model."""
     src = _norm_quote(source)
-    quotes = [q for k in ("moat", "management_candor", "risk_factor_change", "critical_audit_matters")
-              for q in result.get(k, {}).get("evidence", [])]
+    quotes = _quotes(result)
     found = 0
     for q in quotes:
         parts = [p for p in re.split(r"\.\.\.", _norm_quote(q)) if len(p.strip()) > 8]
@@ -205,11 +255,41 @@ def verify_evidence(result: dict, source: str) -> tuple[int, int]:
     return found, len(quotes)
 
 
-def llm_score(result: dict) -> tuple[float, bool]:
-    """0-100 from the three rubric scores (equal weight, 1-10 rescaled) minus the CAM penalty."""
-    def scaled(k):
-        return (min(max(int(result[k]["score"]), 1), 10) - 1) / 9
-    base = 100 * (scaled("moat") + scaled("management_candor") + scaled("risk_factor_change")) / 3
+def component_scores(result: dict) -> dict:
+    """Moat and candor from the model; risk-change and CAM scores computed from classifications."""
+    rc, cam = result["risk_factor_change"], result["critical_audit_matters"]
+    risk = None
+    if rc["assessable"]:
+        risk = max(1, 10 - sum(RISK_DEDUCTIONS.get((r["scope"], r["severity"]), 0) for r in rc["new_risks"]))
+    prior = cam["prior_year_available"]
+    cams = cam["cams"]
+    new_unusual = sum(1 for c in cams if prior and c["new_vs_prior_year"] and c["unusual_for_industry"])
+    new_routine = sum(1 for c in cams if prior and c["new_vs_prior_year"] and not c["unusual_for_industry"])
+    cont_unusual = sum(1 for c in cams if c["unusual_for_industry"] and not (prior and c["new_vs_prior_year"]))
+    cam_score = max(1, 10 - CAM_NEW_UNUSUAL * new_unusual - CAM_NEW_ROUTINE * new_routine
+                    - CAM_CONTINUING_UNUSUAL * cont_unusual)
+    return {"moat": min(max(int(result["moat"]["score"]), 1), 10),
+            "candor": min(max(int(result["management_candor"]["score"]), 1), 10),
+            "risk_change": risk, "cam": cam_score, "cam_count": len(cams), "cam_new": new_unusual + new_routine,
+            "cam_unusual": new_unusual + cont_unusual, "cam_prior_available": prior}
+
+
+def llm_score(components: dict) -> float:
+    """0-100: weighted 1-10 component scores rescaled; an unassessable risk change counts as neutral."""
+    total = 0.0
+    for k, w in LLM_WEIGHTS.items():
+        s = components[k]
+        total += w * ((s - 1) / 9 if s is not None else 0.5)
+    return round(100 * total, 1)
+
+
+def qualitative_gate(result: dict) -> list[str]:
+    """Reasons to move a flag to watch: new serious/existential company-specific risks, new unusual CAMs."""
+    reasons = [f"new {r['severity']} company-specific risk: {r['risk']}"
+               for r in result["risk_factor_change"]["new_risks"]
+               if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES]
     cam = result["critical_audit_matters"]
-    cam_flag = bool(cam["revenue_recognition"] or cam["goodwill_or_intangible_impairment"])
-    return max(0.0, min(100.0, base - CAM_PENALTY * cam_flag)), cam_flag
+    if cam["prior_year_available"]:
+        reasons += [f"new unusual CAM: {c['topic']}" for c in cam["cams"]
+                    if c["new_vs_prior_year"] and c["unusual_for_industry"]]
+    return reasons
