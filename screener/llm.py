@@ -187,6 +187,15 @@ class DailyQuotaExhausted(RuntimeError):
     """The free tier's requests-per-day limit is used up (resets at midnight Pacific)."""
 
 
+class ServiceUnavailable(RuntimeError):
+    """Gemini keeps returning 5xx. Failed attempts count against the free-tier daily quota,
+    so the run stops instead of retrying further."""
+
+
+MAX_5XX_RETRIES = 2
+RETRY_5XX_DELAYS = (60, 180)  # seconds
+
+
 class Gemini:
     def __init__(self, model: str = MODEL, rpm: float = 4, tpm: int = 200_000, max_retries: int = 6):
         self.model, self.max_retries = model, max_retries
@@ -206,19 +215,29 @@ class Gemini:
                 "contents": [{"role": "user", "parts": [{"text": prompt}]}],
                 "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
                                      "responseSchema": SCHEMA}}
+        server_errors = 0
         for attempt in range(self.max_retries):
             self._pace()
             self.last_call = time.monotonic()
-            resp = self.session.post(API.format(model=self.model), json=body, timeout=300)
+            try:
+                resp = self.session.post(API.format(model=self.model), json=body, timeout=300)
+            except (requests.ConnectionError, requests.Timeout):
+                time.sleep(2 ** attempt * 15)  # transient network failure: back off and retry
+                continue
             if resp.status_code == 429 and "PerDay" in resp.text:
                 # Retrying is pointless until midnight Pacific; stop so the run can resume later.
                 raise DailyQuotaExhausted(f"Daily request quota exhausted for {self.model}")
-            if resp.status_code in (429, 500, 503):
-                delay = 2 ** attempt * 10
+            if resp.status_code >= 500:
+                # Each failed attempt still counts against the daily quota: retry sparingly.
+                if server_errors >= MAX_5XX_RETRIES:
+                    raise ServiceUnavailable(f"Gemini returned {resp.status_code} "
+                                             f"{server_errors + 1} times; stopping to preserve quota")
+                time.sleep(RETRY_5XX_DELAYS[server_errors])
+                server_errors += 1
+                continue
+            if resp.status_code == 429:  # per-minute limit
                 m = re.search(r'"retryDelay":\s*"(\d+)s"', resp.text)
-                if m:
-                    delay = int(m.group(1)) + 2
-                time.sleep(delay)
+                time.sleep(int(m.group(1)) + 2 if m else 2 ** attempt * 10)
                 continue
             resp.raise_for_status()
             data = resp.json()

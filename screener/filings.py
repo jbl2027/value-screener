@@ -75,10 +75,7 @@ def ten_k_filings(cik: int, sec: SECClient, as_of: str, n: int = 2) -> list[dict
 
 def fetch_text(f: dict, sec: SECClient) -> str:
     url = f"https://www.sec.gov/Archives/edgar/data/{f['cik']}/{f['accn'].replace('-', '')}/{f['doc']}"
-    sec._throttle()
-    resp = sec._session.get(url, timeout=120)
-    resp.raise_for_status()
-    return to_text(resp.text)
+    return to_text(sec.get_text(url))
 
 
 def _longest_span(text: str, starts: list[str], ends: list[str]) -> str:

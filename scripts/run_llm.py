@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from screener.config import DATA_DIR  # noqa: E402
 from screener.filings import extract_sections, fetch_text, ten_k_filings  # noqa: E402
 from screener.llm import (  # noqa: E402
-    PROMPT_VERSION, DailyQuotaExhausted, Gemini, build_prompt, component_scores, llm_score,
+    PROMPT_VERSION, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt, component_scores, llm_score,
     qualitative_gate, risk_change, verify_evidence,
 )
 from screener.sec_client import SECClient  # noqa: E402
@@ -128,8 +128,8 @@ def main() -> None:
             continue
         try:
             row, full = score_company(r, sec, gemini, args.as_of)
-        except DailyQuotaExhausted as exc:
-            print(f"{exc}. Stopping; rerun after midnight Pacific to resume "
+        except (DailyQuotaExhausted, ServiceUnavailable) as exc:
+            print(f"{exc}. Stopping; rerun later (quota resets at midnight Pacific) to resume "
                   f"({len(done) + new} of {len(universe)} done).", flush=True)
             return
         except Exception as exc:

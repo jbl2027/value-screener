@@ -29,17 +29,30 @@ class SECClient:
                 time.sleep(wait)
             self._last_request = time.monotonic()
 
-    def get_json(self, url: str) -> dict:
+    def _get(self, url: str, timeout: int) -> requests.Response:
+        """GET with retries on throttling, server errors, and transient network failures."""
+        resp = None
         for attempt in range(self._max_retries):
             self._throttle()
-            resp = self._session.get(url, timeout=30)
+            try:
+                resp = self._session.get(url, timeout=timeout)
+            except (requests.ConnectionError, requests.Timeout):
+                time.sleep(2 ** attempt * 5)
+                continue
             if resp.status_code in RETRY_STATUSES:
                 time.sleep(2 ** attempt)
                 continue
             resp.raise_for_status()
-            return resp.json()
-        resp.raise_for_status()
+            return resp
+        if resp is not None:
+            resp.raise_for_status()
         raise RuntimeError(f"SEC request failed after {self._max_retries} attempts: {url}")
+
+    def get_json(self, url: str) -> dict:
+        return self._get(url, timeout=30).json()
+
+    def get_text(self, url: str) -> str:
+        return self._get(url, timeout=120).text
 
     def company_tickers(self) -> dict:
         return self.get_json("https://www.sec.gov/files/company_tickers.json")
