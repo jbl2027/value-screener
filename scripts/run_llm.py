@@ -28,6 +28,14 @@ from screener.llm import (  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
 
 CACHE = DATA_DIR / "cache" / "llm"
+# Fixed column order: error rows have fewer fields, and appending them unaligned shifts the
+# error text into other columns (it once made failed rows look successful).
+COLUMNS = ["as_of", "cik", "ticker", "model", "prompt_version", "accn", "filed", "period", "rf_chars",
+           "mdna_chars", "cam_chars", "prior_cam_chars", "risk_added_share", "risk_similarity", "moat",
+           "moat_lost_revenue_share", "management_candor", "risk_change_score", "cam_score", "new_risks",
+           "new_risks_serious_company", "cam_count", "cam_new", "cam_unusual", "cam_prior_available",
+           "cam_topics", "qualitative_gate", "gate_reasons", "sections_adequate", "dq_notes",
+           "evidence_verified", "evidence_total", "llm_score", "prompt_tokens", "output_tokens", "error"]
 
 
 def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool = False) -> tuple[dict, dict | None]:
@@ -108,7 +116,8 @@ def main() -> None:
     if scores_path.exists():
         # Resume: drop failed rows (they are retried); skip companies done for this prompt version.
         prev = pd.read_csv(scores_path)
-        ok = prev[prev["error"].isna()]
+        # A successful row has the model name and a score; anything else is retried.
+        ok = prev[prev["error"].isna() & prev["llm_score"].notna() & (prev["model"] == Gemini().model)]
         if len(ok) < len(prev):
             ok.to_csv(scores_path, index=False)
         done = set(ok.loc[ok["prompt_version"] == PROMPT_VERSION, "cik"])
@@ -135,7 +144,8 @@ def main() -> None:
         except Exception as exc:
             row, full = {"as_of": args.as_of, "cik": r.cik, "ticker": r.ticker, "prompt_version": PROMPT_VERSION,
                          "error": f"{type(exc).__name__}: {exc}"[:300]}, None
-        pd.DataFrame([row]).to_csv(scores_path, mode="a", header=not scores_path.exists(), index=False)
+        pd.DataFrame([{c: row.get(c) for c in COLUMNS}]).to_csv(
+            scores_path, mode="a", header=not scores_path.exists(), index=False)
         new += 0 if row.get("error") else 1
         consecutive_errors = consecutive_errors + 1 if row.get("error") else 0
         if consecutive_errors >= 2:
