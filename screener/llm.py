@@ -13,6 +13,9 @@ Prompt v2 changes from v1: moat scaled by share of revenue affected by a lost ad
 change and CAM scores computed from classified items; CAMs compared with the prior year and
 judged routine/unusual for the industry; llm_score weights moat 35, risk change 30, CAM 20,
 candor 15; qualitative status gate.
+Prompt v2.1: the model estimates materiality (share of operating income, or revenue, potentially
+affected) for new risks and new unusual CAMs; the gate fires only at >= 10%. The risk-change
+deduction scale is unchanged pending calibration on the 20-company test.
 """
 import json
 import math
@@ -25,7 +28,7 @@ import requests
 from screener.config import require
 
 MODEL = "gemini-3.8-flash"   # pinned; listed by the API on 2026-10-04 as the newest stable Flash
-PROMPT_VERSION = "v2"
+PROMPT_VERSION = "v2.1"  # v2 + materiality estimates for gate-relevant risks and CAMs
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
 # Input caps (characters). ~4 characters per token.
@@ -39,6 +42,10 @@ RISK_DEDUCTIONS = {("company_specific", "moderate"): 2, ("company_specific", "se
 # CAM deductions from 10.
 CAM_NEW_UNUSUAL, CAM_NEW_ROUTINE, CAM_CONTINUING_UNUSUAL = 3, 1, 1
 GATE_SEVERITIES = {"serious", "existential"}
+# Share of operating income (or revenue if operating income isn't estimable) potentially affected.
+MATERIALITY = ["lt_5pct", "5_to_10pct", "10_to_25pct", "gt_25pct", "not_estimable"]
+CAM_MATERIALITY = MATERIALITY + ["not_applicable"]
+GATE_MATERIALITY = {"10_to_25pct", "gt_25pct"}  # the gate fires only at >= 10%
 
 SYSTEM = """You are a forensic accountant reviewing a company's annual report (Form 10-K) for an \
 investment screening tool. Use ONLY the text provided, with one exception: when judging whether \
@@ -83,14 +90,21 @@ business's survival).
  scope: industry_wide (affects peers similarly: macro, tariffs, sector regulation) or \
 company_specific.
  evidence: one verbatim quote from the added text.
+ materiality: the share of the company's operating income potentially affected if the risk \
+materializes (use revenue if operating income cannot be estimated): lt_5pct, 5_to_10pct, \
+10_to_25pct, gt_25pct, or not_estimable. Base it on figures in the text (segment results, \
+revenue from the affected product, customer, or arrangement); state the basis in \
+materiality_basis (operating_income or revenue) and give a one-sentence materiality_rationale.
 Set assessable to false only if last year's Risk Factors were not provided.
 
 4. CRITICAL AUDIT MATTERS (classify; do not score). For each CAM in the current auditor's report:
  topic (a few words), category, new_vs_prior_year (true if no comparable CAM appears in the prior \
 year's report), unusual_for_industry (true if this kind of CAM is not typical for companies in \
 this industry; goodwill impairment, revenue recognition, reserves, and income taxes are routine \
-for most industries), and a one-sentence rationale. Set prior_year_available to false if the \
-prior year's CAM text was not provided."""
+for most industries), and a one-sentence rationale. For CAMs that are both new and unusual, also \
+estimate materiality as above (the share of operating income, or revenue, that the matter could \
+affect); use not_applicable for other CAMs or where a share is meaningless. Set \
+prior_year_available to false if the prior year's CAM text was not provided."""
 
 QUOTED = {"type": "OBJECT", "properties": {
     "score": {"type": "INTEGER"}, "rationale": {"type": "STRING"},
@@ -112,8 +126,12 @@ SCHEMA = {"type": "OBJECT", "properties": {
             "risk": {"type": "STRING"},
             "severity": {"type": "STRING", "enum": ["minor", "moderate", "serious", "existential"]},
             "scope": {"type": "STRING", "enum": ["industry_wide", "company_specific"]},
-            "evidence": {"type": "STRING"}},
-            "required": ["risk", "severity", "scope", "evidence"]}},
+            "evidence": {"type": "STRING"},
+            "materiality": {"type": "STRING", "enum": MATERIALITY},
+            "materiality_basis": {"type": "STRING", "enum": ["operating_income", "revenue"]},
+            "materiality_rationale": {"type": "STRING"}},
+            "required": ["risk", "severity", "scope", "evidence", "materiality", "materiality_basis",
+                         "materiality_rationale"]}},
         "rationale": {"type": "STRING"}},
         "required": ["assessable", "new_risks", "rationale"]},
     "critical_audit_matters": {"type": "OBJECT", "properties": {
@@ -123,8 +141,10 @@ SCHEMA = {"type": "OBJECT", "properties": {
             "category": {"type": "STRING", "enum": CAM_CATEGORIES},
             "new_vs_prior_year": {"type": "BOOLEAN"},
             "unusual_for_industry": {"type": "BOOLEAN"},
-            "rationale": {"type": "STRING"}},
-            "required": ["topic", "category", "new_vs_prior_year", "unusual_for_industry", "rationale"]}},
+            "rationale": {"type": "STRING"},
+            "materiality": {"type": "STRING", "enum": CAM_MATERIALITY}},
+            "required": ["topic", "category", "new_vs_prior_year", "unusual_for_industry", "rationale",
+                         "materiality"]}},
         "evidence": {"type": "ARRAY", "items": {"type": "STRING"}}},
         "required": ["prior_year_available", "cams", "evidence"]},
     "data_quality": {"type": "OBJECT", "properties": {
@@ -302,13 +322,31 @@ def llm_score(components: dict) -> float:
     return round(100 * total, 1)
 
 
-def qualitative_gate(result: dict) -> list[str]:
-    """Reasons to move a flag to watch: new serious/existential company-specific risks, new unusual CAMs."""
-    reasons = [f"new {r['severity']} company-specific risk: {r['risk']}"
-               for r in result["risk_factor_change"]["new_risks"]
-               if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES]
+def gate_candidates(result: dict) -> list[dict]:
+    """New serious/existential company-specific risks and new unusual CAMs, with materiality."""
+    out = [{"kind": "risk", "text": f"new {r['severity']} company-specific risk: {r['risk']}",
+            "materiality": r.get("materiality", "not_estimable"), "basis": r.get("materiality_basis")}
+           for r in result["risk_factor_change"]["new_risks"]
+           if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES]
     cam = result["critical_audit_matters"]
     if cam["prior_year_available"]:
-        reasons += [f"new unusual CAM: {c['topic']}" for c in cam["cams"]
-                    if c["new_vs_prior_year"] and c["unusual_for_industry"]]
-    return reasons
+        out += [{"kind": "cam", "text": f"new unusual CAM: {c['topic']}",
+                 "materiality": c.get("materiality", "not_applicable"), "basis": None}
+                for c in cam["cams"] if c["new_vs_prior_year"] and c["unusual_for_industry"]]
+    return out
+
+
+def _describe(c: dict) -> str:
+    basis = f" of {c['basis'].replace('_', ' ')}" if c.get("basis") else ""
+    return f"{c['text']} ({c['materiality']}{basis})"
+
+
+def qualitative_gate(result: dict) -> list[str]:
+    """Reasons to move a flag to watch: gate candidates estimated to affect >= 10% of operating
+    income (or revenue). Candidates below 10%, not estimable, or not applicable don't fire."""
+    return [_describe(c) for c in gate_candidates(result) if c["materiality"] in GATE_MATERIALITY]
+
+
+def gate_review(result: dict) -> list[str]:
+    """Gate candidates that did not fire (below 10%, not estimable, or not applicable)."""
+    return [_describe(c) for c in gate_candidates(result) if c["materiality"] not in GATE_MATERIALITY]

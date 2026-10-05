@@ -23,7 +23,7 @@ from screener.config import DATA_DIR  # noqa: E402
 from screener.filings import extract_sections, fetch_text, ten_k_filings  # noqa: E402
 from screener.llm import (  # noqa: E402
     PROMPT_VERSION, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt, component_scores, llm_score,
-    qualitative_gate, risk_change, verify_evidence,
+    gate_review, qualitative_gate, risk_change, verify_evidence,
 )
 from screener.sec_client import SECClient  # noqa: E402
 
@@ -34,7 +34,7 @@ COLUMNS = ["as_of", "cik", "ticker", "model", "prompt_version", "accn", "filed",
            "mdna_chars", "cam_chars", "prior_cam_chars", "risk_added_share", "risk_similarity", "moat",
            "moat_lost_revenue_share", "management_candor", "risk_change_score", "cam_score", "new_risks",
            "new_risks_serious_company", "cam_count", "cam_new", "cam_unusual", "cam_prior_available",
-           "cam_topics", "qualitative_gate", "gate_reasons", "sections_adequate", "dq_notes",
+           "cam_topics", "qualitative_gate", "gate_reasons", "gate_review", "sections_adequate", "dq_notes",
            "evidence_verified", "evidence_total", "llm_score", "prompt_tokens", "output_tokens", "error"]
 
 
@@ -84,7 +84,7 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
         cam_count=comp["cam_count"], cam_new=comp["cam_new"], cam_unusual=comp["cam_unusual"],
         cam_prior_available=comp["cam_prior_available"],
         cam_topics="; ".join(c["topic"] for c in result["critical_audit_matters"]["cams"]),
-        qualitative_gate=bool(gate), gate_reasons=" | ".join(gate),
+        qualitative_gate=bool(gate), gate_reasons=" | ".join(gate), gate_review=" | ".join(gate_review(result)),
         sections_adequate=result["data_quality"]["sections_adequate"], dq_notes=result["data_quality"]["notes"],
         evidence_verified=verified, evidence_total=total, llm_score=llm_score(comp),
         prompt_tokens=usage.get("promptTokenCount"), output_tokens=usage.get("candidatesTokenCount"),
