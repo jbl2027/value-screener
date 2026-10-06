@@ -27,7 +27,10 @@ import requests
 
 from screener.config import require
 
-MODEL = "gemini-3.8-flash"   # pinned; listed by the API on 2026-10-04 as the newest stable Flash
+# Pinned. gemini-3.8-flash (free tier: 20 requests/day, frequent 503 overload) proved unusable for a
+# 500-company run; switched 2026-10-06 to the newest stable Flash-Lite, which was available when
+# the other stable Flash models returned 503. All companies are scored with one model.
+MODEL = "gemini-3.5-flash-lite"
 PROMPT_VERSION = "v2.1"  # v2 + materiality estimates for gate-relevant risks and CAMs
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
