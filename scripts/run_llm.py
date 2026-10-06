@@ -1,8 +1,9 @@
 """Milestone 8: Gemini qualitative scoring of each company's latest 10-K.
 
 Usage:
+  python -u scripts/run_llm.py --queue                   daily job: priority queue, Supabase-backed
   python -u scripts/run_llm.py --tickers EIX,FSLR,...   test run -> data/llm_scores_test_<version>.csv
-  python -u scripts/run_llm.py --all                     full run -> data/llm_scores_<version>.csv
+  python -u scripts/run_llm.py --all                     full local run -> data/llm_scores_<version>.csv
 
 Outputs (resumable; responses cached per company/accession/model/prompt version):
   data/llm_scores[_test]_<version>.csv     one row per company
@@ -12,10 +13,12 @@ Outputs (resumable; responses cached per company/accession/model/prompt version)
 import argparse
 import json
 import sys
+import time
 from datetime import date
 from pathlib import Path
 
 import pandas as pd
+from psycopg.types.json import Jsonb
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -25,6 +28,8 @@ from screener.llm import (  # noqa: E402
     PROMPT_VERSION, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt, component_scores, llm_score,
     gate_review, qualitative_gate, risk_change, verify_evidence,
 )
+from screener.db import connect  # noqa: E402
+from screener.llm_store import save, scored_accessions  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
 
 CACHE = DATA_DIR / "cache" / "llm"
@@ -38,14 +43,19 @@ COLUMNS = ["as_of", "cik", "ticker", "model", "prompt_version", "accn", "filed",
            "evidence_verified", "evidence_total", "llm_score", "prompt_tokens", "output_tokens", "error"]
 
 
-def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool = False) -> tuple[dict, dict | None]:
+def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool = False,
+                  skip_accns: set[str] | None = None) -> tuple[dict, dict | None]:
+    """Score one company's latest 10-K. Returns (row, full result); row['skipped'] is set when the
+    latest 10-K is already scored (skip_accns), so no Gemini request is made."""
     cik = int(r.cik)
     row = {"as_of": as_of, "cik": cik, "ticker": r.ticker, "model": gemini.model, "prompt_version": PROMPT_VERSION}
     filings = ten_k_filings(cik, sec, as_of, 2)
     if not filings:
-        return {**row, "error": "no 10-K"}, None
+        return {**row, "error": "no 10-K", "data_issue": True}, None
     cur = filings[0]
     row.update(accn=cur["accn"], filed=cur["filed"], period=cur["period"])
+    if skip_accns and cur["accn"] in skip_accns:
+        return {**row, "skipped": True}, None
     cache_file = CACHE / f"{r.ticker}_{cur['accn']}_{gemini.model}_{PROMPT_VERSION}.json"
 
     sections = extract_sections(fetch_text(cur, sec))
@@ -57,7 +67,7 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
                risk_added_share=change["added_share"] if change else None,
                risk_similarity=change["similarity"] if change else None)
     if not sections["risk_factors"] and not sections["mdna"]:
-        return {**row, "error": "risk factors and MD&A not found"}, None
+        return {**row, "error": "risk factors and MD&A not found", "data_issue": True}, None
 
     prompt = build_prompt(r.name, r.ticker, r.gics_sub_industry, cur["filed"], sections, change,
                           prior["cam"] if prior else None)
@@ -93,14 +103,78 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
                  "risk_added_share": row["risk_added_share"], "components": comp, "gate": gate, **result}
 
 
+PRIORITY_STATUSES = ("flag", "watch")
+
+
+def run_queue(args) -> None:
+    """Daily job: score companies whose latest 10-K has no score for this model and prompt version,
+    flag and watch first (highest MoS first), then the rest. Reads the universe, statuses, and
+    existing scores from Supabase and saves each score there, so it resumes across days and
+    runners. After the backfill, only companies with a new 10-K get scored."""
+    deadline = time.monotonic() + args.max_minutes * 60
+    conn = connect()
+    gemini, sec = Gemini(), SECClient()
+    universe = pd.DataFrame(conn.execute(
+        "select distinct on (u.cik) u.ticker, u.cik, u.name, u.gics_sub_industry, v.status, v.mos "
+        "from universe u left join valuations_latest v on v.cik = u.cik order by u.cik, u.ticker").fetchall(),
+        columns=["ticker", "cik", "name", "gics_sub_industry", "status", "mos"])
+    universe["priority"] = (~universe["status"].isin(PRIORITY_STATUSES)).astype(int)
+    universe = universe.sort_values(["priority", "mos"], ascending=[True, False], na_position="last")
+    done = scored_accessions(conn, gemini.model, PROMPT_VERSION)
+    print(f"Queue: model {gemini.model}, prompt {PROMPT_VERSION}; {len(universe)} companies "
+          f"({int((universe['priority'] == 0).sum())} flag/watch first); {len(done)} have a score", flush=True)
+
+    counts = {"scored": 0, "up_to_date": 0, "data_issue": 0, "error": 0}
+    consecutive_errors, stop_reason = 0, "queue complete"
+    for i, r in enumerate(universe.itertuples(), 1):
+        if time.monotonic() > deadline:
+            stop_reason = f"time budget of {args.max_minutes} minutes reached"
+            break
+        try:
+            row, full = score_company(r, sec, gemini, args.as_of, skip_accns=done.get(int(r.cik)))
+        except (DailyQuotaExhausted, ServiceUnavailable) as exc:
+            stop_reason = str(exc)
+            break
+        except Exception as exc:
+            row, full = {"ticker": r.ticker, "error": f"{type(exc).__name__}: {exc}"[:300]}, None
+        if row.get("skipped"):
+            counts["up_to_date"] += 1
+            continue
+        if row.get("error"):
+            counts["data_issue" if row.get("data_issue") else "error"] += 1
+            print(f"[{i}] {r.ticker}: {row['error']}", flush=True)
+            if not row.get("data_issue"):
+                consecutive_errors += 1
+                if consecutive_errors >= 2:
+                    stop_reason = f"2 consecutive errors (last: {row['error']})"
+                    break
+            continue
+        consecutive_errors = 0
+        save(conn, row, full)
+        counts["scored"] += 1
+        print(f"[{i}] {r.ticker} ({r.status or '-'}): score {row['llm_score']} gate {row['qualitative_gate']} "
+              f"evidence {row['evidence_verified']}/{row['evidence_total']}", flush=True)
+    remaining = len(universe) - sum(counts.values())
+    print(f"Stopped: {stop_reason}. {counts}; {remaining} not reached this run.", flush=True)
+    conn.execute("insert into runs (job, as_of, finished_at, status, summary) values (%s, %s, now(), 'ok', %s)",
+                 ("llm", args.as_of, Jsonb({"stop_reason": stop_reason, **counts, "not_reached": remaining,
+                                            "model": gemini.model, "prompt_version": PROMPT_VERSION})))
+    conn.commit()
+    conn.close()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--tickers")
     group.add_argument("--all", action="store_true")
+    group.add_argument("--queue", action="store_true", help="daily job: Supabase-backed priority queue")
     parser.add_argument("--as-of", default=date.today().isoformat())
     parser.add_argument("--dry-run", action="store_true", help="build prompts without calling Gemini")
+    parser.add_argument("--max-minutes", type=float, default=300, help="queue mode time budget")
     args = parser.parse_args()
+    if args.queue:
+        return run_queue(args)
 
     universe = pd.read_csv(DATA_DIR / "universe.csv").drop_duplicates("cik")
     if args.tickers:

@@ -3,7 +3,7 @@
 Writes data/universe.csv, data/facts.parquet, data/fundamentals_summary.csv, data/prices.parquet
 in the same shapes the pipeline scripts produce, so they run unchanged.
 
-Usage: python scripts/sync_from_supabase.py [universe] [facts] [prices]   (default: all)
+Usage: python scripts/sync_from_supabase.py [universe] [facts] [prices] [llm]   (default: all)
 """
 import io
 import sys
@@ -15,6 +15,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from screener.config import DATA_DIR  # noqa: E402
 from screener.db import connect  # noqa: E402
+from screener.llm import MODEL, PROMPT_VERSION  # noqa: E402
+from screener.llm_store import latest_scores  # noqa: E402
 
 
 def query_csv(conn, sql: str) -> pd.DataFrame:
@@ -54,7 +56,15 @@ def sync_prices(conn) -> int:
     return len(p)
 
 
-SYNCS = {"universe": sync_universe, "facts": sync_facts, "prices": sync_prices}
+def sync_llm(conn) -> int:
+    """Latest Gemini score per company for the current model and prompt version (feeds the
+    qualitative gate in compute_valuations.py and, once approved, the composite)."""
+    df = latest_scores(conn, MODEL, PROMPT_VERSION)
+    df.to_csv(DATA_DIR / f"llm_scores_{PROMPT_VERSION}.csv", index=False)
+    return len(df)
+
+
+SYNCS = {"universe": sync_universe, "facts": sync_facts, "prices": sync_prices, "llm": sync_llm}
 
 
 def main() -> None:

@@ -16,6 +16,11 @@ candor 15; qualitative status gate.
 Prompt v2.1: the model estimates materiality (share of operating income, or revenue, potentially
 affected) for new risks and new unusual CAMs; the gate fires only at >= 10%. The risk-change
 deduction scale is unchanged pending calibration on the 20-company test.
+Prompt v2.2: each new risk gets an event type; the gate fires only for new company-specific
+serious/existential risks of a listed event type (investigation or enforcement, adverse verdict,
+material weakness, going-concern doubt, covenant breach or default, loss of a key customer or
+contract, major impairment, recall) affecting >= 10%, or new unusual CAMs affecting >= 10%.
+The risk-change deduction scale was kept (1 of 20 at the floor in the v2.1 test).
 """
 import json
 import math
@@ -31,7 +36,7 @@ from screener.config import require
 # 500-company run; switched 2026-10-06 to the newest stable Flash-Lite, which was available when
 # the other stable Flash models returned 503. All companies are scored with one model.
 MODEL = "gemini-3.5-flash-lite"
-PROMPT_VERSION = "v2.1"  # v2 + materiality estimates for gate-relevant risks and CAMs
+PROMPT_VERSION = "v2.2"  # v2.1 + event types; the gate fires only for listed event types
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
 # Input caps (characters). ~4 characters per token.
@@ -49,6 +54,11 @@ GATE_SEVERITIES = {"serious", "existential"}
 MATERIALITY = ["lt_5pct", "5_to_10pct", "10_to_25pct", "gt_25pct", "not_estimable"]
 CAM_MATERIALITY = MATERIALITY + ["not_applicable"]
 GATE_MATERIALITY = {"10_to_25pct", "gt_25pct"}  # the gate fires only at >= 10%
+# The gate fires only for these kinds of new company-specific risk (plus new unusual CAMs).
+GATE_EVENT_TYPES = ["investigation_or_enforcement", "adverse_verdict_or_judgment", "material_weakness",
+                    "going_concern_doubt", "covenant_breach_or_default", "loss_of_key_customer_or_contract",
+                    "major_impairment", "recall"]
+EVENT_TYPES = GATE_EVENT_TYPES + ["other"]
 
 SYSTEM = """You are a forensic accountant reviewing a company's annual report (Form 10-K) for an \
 investment screening tool. Use ONLY the text provided, with one exception: when judging whether \
@@ -93,6 +103,13 @@ business's survival).
  scope: industry_wide (affects peers similarly: macro, tariffs, sector regulation) or \
 company_specific.
  evidence: one verbatim quote from the added text.
+ event_type: what the risk is about: investigation_or_enforcement (a government or regulatory \
+investigation, subpoena, or enforcement action), adverse_verdict_or_judgment (a court or arbitration \
+ruling against the company), material_weakness (in internal control over financial reporting), \
+going_concern_doubt, covenant_breach_or_default (on debt or other obligations), \
+loss_of_key_customer_or_contract, major_impairment (a large write-down of assets or goodwill), recall \
+(product recall or safety withdrawal), or other (anything else, including strategy, investment, \
+competition, financing, macro, regulation in general, or a planned transaction).
  materiality: the share of the company's operating income potentially affected if the risk \
 materializes (use revenue if operating income cannot be estimated): lt_5pct, 5_to_10pct, \
 10_to_25pct, gt_25pct, or not_estimable. Base it on figures in the text (segment results, \
@@ -130,11 +147,12 @@ SCHEMA = {"type": "OBJECT", "properties": {
             "severity": {"type": "STRING", "enum": ["minor", "moderate", "serious", "existential"]},
             "scope": {"type": "STRING", "enum": ["industry_wide", "company_specific"]},
             "evidence": {"type": "STRING"},
+            "event_type": {"type": "STRING", "enum": EVENT_TYPES},
             "materiality": {"type": "STRING", "enum": MATERIALITY},
             "materiality_basis": {"type": "STRING", "enum": ["operating_income", "revenue"]},
             "materiality_rationale": {"type": "STRING"}},
-            "required": ["risk", "severity", "scope", "evidence", "materiality", "materiality_basis",
-                         "materiality_rationale"]}},
+            "required": ["risk", "severity", "scope", "evidence", "event_type", "materiality",
+                         "materiality_basis", "materiality_rationale"]}},
         "rationale": {"type": "STRING"}},
         "required": ["assessable", "new_risks", "rationale"]},
     "critical_audit_matters": {"type": "OBJECT", "properties": {
@@ -330,11 +348,14 @@ def llm_score(components: dict) -> float:
 
 
 def gate_candidates(result: dict) -> list[dict]:
-    """New serious/existential company-specific risks and new unusual CAMs, with materiality."""
-    out = [{"kind": "risk", "text": f"new {r['severity']} company-specific risk: {r['risk']}",
+    """New serious/existential company-specific risks of a gate event type, and new unusual CAMs,
+    with materiality."""
+    out = [{"kind": "risk", "text": f"new {r['severity']} company-specific risk "
+                                    f"[{r.get('event_type')}]: {r['risk']}",
             "materiality": r.get("materiality", "not_estimable"), "basis": r.get("materiality_basis")}
            for r in result["risk_factor_change"]["new_risks"]
-           if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES]
+           if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES
+           and r.get("event_type") in GATE_EVENT_TYPES]
     cam = result["critical_audit_matters"]
     if cam["prior_year_available"]:
         out += [{"kind": "cam", "text": f"new unusual CAM: {c['topic']}",
