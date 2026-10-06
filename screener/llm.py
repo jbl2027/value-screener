@@ -250,8 +250,12 @@ class Gemini:
             if resp.status_code >= 500:
                 # Each failed attempt still counts against the daily quota: retry sparingly.
                 if server_errors >= MAX_5XX_RETRIES:
-                    raise ServiceUnavailable(f"Gemini returned {resp.status_code} "
-                                             f"{server_errors + 1} times; stopping to preserve quota")
+                    try:
+                        detail = resp.json()["error"]["message"]
+                    except (ValueError, KeyError):
+                        detail = resp.text[:200]
+                    raise ServiceUnavailable(f"Gemini returned {resp.status_code} {server_errors + 1} times "
+                                             f"({detail}); stopping to preserve quota")
                 time.sleep(RETRY_5XX_DELAYS[server_errors])
                 server_errors += 1
                 continue
