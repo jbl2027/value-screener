@@ -74,7 +74,9 @@ def main() -> None:
     apa = out[out["ticker"] == "APA"]
     print(apa[show + ["components_missing"]].round(1).to_string(index=False))
     both = out.dropna(subset=["composite", "mos"])
-    print(f"\nSpearman correlation composite vs MoS: {both['composite'].corr(both['mos'], method='spearman'):.2f}")
+    # Spearman = Pearson on ranks (pandas' method="spearman" needs SciPy, which isn't a dependency).
+    rho = both["composite"].rank().corr(both["mos"].rank())
+    print(f"\nSpearman correlation composite vs MoS: {rho:.2f}")
 
 
 if __name__ == "__main__":
