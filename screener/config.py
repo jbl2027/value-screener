@@ -5,9 +5,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
-
 load_dotenv(ROOT / ".env")
+
+# VALUE_SCREENER_DATA redirects pipeline inputs/outputs (e.g. to test a Supabase round trip).
+DATA_DIR = Path(os.getenv("VALUE_SCREENER_DATA") or ROOT / "data")
 
 
 def require(name: str) -> str:

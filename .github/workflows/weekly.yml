@@ -1,0 +1,55 @@
+# Weekly: rebuild the universe and point-in-time fundamentals from SEC EDGAR -> Supabase,
+# then recompute results on the refreshed facts.
+name: weekly-fundamentals
+
+on:
+  schedule:
+    - cron: "20 11 * * 6"     # Saturday 11:20 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: screener-pipeline    # never overlap with the daily job
+  cancel-in-progress: false
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+      TIINGO_KEY: ${{ secrets.TIINGO_KEY }}
+      FRED_KEY: ${{ secrets.FRED_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Apply database migrations
+        run: python -u scripts/db_migrate.py
+      - name: S&P 500 universe (constituents, CIK, SIC)
+        run: python -u scripts/build_universe.py
+      - name: Point-in-time fundamentals from EDGAR (~500 companyfacts downloads)
+        run: python -u scripts/build_fundamentals.py
+      - name: Load universe and facts to Supabase
+        run: python -u scripts/load_supabase.py universe facts
+      - name: Pull prices from Supabase
+        run: python -u scripts/sync_from_supabase.py prices
+      - name: Recompute results on refreshed facts
+        run: |
+          python -u scripts/compute_metrics.py
+          python -u scripts/compute_valuations.py
+          python -u scripts/compute_scores.py
+      - name: Load results to Supabase
+        run: python -u scripts/load_supabase.py results
+      - name: Keep mapping report for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapping-report
+          path: |
+            data/fundamentals_summary.csv
+            data/mapping_report.csv
+          retention-days: 30

@@ -14,9 +14,10 @@ Component weights (report section 2.2):
 Percentile ranks are sector-neutral: standard companies rank within their GICS industry group,
 falling back to GICS sector, then all standard companies, when fewer than MIN_GROUP companies
 have the metric (matching the valuation peers). Banks, insurers, and REITs rank within their
-own model. A missing component is imputed at the neutral score of 50 (no renormalization);
-`components_available` counts the real ones, and fewer than MIN_COMPONENTS makes the composite
-low confidence. A composite also requires a real valuation score, and is null for rows whose
+own model. A missing component is imputed at the neutral score of 50; `components_available`
+counts the real ones (of `components_active`), and fewer than MIN_COMPONENTS makes the composite
+low confidence. Components in PENDING (currently the LLM score) are excluded and the remaining
+weights renormalized until they are in production. A composite also requires a real valuation score, and is null for rows whose
 valuation status is insufficient_data (component scores are kept for debugging). Banks and
 insurers have no earnings-quality or momentum component (Rule 1), so those are imputed.
 """
@@ -26,6 +27,9 @@ import pandas as pd
 WEIGHTS = {"valuation": 25, "productivity": 15, "earnings_quality": 10, "momentum": 10,
            "llm": 20, "growth": 10, "shareholder_yield": 10}
 NEUTRAL = 50.0              # imputed score for a missing component
+# Components not yet in production are excluded and the remaining weights renormalized (rather
+# than imputed at 50). The LLM component joins once its rubric is approved and scored at scale.
+PENDING = {"llm"}
 MIN_GROUP = 8               # minimum companies with the metric for a ranking group
 MIN_COMPONENTS = 5          # fewer real components -> composite low confidence
 SLOAN_WORST_DECILE = 10.0   # percentile at or below which accruals score 0
@@ -106,11 +110,14 @@ def score_all(df: pd.DataFrame) -> pd.DataFrame:
     df["momentum_group"] = np.where(df["momentum_score"].notna(), "absolute map", None)
     df["llm_group"] = np.where(df["llm_score"].notna(), "absolute (rubric)", None)
 
-    scores = pd.DataFrame({k: df[f"{k}_score"] for k in WEIGHTS})
+    active = {k: w for k, w in WEIGHTS.items() if k not in PENDING}
+    scores = pd.DataFrame({k: df[f"{k}_score"] for k in active})
     df["components_available"] = scores.notna().sum(axis=1)
-    df["components_missing"] = scores.apply(lambda r: " ".join(k for k in WEIGHTS if pd.isna(r[k])), axis=1)
-    total = sum(WEIGHTS.values())
-    composite = sum(scores[k].fillna(NEUTRAL) * w for k, w in WEIGHTS.items()) / total
+    df["components_active"] = len(active)
+    df["components_missing"] = scores.apply(lambda r: " ".join(k for k in active if pd.isna(r[k])), axis=1)
+    df["components_pending"] = " ".join(sorted(PENDING))
+    total = sum(active.values())
+    composite = sum(scores[k].fillna(NEUTRAL) * w for k, w in active.items()) / total
 
     has_valuation = scores["valuation"].notna()
     insufficient = df.get("status", pd.Series(index=df.index, dtype=object)) == "insufficient_data"

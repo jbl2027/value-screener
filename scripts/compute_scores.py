@@ -1,4 +1,4 @@
-"""Milestone 7: composite score (0-100) with sector-neutral percentile ranks.
+﻿"""Milestone 7: composite score (0-100) with sector-neutral percentile ranks.
 
 Inputs:  data/metrics.csv, data/valuations.csv, data/universe.csv, data/llm_scores.csv (optional, M8)
 Output:  data/scores.csv  composite, confidence, and each component's raw value, score, and group
@@ -36,7 +36,7 @@ def main() -> None:
 
     cols = (["as_of", "cik", "ticker", "name", "sector_model", "gics_sector", "gics_industry_group", "status",
              "confidence", "mos", "composite", "composite_confidence", "composite_rank", "components_available",
-             "components_missing", "composite_note"]
+             "components_active", "components_missing", "components_pending", "composite_note"]
             + list(dict.fromkeys(x for c in WEIGHTS for x in (f"{c}_score", RAW[c], f"{c}_group"))))
     out = scored[cols].sort_values("composite", ascending=False)
     out.to_csv(DATA_DIR / "scores.csv", index=False)
@@ -47,7 +47,7 @@ def main() -> None:
     print(f"Distribution: p10 {s.quantile(.1):.1f}  median {s.median():.1f}  p90 {s.quantile(.9):.1f}")
     print("Null composite:", out[out["composite"].isna()]["composite_note"].value_counts().to_dict())
     print("Composite confidence:", out["composite_confidence"].value_counts().to_dict())
-    print("Components available (of 7):", out["components_available"].value_counts().sort_index().to_dict())
+    print(f"Components available (of {int(out['components_active'].iloc[0])} active):", out["components_available"].value_counts().sort_index().to_dict())
 
     print("\nComponent coverage (companies with a real score):")
     for c in WEIGHTS:

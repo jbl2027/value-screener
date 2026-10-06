@@ -1,0 +1,42 @@
+# Daily: today's closes -> metrics, valuations, scores -> Supabase.
+# Runs after the US close (16:00 New York = 20:00 UTC in summer, 21:00 UTC in winter).
+name: daily-screen
+
+on:
+  schedule:
+    - cron: "20 22 * * 1-5"   # 22:20 UTC, Monday-Friday
+  workflow_dispatch:
+
+concurrency:
+  group: screener-pipeline    # never overlap with the weekly job
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+      TIINGO_KEY: ${{ secrets.TIINGO_KEY }}
+      FRED_KEY: ${{ secrets.FRED_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Pull universe, facts, prices from Supabase
+        run: python -u scripts/sync_from_supabase.py
+      - name: Fetch today's closes (one Tiingo bulk request)
+        run: python -u scripts/update_prices.py
+      - name: Metrics
+        run: python -u scripts/compute_metrics.py
+      - name: Fair value, margin of safety, flags
+        run: python -u scripts/compute_valuations.py
+      - name: Composite scores
+        run: python -u scripts/compute_scores.py
+      - name: Load prices and results to Supabase
+        run: python -u scripts/load_supabase.py prices results

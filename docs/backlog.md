@@ -70,6 +70,20 @@ Items deferred to after the milestone noted.
 - FDX: the FedEx Freight spin 8-K (2026-06-01) is 123 days old, just past the 120-day pending
   window, and no post-event 10-Q exists yet, so it gets normal treatment.
 
+## Milestone 8 (LLM): status
+- Model: gemini-3.5-flash-lite (gemini-3.8-flash free tier = 20 requests/day and repeatedly
+  503-overloaded). Exact Flash-Lite daily limit not exposed by the API; check AI Studio.
+- Rubric v2.1 tested on 20 companies (data/llm_*_test_v2.1.*). Risk-change scores 1-9, median
+  5.5, 1 of 20 at the floor. Gate fires for 8 of 20 (40%): the model rates most serious risks
+  ">25% of operating income" (e.g. MSFT AI capex, ZTS convertible notes). Pending: gate fix and
+  rubric approval, then the LLM GitHub Actions workflow with a priority queue.
+- Until then the composite excludes the LLM component and renormalizes the other weights.
+
+## Milestone 9: Supabase notes
+- Database ~195 MB of the 500 MB free tier after the initial load (facts ~970k rows dominate).
+  Daily history is kept slim (screen_history); full detail only in *_latest tables.
+- Price history starts 2026-10-02; sessions missed before the daily job starts are not backfilled.
+
 ## Composite score (Milestone 7): decisions applied
 - Ranking groups: GICS industry group -> sector -> all standard (min 8), matching valuation peers.
 - Missing components imputed at 50; `components_available` (of 7); < 5 -> low confidence.

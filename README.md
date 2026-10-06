@@ -19,5 +19,14 @@ Secrets live in `.env` (gitignored).
 - `python scripts/explore_tags.py PATTERN TICKER...`: dev helper listing which XBRL tags a company uses.
 - `python scripts/extract_research.py`: regenerates `docs/research.md` from the research PDF.
 
+## Supabase and scheduled jobs (Milestone 9)
+- `python scripts/db_migrate.py`: applies `supabase/migrations/*.sql` once each.
+- `python scripts/load_supabase.py [universe] [facts] [prices] [results]`: loads local outputs into Supabase (facts replaced atomically with `superseded_date`; results into `*_latest` tables plus slim `screen_history`). Each run is logged in `runs`.
+- `python scripts/sync_from_supabase.py [universe] [facts] [prices]`: rebuilds local inputs from Supabase (GitHub Actions runners start empty).
+- Connection: Supavisor session pooler (IPv4), see `screener/db.py`. Frontend reads `latest_screen` (view) and the `*_latest` tables as an authenticated user; RLS blocks anon.
+- `.github/workflows/daily.yml` (weekdays 22:20 UTC): sync -> Tiingo closes -> metrics -> valuations -> scores -> load.
+- `.github/workflows/weekly.yml` (Saturday 11:20 UTC): migrations -> universe -> EDGAR fundamentals -> load -> recompute -> load.
+- Required GitHub Actions secrets: `SUPABASE_URL`, `SUPABASE_DB_PASSWORD`, `SEC_USER_AGENT`, `TIINGO_KEY`, `FRED_KEY` (`GEMINI_KEY` later, with the LLM workflow).
+
 ## Point-in-time facts
 Each fact keeps `period_start`, `period_end`, `fy`, `fp`, `form`, `filed`, and `accn`. A value is stored once, from the first filing that reported it; a later filing reporting a different value for the same period is kept as a separate row (a restatement). Query "as of" a date with `filed <= date`, taking the latest-filed row per period.
