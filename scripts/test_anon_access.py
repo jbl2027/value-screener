@@ -73,9 +73,11 @@ def part_b() -> bool | None:
         print("\nPart B: skipped (set SUPABASE_ANON_KEY in .env to the project's anon/publishable key)")
         return None
     base = require("SUPABASE_URL").rstrip("/") + "/rest/v1"
-    headers = {"apikey": key, "Authorization": f"Bearer {key}"}
+    # New-style publishable keys (sb_publishable_...) are not JWTs and go only in the apikey header;
+    # legacy anon keys are JWTs and are also sent as the bearer token.
+    headers = {"apikey": key} if key.startswith("sb_") else {"apikey": key, "Authorization": f"Bearer {key}"}
+    print(f"\nPart B: HTTP with the {'publishable' if key.startswith('sb_') else 'legacy anon'} key only (signed out)")
     ok = True
-    print("\nPart B: HTTP with the anon key only (signed out)")
     for rel in RELATIONS:
         r = requests.get(f"{base}/{rel}", headers=headers, params={"select": "*", "limit": 5}, timeout=30)
         body = r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text
@@ -84,8 +86,12 @@ def part_b() -> bool | None:
         read_safe = r.status_code in (401, 403, 404) or rows == 0 or (isinstance(body, dict) and "code" in body)
         write_safe = w.status_code >= 400
         ok &= read_safe and write_safe
-        detail = f"{rows} rows" if rows is not None else (body.get("message", "")[:60] if isinstance(body, dict) else "")
-        print(f"  {rel:22s} GET {r.status_code} {detail:62s} POST {w.status_code}"
+        detail = f"{rows} rows" if rows is not None else (body.get("message", "")[:55] if isinstance(body, dict) else "")
+        try:
+            w_msg = w.json().get("message", "")[:55]
+        except ValueError:
+            w_msg = w.text[:55]
+        print(f"  {rel:22s} GET {r.status_code} {detail:56s} POST {w.status_code} {w_msg}"
               f"{'' if read_safe and write_safe else '   <-- EXPOSED'}")
     return ok
 
