@@ -25,7 +25,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from screener.config import DATA_DIR  # noqa: E402
 from screener.filings import extract_sections, fetch_text, ten_k_filings  # noqa: E402
 from screener.llm import (  # noqa: E402
-    PROMPT_VERSION, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt, component_scores, llm_score,
+    PROMPT_VERSION, SELF_CONSISTENCY_TEMPERATURE, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt,
+    component_scores, llm_score,
     gate_review, qualitative_gate, risk_change, verify_evidence,
 )
 from screener.db import connect  # noqa: E402
@@ -44,9 +45,11 @@ COLUMNS = ["as_of", "cik", "ticker", "model", "prompt_version", "accn", "filed",
 
 
 def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool = False,
-                  skip_accns: set[str] | None = None) -> tuple[dict, dict | None]:
+                  skip_accns: set[str] | None = None, self_consistency: bool = False) -> tuple[dict, dict | None]:
     """Score one company's latest 10-K. Returns (row, full result); row['skipped'] is set when the
-    latest 10-K is already scored (skip_accns), so no Gemini request is made."""
+    latest 10-K is already scored (skip_accns), so no Gemini request is made. With
+    self_consistency, a second run at a higher temperature re-classifies the gate items and the
+    gate fires if either run fires (scores come from the first run)."""
     cik = int(r.cik)
     row = {"as_of": as_of, "cik": cik, "ticker": r.ticker, "model": gemini.model, "prompt_version": PROMPT_VERSION}
     filings = ten_k_filings(cik, sec, as_of, 2)
@@ -83,7 +86,17 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
 
     verified, total = verify_evidence(result, prompt)
     comp = component_scores(result)
-    gate = qualitative_gate(result)
+    gate, review = qualitative_gate(result, prompt), gate_review(result, prompt)
+    second = None
+    if self_consistency and not dry_run:
+        sc_file = cache_file.with_name(cache_file.stem + "_sc.json")
+        if sc_file.exists():
+            second = json.loads(sc_file.read_text(encoding="utf-8"))["result"]
+        else:
+            second, _ = gemini.generate(prompt, temperature=SELF_CONSISTENCY_TEMPERATURE)
+            sc_file.write_text(json.dumps({"result": second}), encoding="utf-8")
+        gate += [f"{g} [run 2]" for g in qualitative_gate(second, prompt) if g not in gate]
+        review += [f"{g} [run 2]" for g in gate_review(second, prompt) if g not in review]
     rc = result["risk_factor_change"]
     row.update(
         moat=comp["moat"], moat_lost_revenue_share=result["moat"]["revenue_share_affected_by_lost_advantage"],
@@ -94,13 +107,18 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
         cam_count=comp["cam_count"], cam_new=comp["cam_new"], cam_unusual=comp["cam_unusual"],
         cam_prior_available=comp["cam_prior_available"],
         cam_topics="; ".join(c["topic"] for c in result["critical_audit_matters"]["cams"]),
-        qualitative_gate=bool(gate), gate_reasons=" | ".join(gate), gate_review=" | ".join(gate_review(result)),
+        qualitative_gate=bool(gate), gate_reasons=" | ".join(gate), gate_review=" | ".join(review),
         sections_adequate=result["data_quality"]["sections_adequate"], dq_notes=result["data_quality"]["notes"],
         evidence_verified=verified, evidence_total=total, llm_score=llm_score(comp),
         prompt_tokens=usage.get("promptTokenCount"), output_tokens=usage.get("candidatesTokenCount"),
         error=None)
-    return row, {"ticker": r.ticker, "accn": cur["accn"], "model": gemini.model, "prompt_version": PROMPT_VERSION,
-                 "risk_added_share": row["risk_added_share"], "components": comp, "gate": gate, **result}
+    full = {"ticker": r.ticker, "accn": cur["accn"], "model": gemini.model, "prompt_version": PROMPT_VERSION,
+            "risk_added_share": row["risk_added_share"], "components": comp, "gate": gate, "gate_review": review,
+            **result}
+    if second:
+        full["self_consistency_run"] = {"risk_factor_change": second["risk_factor_change"],
+                                        "critical_audit_matters": second["critical_audit_matters"]}
+    return row, full
 
 
 PRIORITY_STATUSES = ("flag", "watch")
@@ -120,7 +138,9 @@ def run_queue(args) -> None:
         columns=["ticker", "cik", "name", "gics_sub_industry", "status", "mos"])
     universe["priority"] = (~universe["status"].isin(PRIORITY_STATUSES)).astype(int)
     universe = universe.sort_values(["priority", "mos"], ascending=[True, False], na_position="last")
-    done = scored_accessions(conn, gemini.model, PROMPT_VERSION)
+    if args.only:
+        universe = universe[universe["ticker"].isin([t.strip().upper() for t in args.only.split(",")])]
+    done = {} if args.force else scored_accessions(conn, gemini.model, PROMPT_VERSION)
     print(f"Queue: model {gemini.model}, prompt {PROMPT_VERSION}; {len(universe)} companies "
           f"({int((universe['priority'] == 0).sum())} flag/watch first); {len(done)} have a score", flush=True)
 
@@ -131,7 +151,8 @@ def run_queue(args) -> None:
             stop_reason = f"time budget of {args.max_minutes} minutes reached"
             break
         try:
-            row, full = score_company(r, sec, gemini, args.as_of, skip_accns=done.get(int(r.cik)))
+            row, full = score_company(r, sec, gemini, args.as_of, skip_accns=done.get(int(r.cik)),
+                                      self_consistency=r.priority == 0)
         except (DailyQuotaExhausted, ServiceUnavailable) as exc:
             stop_reason = str(exc)
             break
@@ -172,6 +193,8 @@ def main() -> None:
     parser.add_argument("--as-of", default=date.today().isoformat())
     parser.add_argument("--dry-run", action="store_true", help="build prompts without calling Gemini")
     parser.add_argument("--max-minutes", type=float, default=300, help="queue mode time budget")
+    parser.add_argument("--only", help="queue mode: restrict to these tickers (comma-separated)")
+    parser.add_argument("--force", action="store_true", help="queue mode: rescore even if already scored")
     args = parser.parse_args()
     if args.queue:
         return run_queue(args)

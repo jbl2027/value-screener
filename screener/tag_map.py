@@ -78,6 +78,14 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "DepreciationAmortizationAndAccretionNet",
         "Depreciation",
     )),
+    # Goodwill and intangible impairment (rule-based qualitative gate: >= 5% of total assets).
+    "impairment_goodwill_intangibles": ("USD", "duration", _g(
+        "GoodwillAndIntangibleAssetImpairment",
+        "GoodwillImpairmentLoss+ImpairmentOfIntangibleAssetsExcludingGoodwill",
+        "ImpairmentOfIntangibleAssetsExcludingGoodwill",
+        "ImpairmentOfIntangibleAssetsIndefinitelivedExcludingGoodwill+ImpairmentOfIntangibleAssetsFinitelived",
+        "ImpairmentOfIntangibleAssetsFinitelived",
+    )),
     "gain_on_property_sales": ("USD", "duration", _g(
         "GainsLossesOnSalesOfInvestmentRealEstate",
         "GainLossOnSaleOfRealEstateInvestmentProperty",

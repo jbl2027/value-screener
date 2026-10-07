@@ -78,6 +78,13 @@ Items deferred to after the milestone noted.
   ">25% of operating income" (e.g. MSFT AI capex, ZTS convertible notes). Pending: gate fix and
   rubric approval, then the LLM GitHub Actions workflow with a priority queue.
 - Until then the composite excludes the LLM component and renormalizes the other weights.
+- Gate (approved): LLM part = new serious/existential company-specific risk of 8 event types,
+  materiality >= 10% or not estimable, verified quote with matching event language, two runs for
+  flag/watch (fires if either fires); new unusual CAMs >= 10%. Rule-based: going concern and
+  material weakness (10-K text, formal auditor/9A conclusions only), restatement (8-K Item 4.02 or
+  10-K/A with restated XBRL financial data; 10-K/A text matching fired on clawback clauses), and
+  goodwill/intangible impairment >= 5% of assets. First full run: gate fired for 19 companies;
+  flags moved to watch: GEN, EIX, CDW, UHS (all LLM).
 
 ## Milestone 9: Supabase notes
 - Database ~195 MB of the 500 MB free tier after the initial load (facts ~970k rows dominate).

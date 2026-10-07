@@ -132,7 +132,7 @@ VAL_COLS = ["cik", "ticker", "as_of", "name", "sector_model", "gics_sector", "gi
             "status_reason", "confidence", "confidence_reasons", "warnings", "disqualify_reasons", "missing_inputs",
             "price", "fair_value", "mos", "method", "company_multiple", "peer_multiple", "fair_multiple",
             "peer_group", "peer_count", "base_value", "base_basis", "earnings_yield", "treasury_yield",
-            "qualitative_gate", "qualitative_reasons"]
+            "qualitative_gate", "qualitative_reasons", "qualitative_detectors"]
 SCORE_COLS = ["cik", "ticker", "as_of", "composite", "composite_confidence", "composite_rank",
               "components_available", "components_missing", "composite_note", "valuation_score",
               "productivity_score", "earnings_quality_score", "momentum_score", "llm_score", "growth_score",

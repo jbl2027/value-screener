@@ -1,0 +1,34 @@
+# Daily Gemini 10-K scoring: priority queue (flag and watch first, then the rest), stops cleanly at
+# the free-tier daily quota or after repeated 5xx errors, and resumes the next day from Supabase.
+# After the backfill, only companies with a new 10-K are scored.
+name: llm-scoring
+
+on:
+  schedule:
+    - cron: "40 8 * * *"      # 08:40 UTC daily: after the quota reset (midnight Pacific = 07:00/08:00 UTC)
+  workflow_dispatch:
+
+concurrency:
+  group: llm-scoring
+  cancel-in-progress: false
+
+jobs:
+  llm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+      GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Apply database migrations
+        run: python -u scripts/db_migrate.py
+      - name: Score 10-Ks (priority queue; stops at quota, repeated 5xx, or 300 minutes)
+        run: python -u scripts/run_llm.py --queue --max-minutes 300

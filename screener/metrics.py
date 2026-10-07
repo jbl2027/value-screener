@@ -490,6 +490,9 @@ def compute(cd: CompanyData, model: str, price: float | None, price_date: str | 
     # Corporate-action materiality inputs: acquisitions vs pre-event assets; revenue restatement
     # (a disposed business moved to discontinued operations shrinks restated revenue).
     c.m["acquisitions_ttm_to_assets"] = _div(c.ttm("acquisitions"), cd.fy("total_assets"))
+    # Rule-based gate input: goodwill/intangible impairment in the latest fiscal year vs total assets.
+    c.m["impairment_fy"] = c.fy("impairment_goodwill_intangibles")
+    c.m["impairment_to_assets"] = _div(c.m["impairment_fy"], cd.fy("total_assets"))
     ratio = cd.ttm("revenue").restatement_ratio
     c.m["revenue_restated_share_removed"] = 1 - ratio if ratio is not None else None
     c.m["fy_end"] = cd.fy_end()

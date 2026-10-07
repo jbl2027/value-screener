@@ -3,7 +3,7 @@
 Writes data/universe.csv, data/facts.parquet, data/fundamentals_summary.csv, data/prices.parquet
 in the same shapes the pipeline scripts produce, so they run unchanged.
 
-Usage: python scripts/sync_from_supabase.py [universe] [facts] [prices] [llm]   (default: all)
+Usage: python scripts/sync_from_supabase.py [universe] [facts] [prices] [llm] [flags]   (default: all)
 """
 import io
 import sys
@@ -64,7 +64,18 @@ def sync_llm(conn) -> int:
     return len(df)
 
 
-SYNCS = {"universe": sync_universe, "facts": sync_facts, "prices": sync_prices, "llm": sync_llm}
+def sync_flags(conn) -> int:
+    """Rule-based 10-K text detectors (going concern, material weakness) per company and 10-K."""
+    df = query_csv(conn, "select cik, ticker, accn, filed, going_concern, material_weakness, evidence "
+                         "from filing_flags")
+    for c in ("going_concern", "material_weakness"):
+        df[c] = df[c].map({"t": True, "f": False, True: True, False: False})
+    df.to_csv(DATA_DIR / "filing_flags.csv", index=False)
+    return len(df)
+
+
+SYNCS = {"universe": sync_universe, "facts": sync_facts, "prices": sync_prices, "llm": sync_llm,
+         "flags": sync_flags}
 
 
 def main() -> None:

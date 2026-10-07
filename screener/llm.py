@@ -21,6 +21,11 @@ serious/existential risks of a listed event type (investigation or enforcement, 
 material weakness, going-concern doubt, covenant breach or default, loss of a key customer or
 contract, major impairment, recall) affecting >= 10%, or new unusual CAMs affecting >= 10%.
 The risk-change deduction scale was kept (1 of 20 at the floor in the v2.1 test).
+Gate refinements (same prompt v2.2): "not estimable" fires for the listed event types; a risk only
+fires if its quote is verified in the filing and contains language matching its event type
+(otherwise it is downgraded to review); flag/watch companies get a second classification run at
+SELF_CONSISTENCY_TEMPERATURE and the gate fires if either run fires. Rule-based detectors (going
+concern, material weakness, restatement, impairment) live in gate_rules.py.
 """
 import json
 import math
@@ -31,6 +36,7 @@ from collections import Counter
 import requests
 
 from screener.config import require
+from screener.gate_rules import quote_matches_event
 
 # Pinned. gemini-3.8-flash (free tier: 20 requests/day, frequent 503 overload) proved unusable for a
 # 500-company run; switched 2026-10-06 to the newest stable Flash-Lite, which was available when
@@ -50,6 +56,7 @@ RISK_DEDUCTIONS = {("company_specific", "moderate"): 2, ("company_specific", "se
 # CAM deductions from 10.
 CAM_NEW_UNUSUAL, CAM_NEW_ROUTINE, CAM_CONTINUING_UNUSUAL = 3, 1, 1
 GATE_SEVERITIES = {"serious", "existential"}
+SELF_CONSISTENCY_TEMPERATURE = 0.7  # second gate run for flag/watch companies
 # Share of operating income (or revenue if operating income isn't estimable) potentially affected.
 MATERIALITY = ["lt_5pct", "5_to_10pct", "10_to_25pct", "gt_25pct", "not_estimable"]
 CAM_MATERIALITY = MATERIALITY + ["not_applicable"]
@@ -251,10 +258,10 @@ class Gemini:
         if wait > 0:
             time.sleep(wait)
 
-    def generate(self, prompt: str) -> tuple[dict, dict]:
+    def generate(self, prompt: str, temperature: float = 0) -> tuple[dict, dict]:
         body = {"systemInstruction": {"parts": [{"text": SYSTEM}]},
                 "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-                "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
+                "generationConfig": {"temperature": temperature, "responseMimeType": "application/json",
                                      "responseSchema": SCHEMA}}
         server_errors = 0
         for attempt in range(self.max_retries):
@@ -347,34 +354,55 @@ def llm_score(components: dict) -> float:
     return round(100 * total, 1)
 
 
-def gate_candidates(result: dict) -> list[dict]:
-    """New serious/existential company-specific risks of a gate event type, and new unusual CAMs,
-    with materiality."""
-    out = [{"kind": "risk", "text": f"new {r['severity']} company-specific risk "
-                                    f"[{r.get('event_type')}]: {r['risk']}",
-            "materiality": r.get("materiality", "not_estimable"), "basis": r.get("materiality_basis")}
-           for r in result["risk_factor_change"]["new_risks"]
-           if r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES
-           and r.get("event_type") in GATE_EVENT_TYPES]
+def _quote_found(quote: str, source_norm: str) -> bool:
+    parts = [p for p in re.split(r"\.\.\.", _norm_quote(quote)) if len(p.strip()) > 8]
+    return bool(parts) and all(p.strip() in source_norm for p in parts)
+
+
+def gate_candidates(result: dict, source: str) -> list[dict]:
+    """New serious/existential company-specific risks of a gate event type, and new unusual CAMs.
+    Each candidate gets `fires` and, if it doesn't fire, `why_not`:
+      risks: materiality >= 10% or not estimable, AND the risk's quote is verified in the source
+             text AND contains language matching its event type (gate_rules.EVENT_KEYWORDS)
+      CAMs:  materiality >= 10%"""
+    src = _norm_quote(source)
+    out = []
+    for r in result["risk_factor_change"]["new_risks"]:
+        if not (r["scope"] == "company_specific" and r["severity"] in GATE_SEVERITIES
+                and r.get("event_type") in GATE_EVENT_TYPES):
+            continue
+        mat = r.get("materiality", "not_estimable")
+        c = {"kind": "risk", "text": f"new {r['severity']} company-specific risk [{r['event_type']}]: {r['risk']}",
+             "materiality": mat, "basis": r.get("materiality_basis"), "fires": True, "why_not": None}
+        if mat not in GATE_MATERIALITY and mat != "not_estimable":
+            c.update(fires=False, why_not="materiality below 10%")
+        elif not _quote_found(r.get("evidence", ""), src):
+            c.update(fires=False, why_not="quote not verified in the filing")
+        elif not quote_matches_event(r["event_type"], r.get("evidence", "")):
+            c.update(fires=False, why_not=f"quote lacks {r['event_type']} language")
+        out.append(c)
     cam = result["critical_audit_matters"]
     if cam["prior_year_available"]:
-        out += [{"kind": "cam", "text": f"new unusual CAM: {c['topic']}",
-                 "materiality": c.get("materiality", "not_applicable"), "basis": None}
-                for c in cam["cams"] if c["new_vs_prior_year"] and c["unusual_for_industry"]]
+        for x in cam["cams"]:
+            if x["new_vs_prior_year"] and x["unusual_for_industry"]:
+                mat = x.get("materiality", "not_applicable")
+                fires = mat in GATE_MATERIALITY
+                out.append({"kind": "cam", "text": f"new unusual CAM: {x['topic']}", "materiality": mat,
+                            "basis": None, "fires": fires, "why_not": None if fires else "materiality below 10%"})
     return out
 
 
 def _describe(c: dict) -> str:
     basis = f" of {c['basis'].replace('_', ' ')}" if c.get("basis") else ""
-    return f"{c['text']} ({c['materiality']}{basis})"
+    why = f"; review: {c['why_not']}" if c.get("why_not") else ""
+    return f"{c['text']} ({c['materiality']}{basis}{why})"
 
 
-def qualitative_gate(result: dict) -> list[str]:
-    """Reasons to move a flag to watch: gate candidates estimated to affect >= 10% of operating
-    income (or revenue). Candidates below 10%, not estimable, or not applicable don't fire."""
-    return [_describe(c) for c in gate_candidates(result) if c["materiality"] in GATE_MATERIALITY]
+def qualitative_gate(result: dict, source: str) -> list[str]:
+    """Reasons to move a flag to watch (LLM part of the gate)."""
+    return [_describe(c) for c in gate_candidates(result, source) if c["fires"]]
 
 
-def gate_review(result: dict) -> list[str]:
-    """Gate candidates that did not fire (below 10%, not estimable, or not applicable)."""
-    return [_describe(c) for c in gate_candidates(result) if c["materiality"] not in GATE_MATERIALITY]
+def gate_review(result: dict, source: str) -> list[str]:
+    """Gate candidates that did not fire, with the reason."""
+    return [_describe(c) for c in gate_candidates(result, source) if not c["fires"]]

@@ -36,8 +36,10 @@ jobs:
         run: python -u scripts/build_fundamentals.py
       - name: Load universe and facts to Supabase
         run: python -u scripts/load_supabase.py universe facts
-      - name: Pull prices from Supabase
-        run: python -u scripts/sync_from_supabase.py prices
+      - name: Rule-based 10-K detectors (going concern, material weakness; new 10-Ks only)
+        run: python -u scripts/scan_filing_flags.py
+      - name: Pull prices, LLM scores, and 10-K detector flags from Supabase
+        run: python -u scripts/sync_from_supabase.py prices llm flags
       - name: Recompute results on refreshed facts
         run: |
           python -u scripts/compute_metrics.py

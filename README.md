@@ -26,7 +26,10 @@ Secrets live in `.env` (gitignored).
 - Connection: Supavisor session pooler (IPv4), see `screener/db.py`. Frontend reads `latest_screen` (view) and the `*_latest` tables as an authenticated user; RLS blocks anon.
 - `.github/workflows/daily.yml` (weekdays 22:20 UTC): sync -> Tiingo closes -> metrics -> valuations -> scores -> load.
 - `.github/workflows/weekly.yml` (Saturday 11:20 UTC): migrations -> universe -> EDGAR fundamentals -> load -> recompute -> load.
-- Required GitHub Actions secrets: `SUPABASE_URL`, `SUPABASE_DB_PASSWORD`, `SEC_USER_AGENT`, `TIINGO_KEY`, `FRED_KEY` (`GEMINI_KEY` later, with the LLM workflow).
+- `.github/workflows/llm.yml` (daily 08:40 UTC): Gemini 10-K scoring priority queue (`run_llm.py --queue`), flag/watch first; stops at quota, repeated 5xx, or 300 minutes; resumes next day from Supabase; after the backfill only new 10-Ks are scored.
+- `python -u scripts/scan_filing_flags.py`: rule-based gate detectors on 10-K text (going concern, material weakness), once per 10-K; runs in the weekly workflow.
+- Qualitative gate (flag -> watch, reason `qualitative_risk`): LLM review plus rule-based detectors (going concern, material weakness, restatement, goodwill/intangible impairment >= 5% of assets); see `screener/gate_rules.py` and `valuation.apply_qualitative_gate`.
+- Required GitHub Actions secrets: `SUPABASE_URL`, `SUPABASE_DB_PASSWORD`, `SEC_USER_AGENT`, `TIINGO_KEY`, `FRED_KEY`, `GEMINI_KEY`.
 
 ## Point-in-time facts
 Each fact keeps `period_start`, `period_end`, `fy`, `fp`, `form`, `filed`, and `accn`. A value is stored once, from the first filing that reported it; a later filing reporting a different value for the same period is kept as a separate row (a restatement). Query "as of" a date with `filed <= date`, taking the latest-filed row per period.

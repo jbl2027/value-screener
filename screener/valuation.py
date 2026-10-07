@@ -23,6 +23,7 @@ import numpy as np
 import pandas as pd
 
 from screener import rules as R
+from screener.gate_rules import IMPAIRMENT_THRESHOLD
 
 MIN_R2_NORMAL = 0.30  # regression fits below this make bank/insurer valuations low confidence
 
@@ -321,19 +322,47 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
     return rec
 
 
-def apply_qualitative_gate(result: pd.DataFrame, llm: pd.DataFrame | None) -> pd.DataFrame:
-    """Move flag -> watch when the 10-K review found a new serious/existential company-specific
-    risk or a new unusual CAM (Milestone 8). Other statuses are unchanged."""
+def apply_qualitative_gate(result: pd.DataFrame, llm: pd.DataFrame | None,
+                           filing_flags: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Qualitative gate: move flag -> watch (reason qualitative_risk) when any detector fires.
+      llm                Gemini review: new serious company-specific risk of a listed event type, or a
+                         new unusual CAM (with the quote and self-consistency checks)
+      going_concern,     rule-based, from the latest 10-K's text (filing_flags)
+      material_weakness
+      restatement        rule-based, 8-K Item 4.02 / restating 10-K/A since the last 10-K
+      major_impairment   rule-based, goodwill/intangible impairment >= 5% of total assets
+    Other statuses are unchanged. Fired detectors are listed in qualitative_detectors."""
     result = result.copy()
-    result["qualitative_gate"] = False
-    result["qualitative_reasons"] = None
-    if llm is None or llm.empty:
-        return result
-    gated = llm[llm["qualitative_gate"].astype(str).str.lower() == "true"].set_index("cik")["gate_reasons"]
-    hit = result["cik"].isin(gated.index)
-    result.loc[hit, "qualitative_gate"] = True
-    result.loc[hit, "qualitative_reasons"] = result.loc[hit, "cik"].map(gated)
-    move = hit & (result["status"] == R.STATUS_FLAG)
+    reasons = {cik: [] for cik in result["cik"]}
+    detectors = {cik: [] for cik in result["cik"]}
+
+    def add(cik, detector, reason):
+        if cik in reasons:
+            detectors[cik].append(detector)
+            reasons[cik].append(f"{detector}: {reason}")
+
+    if llm is not None and not llm.empty:
+        for _, r in llm[llm["qualitative_gate"].astype(str).str.lower() == "true"].iterrows():
+            add(r["cik"], "llm", r["gate_reasons"])
+    if filing_flags is not None and not filing_flags.empty:
+        latest = filing_flags.sort_values("filed").groupby("cik").tail(1)
+        for _, r in latest.iterrows():
+            for d in ("going_concern", "material_weakness"):
+                if str(r[d]).lower() == "true":
+                    ev = [e for e in str(r.get("evidence") or "").split(" | ") if e.startswith(d)]
+                    add(r["cik"], d, (ev[0].split(": ", 1)[-1] if ev else "detected in 10-K text")[:300])
+    for _, r in result.iterrows():
+        if _truthy(r.get("restatement")):
+            add(r["cik"], "restatement", r.get("restatement_evidence"))
+        imp = r.get("impairment_to_assets")
+        if imp is not None and not (isinstance(imp, float) and np.isnan(imp)) and imp >= IMPAIRMENT_THRESHOLD:
+            add(r["cik"], "major_impairment",
+                f"goodwill/intangible impairment {imp:.1%} of total assets in fiscal year {r.get('fy_end')}")
+
+    result["qualitative_gate"] = result["cik"].map(lambda c: bool(reasons[c]))
+    result["qualitative_detectors"] = result["cik"].map(lambda c: ", ".join(detectors[c]) or None)
+    result["qualitative_reasons"] = result["cik"].map(lambda c: " | ".join(reasons[c]) or None)
+    move = result["qualitative_gate"] & (result["status"] == R.STATUS_FLAG)
     result.loc[move, "status"] = R.STATUS_WATCH
     result.loc[move, "status_reason"] = "qualitative_risk: " + result.loc[move, "qualitative_reasons"]
     return result

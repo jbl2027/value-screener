@@ -19,6 +19,7 @@ from screener.config import DATA_DIR  # noqa: E402
 from screener.corporate_actions import check  # noqa: E402
 from screener.fred import latest  # noqa: E402
 from screener.fundamentals import extract_facts  # noqa: E402
+from screener.gate_rules import restated_10ka  # noqa: E402
 from screener.sec_client import SECClient  # noqa: E402
 from screener.sensitivities import EBIT_ADJUSTMENTS, apply_ebit_adjustments  # noqa: E402
 from screener.series import build_company  # noqa: E402
@@ -37,7 +38,8 @@ OUTPUT_COLUMNS = [
     "m_score_imputed", "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled",
     "status_without_dq", "beneish_top_index", "captive_finance", "corporate_action_pending",
     "event_filed", "event_source", "first_periodic_after", "corporate_action_materiality",
-    "qualitative_gate", "qualitative_reasons",
+    "qualitative_gate", "qualitative_detectors", "qualitative_reasons", "restatement", "restatement_evidence",
+    "impairment_to_assets",
     "ebit_ttm", "ebit_3y_avg", "ebit_fy", "ebit_fy_prior", "ebit_fy_change",
 ]
 BASELINE = DATA_DIR / "valuations.csv"
@@ -94,6 +96,12 @@ def main() -> None:
         corp = list(pool.map(lambda c: check(int(c), sec, as_of, R.CORPORATE_ACTION_LOOKBACK_DAYS,
                                              manual.get(int(c))), metrics["cik"]))
     corp = pd.DataFrame(corp)
+    # Restatement detector, XBRL part: a 10-K/A with restated financial data since the last 10-K.
+    restated = restated_10ka(pd.read_parquet(DATA_DIR / "facts.parquet", columns=["cik", "concept", "form", "filed"]),
+                             summary.set_index("cik")["latest_10k_filed"].to_dict())
+    corp["restatement"] = corp["restatement"].fillna(False).astype(bool) | corp["cik"].isin(restated)
+    corp["restatement_evidence"] = [ev if isinstance(ev, str) else restated.get(c)
+                                    for c, ev in zip(corp["cik"], corp["restatement_evidence"])]
     corp["disposed_revenue_share"] = corp["cik"].map(
         lambda c: disposed_revenue_share(c, manual[c][2], sec, as_of) if c in manual and manual[c][2] else None)
     corp.to_csv(DATA_DIR / "corporate_actions.csv", index=False)
@@ -104,7 +112,13 @@ def main() -> None:
 
     result, fits = value_all(metrics, summary, corp, t_yield)
     llm_path = DATA_DIR / f"llm_scores_{PROMPT_VERSION}.csv"
-    result = apply_qualitative_gate(result, pd.read_csv(llm_path) if llm_path.exists() else None)
+    flags_path = DATA_DIR / "filing_flags.csv"
+    result = apply_qualitative_gate(result, pd.read_csv(llm_path) if llm_path.exists() else None,
+                                    pd.read_csv(flags_path) if flags_path.exists() else None)
+    gated = result[result["qualitative_gate"]]
+    print(f"Qualitative gate fired for {len(gated)} companies: "
+          + (gated["qualitative_detectors"].str.split(", ").explode().value_counts().to_dict().__repr__()
+             if len(gated) else "none"))
     baseline = pd.read_csv(BASELINE) if BASELINE.exists() else None
     sens = sensitivities(result)
     sens.to_csv(DATA_DIR / "sensitivities.csv", index=False)
