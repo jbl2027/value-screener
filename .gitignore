@@ -222,3 +222,7 @@ data/cache/
 data/test_facts.csv
 data/facts.parquet
 data/prices.parquet
+
+# Synced from Supabase (source of truth)
+data/filing_flags.csv
+data/llm_scores_v*.csv
