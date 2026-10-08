@@ -1,13 +1,15 @@
 """Milestone 7: composite score (0-100), the research report's Forensic Value Score weights.
 
-Component weights (report section 2.2):
+Component weights: LLM_WEIGHT (10) for the Gemini score; the rest keep the report's relative
+weights (section 2.2), scaled to 100 - LLM_WEIGHT (at 10: 28.125 / 16.875 / 11.25 each):
   valuation 25   relative valuation (earnings yield EBIT/EV; banks TBV/P; insurers B/P; REITs FFO/P)
   productivity 15  operating profitability (EBIT + R&D) / assets (Ball et al. 2015) for every
                  standard company; banks ROTCE, insurers ROE
   earnings_quality 10  Sloan accruals (lower is better; worst decile in group scores 0)
   momentum 10    Piotroski F mapped: 8-9 -> 100, 7 -> 85, 6 -> 65, 5 -> 50, 4 -> 35, <= 3 -> 0
                  (full score, or scaled score when >= 7 tests ran; else missing)
-  llm 20         Gemini 10-K forensic score (Milestone 8)
+  llm            Gemini 10-K forensic score (Milestone 8), absolute 0-100; for flag/watch the
+                 mean of two runs
   growth 10      ROIC x reinvestment rate (R&D-adjusted where available)
   shareholder_yield 10
 
@@ -16,7 +18,7 @@ falling back to GICS sector, then all standard companies, when fewer than MIN_GR
 have the metric (matching the valuation peers). Banks, insurers, and REITs rank within their
 own model. A missing component is imputed at the neutral score of 50; `components_available`
 counts the real ones (of `components_active`), and fewer than MIN_COMPONENTS makes the composite
-low confidence. Components in PENDING (currently the LLM score) are excluded and the remaining
+low confidence. Components in PENDING (currently none) are excluded and the remaining
 weights renormalized until they are in production. A composite also requires a real valuation score, and is null for rows whose
 valuation status is insufficient_data (component scores are kept for debugging). Banks and
 insurers have no earnings-quality or momentum component (Rule 1), so those are imputed.
@@ -24,12 +26,17 @@ insurers have no earnings-quality or momentum component (Rule 1), so those are i
 import numpy as np
 import pandas as pd
 
-WEIGHTS = {"valuation": 25, "productivity": 15, "earnings_quality": 10, "momentum": 10,
-           "llm": 20, "growth": 10, "shareholder_yield": 10}
+# The single knob for the Gemini component (percent of the composite). The other components keep
+# their relative weights from the report and are scaled to fill the remaining 100 - LLM_WEIGHT.
+LLM_WEIGHT = 10
+BASE_WEIGHTS = {"valuation": 25, "productivity": 15, "earnings_quality": 10, "momentum": 10,
+                "growth": 10, "shareholder_yield": 10}
+WEIGHTS = {**{k: w * (100 - LLM_WEIGHT) / sum(BASE_WEIGHTS.values()) for k, w in BASE_WEIGHTS.items()},
+           "llm": LLM_WEIGHT}
 NEUTRAL = 50.0              # imputed score for a missing component
 # Components not yet in production are excluded and the remaining weights renormalized (rather
-# than imputed at 50). The LLM component joins once its rubric is approved and scored at scale.
-PENDING = {"llm"}
+# than imputed at 50). Empty since 2026-10-08, when the LLM component went live at LLM_WEIGHT.
+PENDING: set[str] = set()
 MIN_GROUP = 8               # minimum companies with the metric for a ranking group
 MIN_COMPONENTS = 5          # fewer real components -> composite low confidence
 SLOAN_WORST_DECILE = 10.0   # percentile at or below which accruals score 0

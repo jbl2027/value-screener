@@ -94,7 +94,17 @@ Items deferred to after the milestone noted.
   5.5, 1 of 20 at the floor. Gate fires for 8 of 20 (40%): the model rates most serious risks
   ">25% of operating income" (e.g. MSFT AI capex, ZTS convertible notes). Pending: gate fix and
   rubric approval, then the LLM GitHub Actions workflow with a priority queue.
-- Until then the composite excludes the LLM component and renormalizes the other weights.
+- Backfill complete 2026-10-07: 499 of 500 (HONA has no 10-K yet). Re-scoring 10 random
+  non-flag/watch companies: llm_score mean absolute difference 2.6 (max 10.5); risk change is the
+  noisiest component (0.8), CAM the most stable (0.1).
+- 2026-10-08: LLM component live in the composite at `scoring.LLM_WEIGHT` = 10 (others scaled
+  to 90 in their report proportions). Flag/watch scores are the mean of two runs (run 2 at
+  temperature 0.7; `llm_scores.runs`, `run_scores`); the gate fires if either run fires. A
+  company that becomes flag/watch with a single-run score gets run 2 in the next queue run,
+  reusing the stored run 1 (one request). Gate findings from an earlier partial second run on
+  the same 10-K are carried over as "[earlier run]" (IT's was restored by hand after the first
+  upgrade pass dropped it). Effect on 2026-10-07 flags: no status change, no flag moved more
+  than 3 places among flags (mean 0.8), composite change mean +0.3, max 3.5 (APO).
 - Gate (approved): LLM part = new serious/existential company-specific risk of 8 event types,
   materiality >= 10% or not estimable, verified quote with matching event language, two runs for
   flag/watch (fires if either fires); new unusual CAMs >= 10%. Rule-based: going concern and
@@ -114,7 +124,7 @@ Items deferred to after the milestone noted.
 - Productivity = operating profitability (EBIT + R&D) / assets for all standard companies
   (430 of 431 covered; FSLR's numerator excludes 45X credits).
 - Composite null for insufficient_data rows (component scores kept).
-- LLM component (20%) imputed at 50 until Milestone 8 scores exist.
+- LLM component at LLM_WEIGHT (10%) since 2026-10-08; a missing LLM score is imputed at 50.
 
 ## Valuation: open items
 - Spin-offs can be announced under 8-K Item 8.01 rather than 2.01 (Comcast/Versant), so the

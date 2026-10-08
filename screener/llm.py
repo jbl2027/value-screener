@@ -354,6 +354,19 @@ def llm_score(components: dict) -> float:
     return round(100 * total, 1)
 
 
+AVERAGED_COMPONENTS = ("moat", "candor", "risk_change", "cam")
+
+
+def average_runs(first: dict, second: dict) -> tuple[dict, float]:
+    """Mean of two runs' component scores (a component missing in one run, e.g. an unassessable
+    risk change, takes the other run's value) and the mean of the two runs' llm_scores."""
+    avg = dict(first)
+    for k in AVERAGED_COMPONENTS:
+        vals = [v for v in (first[k], second[k]) if v is not None]
+        avg[k] = sum(vals) / len(vals) if vals else None
+    return avg, round((llm_score(first) + llm_score(second)) / 2, 1)
+
+
 def _quote_found(quote: str, source_norm: str) -> bool:
     parts = [p for p in re.split(r"\.\.\.", _norm_quote(quote)) if len(p.strip()) > 8]
     return bool(parts) and all(p.strip() in source_norm for p in parts)

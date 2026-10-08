@@ -25,8 +25,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from screener.config import DATA_DIR  # noqa: E402
 from screener.filings import extract_sections, fetch_text, ten_k_filings  # noqa: E402
 from screener.llm import (  # noqa: E402
-    PROMPT_VERSION, SELF_CONSISTENCY_TEMPERATURE, DailyQuotaExhausted, Gemini, ServiceUnavailable, build_prompt,
-    component_scores, llm_score,
+    PROMPT_VERSION, SCHEMA, SELF_CONSISTENCY_TEMPERATURE, DailyQuotaExhausted, Gemini, ServiceUnavailable,
+    average_runs, build_prompt, component_scores, llm_score,
     gate_review, qualitative_gate, risk_change, verify_evidence,
 )
 from screener.db import connect  # noqa: E402
@@ -42,14 +42,18 @@ COLUMNS = ["as_of", "cik", "ticker", "model", "prompt_version", "accn", "filed",
            "new_risks_serious_company", "cam_count", "cam_new", "cam_unusual", "cam_prior_available",
            "cam_topics", "qualitative_gate", "gate_reasons", "gate_review", "sections_adequate", "dq_notes",
            "evidence_verified", "evidence_total", "llm_score", "prompt_tokens", "output_tokens", "error"]
+RESULT_KEYS = tuple(SCHEMA["required"])  # top-level keys of one Gemini run's result
 
 
 def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool = False,
-                  skip_accns: set[str] | None = None, self_consistency: bool = False) -> tuple[dict, dict | None]:
+                  skip_accns: set[str] | None = None, self_consistency: bool = False,
+                  first_run: dict | None = None) -> tuple[dict, dict | None]:
     """Score one company's latest 10-K. Returns (row, full result); row['skipped'] is set when the
     latest 10-K is already scored (skip_accns), so no Gemini request is made. With
-    self_consistency, a second run at a higher temperature re-classifies the gate items and the
-    gate fires if either run fires (scores come from the first run)."""
+    self_consistency (flag/watch), a second full run at a higher temperature is made: the gate
+    fires if either run fires, and the component scores and llm_score are the mean of the two
+    runs. first_run: a stored single-run result for this 10-K (from Supabase), reused as run 1 so
+    only the second run is requested."""
     cik = int(r.cik)
     row = {"as_of": as_of, "cik": cik, "ticker": r.ticker, "model": gemini.model, "prompt_version": PROMPT_VERSION}
     filings = ten_k_filings(cik, sec, as_of, 2)
@@ -74,7 +78,12 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
 
     prompt = build_prompt(r.name, r.ticker, r.gics_sub_industry, cur["filed"], sections, change,
                           prior["cam"] if prior else None)
-    if cache_file.exists():
+    if first_run is not None and first_run.get("accn") != cur["accn"]:
+        first_run = None   # a newer 10-K exists: score it from scratch
+    if first_run is not None:
+        result = {k: first_run[k] for k in RESULT_KEYS}
+        usage = first_run.get("_usage") or {}
+    elif cache_file.exists():
         cached = json.loads(cache_file.read_text(encoding="utf-8"))
         result, usage = cached["result"], cached["usage"]
     elif dry_run:
@@ -86,21 +95,35 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
 
     verified, total = verify_evidence(result, prompt)
     comp = component_scores(result)
+    score = llm_score(comp)
     gate, review = qualitative_gate(result, prompt), gate_review(result, prompt)
-    second = None
+    second, runs = None, [{**comp, "llm_score": score}]
     if self_consistency and not dry_run:
         sc_file = cache_file.with_name(cache_file.stem + "_sc.json")
         if sc_file.exists():
             second = json.loads(sc_file.read_text(encoding="utf-8"))["result"]
         else:
             second, _ = gemini.generate(prompt, temperature=SELF_CONSISTENCY_TEMPERATURE)
+            CACHE.mkdir(parents=True, exist_ok=True)
             sc_file.write_text(json.dumps({"result": second}), encoding="utf-8")
         gate += [f"{g} [run 2]" for g in qualitative_gate(second, prompt) if g not in gate]
         review += [f"{g} [run 2]" for g in gate_review(second, prompt) if g not in review]
+        comp2 = component_scores(second)
+        runs.append({**comp2, "llm_score": llm_score(comp2)})
+        comp, score = average_runs(comp, comp2)
+    if first_run is not None:
+        # Findings from an earlier second run on this 10-K (stored before full second runs were
+        # kept) still count: the gate fires if any run on the filing fired.
+        for stored, out in ((first_run.get("gate") or [], gate), (first_run.get("gate_review") or [], review)):
+            for g in stored:
+                base = g.replace(" [run 2]", "").replace(" [earlier run]", "")
+                if g.endswith(("[run 2]", "[earlier run]")) and not any(x.startswith(base) for x in out):
+                    out.append(f"{base} [earlier run]")
     rc = result["risk_factor_change"]
     row.update(
         moat=comp["moat"], moat_lost_revenue_share=result["moat"]["revenue_share_affected_by_lost_advantage"],
         management_candor=comp["candor"], risk_change_score=comp["risk_change"], cam_score=comp["cam"],
+        runs=len(runs), run_scores=runs,
         new_risks=len(rc["new_risks"]),
         new_risks_serious_company=sum(1 for x in rc["new_risks"] if x["scope"] == "company_specific"
                                       and x["severity"] in ("serious", "existential")),
@@ -109,15 +132,14 @@ def score_company(r, sec: SECClient, gemini: Gemini, as_of: str, dry_run: bool =
         cam_topics="; ".join(c["topic"] for c in result["critical_audit_matters"]["cams"]),
         qualitative_gate=bool(gate), gate_reasons=" | ".join(gate), gate_review=" | ".join(review),
         sections_adequate=result["data_quality"]["sections_adequate"], dq_notes=result["data_quality"]["notes"],
-        evidence_verified=verified, evidence_total=total, llm_score=llm_score(comp),
+        evidence_verified=verified, evidence_total=total, llm_score=score,
         prompt_tokens=usage.get("promptTokenCount"), output_tokens=usage.get("candidatesTokenCount"),
         error=None)
     full = {"ticker": r.ticker, "accn": cur["accn"], "model": gemini.model, "prompt_version": PROMPT_VERSION,
-            "risk_added_share": row["risk_added_share"], "components": comp, "gate": gate, "gate_review": review,
-            **result}
+            "risk_added_share": row["risk_added_share"], "components": comp, "run_scores": runs, "gate": gate,
+            "gate_review": review, "_usage": usage, **result}
     if second:
-        full["self_consistency_run"] = {"risk_factor_change": second["risk_factor_change"],
-                                        "critical_audit_matters": second["critical_audit_matters"]}
+        full["self_consistency_run"] = second   # full second run (rationales and evidence too)
     return row, full
 
 
@@ -126,9 +148,12 @@ PRIORITY_STATUSES = ("flag", "watch")
 
 def run_queue(args) -> None:
     """Daily job: score companies whose latest 10-K has no score for this model and prompt version,
-    flag and watch first (highest MoS first), then the rest. Reads the universe, statuses, and
-    existing scores from Supabase and saves each score there, so it resumes across days and
-    runners. After the backfill, only companies with a new 10-K get scored."""
+    flag and watch first (highest MoS first), then the rest. A flag/watch company whose latest
+    score has only one run (e.g. it became flag after its 10-K was scored) gets the second run
+    now, reusing the stored first run; the averaged score and the two-run gate replace it.
+    Reads the universe, statuses, and existing scores from Supabase and saves each score there,
+    so it resumes across days and runners. After the backfill, only new 10-Ks and newly
+    flagged/watched companies cost Gemini requests."""
     deadline = time.monotonic() + args.max_minutes * 60
     conn = connect()
     gemini, sec = Gemini(), SECClient()
@@ -141,18 +166,32 @@ def run_queue(args) -> None:
     if args.only:
         universe = universe[universe["ticker"].isin([t.strip().upper() for t in args.only.split(",")])]
     done = {} if args.force else scored_accessions(conn, gemini.model, PROMPT_VERSION)
+    # Latest score per company with its run count: flag/watch with a single run need run 2.
+    single = {cik: accn for cik, accn, runs in conn.execute(
+        "select cik, accn, runs from llm_latest where model = %s and prompt_version = %s",
+        (gemini.model, PROMPT_VERSION)).fetchall() if runs < 2}
+    needs_second = {int(r.cik) for r in universe.itertuples() if r.priority == 0 and int(r.cik) in single}
     print(f"Queue: model {gemini.model}, prompt {PROMPT_VERSION}; {len(universe)} companies "
-          f"({int((universe['priority'] == 0).sum())} flag/watch first); {len(done)} have a score", flush=True)
+          f"({int((universe['priority'] == 0).sum())} flag/watch first); {len(done)} have a score; "
+          f"{len(needs_second)} flag/watch need a second run", flush=True)
 
-    counts = {"scored": 0, "up_to_date": 0, "data_issue": 0, "error": 0}
+    counts = {"scored": 0, "second_run": 0, "up_to_date": 0, "data_issue": 0, "error": 0}
     consecutive_errors, stop_reason = 0, "queue complete"
     for i, r in enumerate(universe.itertuples(), 1):
         if time.monotonic() > deadline:
             stop_reason = f"time budget of {args.max_minutes} minutes reached"
             break
+        cik, first_run, skip = int(r.cik), None, done.get(int(r.cik))
+        if cik in needs_second and not args.force:
+            stored = conn.execute(
+                "select result, prompt_tokens, output_tokens from llm_scores where cik = %s and accn = %s "
+                "and model = %s and prompt_version = %s", (cik, single[cik], gemini.model, PROMPT_VERSION)).fetchone()
+            if stored and stored[0] and all(k in stored[0] for k in RESULT_KEYS):
+                first_run = {**stored[0], "_usage": {"promptTokenCount": stored[1], "candidatesTokenCount": stored[2]}}
+                skip = (skip or set()) - {single[cik]}   # rescore this 10-K (run 2 only)
         try:
-            row, full = score_company(r, sec, gemini, args.as_of, skip_accns=done.get(int(r.cik)),
-                                      self_consistency=r.priority == 0)
+            row, full = score_company(r, sec, gemini, args.as_of, skip_accns=skip,
+                                      self_consistency=r.priority == 0, first_run=first_run)
         except (DailyQuotaExhausted, ServiceUnavailable) as exc:
             stop_reason = str(exc)
             break
@@ -172,7 +211,7 @@ def run_queue(args) -> None:
             continue
         consecutive_errors = 0
         save(conn, row, full)
-        counts["scored"] += 1
+        counts["second_run" if first_run is not None and row["accn"] == first_run.get("accn") else "scored"] += 1
         print(f"[{i}] {r.ticker} ({r.status or '-'}): score {row['llm_score']} gate {row['qualitative_gate']} "
               f"evidence {row['evidence_verified']}/{row['evidence_total']}", flush=True)
     remaining = len(universe) - sum(counts.values())

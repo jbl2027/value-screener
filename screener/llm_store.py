@@ -10,7 +10,8 @@ STORE_COLS = ["cik", "ticker", "accn", "filed", "period", "model", "prompt_versi
               "moat_lost_revenue_share", "management_candor", "risk_change_score", "cam_score", "new_risks",
               "new_risks_serious_company", "cam_count", "cam_new", "cam_unusual", "cam_topics",
               "qualitative_gate", "gate_reasons", "gate_review", "risk_added_share", "evidence_verified",
-              "evidence_total", "llm_score", "prompt_tokens", "output_tokens"]
+              "evidence_total", "llm_score", "prompt_tokens", "output_tokens", "runs"]
+JSON_COLS = ["run_scores"]  # stored with save(); not part of the latest_scores() CSV
 
 
 def _clean(v):
@@ -27,12 +28,15 @@ def scored_accessions(conn: psycopg.Connection, model: str, version: str) -> dic
 
 
 def save(conn: psycopg.Connection, row: dict, result: dict) -> None:
-    values = [_clean(row.get(c)) for c in STORE_COLS]
+    dumps = lambda o: json.dumps(o, default=str)  # noqa: E731
+    cols = STORE_COLS + JSON_COLS
+    values = ([_clean(row.get("runs", 1) if c == "runs" else row.get(c)) for c in STORE_COLS]
+              + [Jsonb(row.get(c), dumps=dumps) if row.get(c) is not None else None for c in JSON_COLS])
     conn.execute(
-        f"insert into llm_scores ({', '.join(STORE_COLS)}, result) values ({', '.join(['%s'] * (len(STORE_COLS) + 1))}) "
+        f"insert into llm_scores ({', '.join(cols)}, result) values ({', '.join(['%s'] * (len(cols) + 1))}) "
         f"on conflict (cik, accn, model, prompt_version) do update set "
-        f"{', '.join(f'{c} = excluded.{c}' for c in STORE_COLS[3:])}, result = excluded.result, scored_at = now()",
-        values + [Jsonb(result, dumps=lambda o: json.dumps(o, default=str))])
+        f"{', '.join(f'{c} = excluded.{c}' for c in cols[3:])}, result = excluded.result, scored_at = now()",
+        values + [Jsonb(result, dumps=dumps)])
     conn.commit()
 
 
