@@ -47,6 +47,8 @@ jobs:
           python -u scripts/compute_scores.py
       - name: Load results to Supabase
         run: python -u scripts/load_supabase.py results
+      - name: Holdings alerts (rows in Supabase only; nothing is sent)
+        run: python -u scripts/check_alerts.py
       - name: Keep mapping report for review
         uses: actions/upload-artifact@v4
         with:

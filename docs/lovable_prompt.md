@@ -19,6 +19,19 @@ Use only these relations. Join on `ticker` (present in all of them).
 Keys inside `detail` to use: f_points, f_tests, f_score_scaled, m_score, m_score_imputed, beneish_top_index, status_without_dq, peer_n_sub, peer_w, peer_median_sub, peer_median_anchor, peer_anchor_level, peer_anchor_group, peer_anchor_n, peer_blended, peer_cap_applied, ebit_ttm, ebit_3y_avg, ebit_fy, ebit_fy_prior, ebit_fy_change, ebit_ttm_reported, ebit_3y_avg_reported, ebit_adjustment, treasury_guard_pass, event_filed, event_source, corporate_action_materiality, captive_finance, shares.
 Select JSON keys with PostgREST paths, e.g. `.from('valuations_latest').select('ticker, f_score_scaled:detail->f_score_scaled, f_points:detail->f_points, f_tests:detail->f_tests, m_score:detail->m_score, m_score_imputed:detail->m_score_imputed')`.
 
+**List-like text fields (exact types, verified against the live schema).** None of these is an array or JSON: each is a nullable plain `text` column holding a delimited list. It is `null` when there are no items, never an empty string. Split it into items for display, trim each one, and treat `null` as an empty list. Never call array methods on the raw value.
+
+| Field | Relations | Postgres type | Separator | Example |
+|---|---|---|---|---|
+| qualitative_detectors | latest_screen, valuations_latest | text (nullable) | `", "` | `llm, material_weakness` |
+| qualitative_reasons | latest_screen, valuations_latest | text (nullable) | `" \| "` (each detector's first item is prefixed `detector: `) | `llm: new serious company-specific risk [...] \| material_weakness: ...` |
+| confidence_reasons | latest_screen, valuations_latest | text (nullable) | `"; "` | `post-corporate-action (...): TTM only until next 10-K` |
+| warnings | latest_screen, valuations_latest | text (nullable) | `"; "` | `government_credit_dependent: EBIT ex Section 45X ...` |
+| disqualify_reasons | valuations_latest | text (nullable) | `"; "` | `beneish M=-0.33 > -1.78; piotroski 3/9 <= 1/3` |
+| missing_inputs | valuations_latest | text (nullable) | `"; "` | `ffo (net income, D&A, or gains on property sales)` |
+
+Other types: `mos`, `earnings_yield`, `treasury_yield` are float8 fractions (0.51 = 51%); `price`, `fair_value`, `composite` are float8; `qualitative_gate` is boolean; `as_of` is a date; `status` and `confidence` are text.
+
 **`scores_latest`** (table): ticker, composite, composite_confidence, composite_rank, components_available, components_missing, composite_note, valuation_score, productivity_score, earnings_quality_score, momentum_score, llm_score, growth_score, shareholder_yield_score, detail (jsonb; keys: components_active, components_pending, valuation_raw, productivity_raw, sloan_accruals, f_used, growth_metric, shareholder_yield, valuation_group, productivity_group, earnings_quality_group, momentum_group, growth_group, shareholder_yield_group).
 
 **`llm_latest`** (view, latest Gemini 10-K review per company; may be missing for some companies): ticker, accn, filed, period, model, prompt_version, moat, moat_lost_revenue_share, management_candor, risk_change_score, cam_score, new_risks, new_risks_serious_company, cam_count, cam_new, cam_unusual, cam_topics, qualitative_gate, gate_reasons, gate_review, risk_added_share, evidence_verified, evidence_total, llm_score, scored_at, result (jsonb).

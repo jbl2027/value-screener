@@ -3,7 +3,8 @@
 Part A (always): connect as postgres and switch to the `anon` role, which is exactly what the
 Supabase REST API (PostgREST) does for a request carrying only the anon key; SELECT and INSERT
 must fail with permission denied or return zero rows. As a sanity check, the `authenticated` role
-must be able to read but not write.
+must be able to read but not write (holdings and sales are writable for a user's own rows only, so
+with no user session the delete must touch zero rows; per-user RLS is tested in test_holdings.py).
 
 Part B (if SUPABASE_ANON_KEY is set): real HTTP requests to the REST API with only the anon key
 (no user session): each relation must return 401/403/permission error or zero rows, and writes
@@ -25,7 +26,10 @@ from screener.db import connect  # noqa: E402
 
 RELATIONS = ["latest_screen", "llm_latest", "valuations_latest", "scores_latest", "screen_history", "filing_flags",
              "runs", "metrics_latest", "llm_scores", "universe", "facts", "fundamentals_summary", "prices",
-             "pipeline_status", "schema_migrations"]
+             "pipeline_status", "holdings", "sales", "alerts", "holdings_live", "sales_realized",
+             "portfolio_summary", "schema_migrations"]
+# Relations the signed-in user may write (own rows only, enforced by RLS; tested in test_holdings.py).
+USER_WRITABLE = {"holdings", "sales"}
 
 
 def as_role(conn, role: str, sql: str):
@@ -63,6 +67,7 @@ def part_a() -> bool:
             ok &= anon_safe and write_safe
             fmt = lambda r: f"{r[0]} ({r[1]} rows)" if r[0] == "rows" else r[0]
             print(f"  {rel:22s} {fmt(a_sel):34s} {fmt(a_ins):22s} {fmt(u_sel):22s} {fmt(u_del)}"
+                  f"{' (own rows only, RLS)' if rel in USER_WRITABLE else ''}"
                   f"{'' if anon_safe and write_safe else '   <-- EXPOSED'}")
     return ok
 

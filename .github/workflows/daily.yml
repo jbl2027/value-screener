@@ -42,3 +42,5 @@ jobs:
         run: python -u scripts/compute_scores.py
       - name: Load prices and results to Supabase
         run: python -u scripts/load_supabase.py prices results
+      - name: Holdings alerts (rows in Supabase only; nothing is sent)
+        run: python -u scripts/check_alerts.py
