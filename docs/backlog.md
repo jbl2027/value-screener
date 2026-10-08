@@ -113,6 +113,22 @@ Items deferred to after the milestone noted.
   goodwill/intangible impairment >= 5% of assets. First full run: gate fired for 19 companies;
   flags moved to watch: GEN, EIX, CDW, UHS (all LLM).
 
+- Gemini requests have a wall-clock limit (`llm.REQUEST_TIMEOUT`, 300 s; requests' own timeout
+  is per socket read, and one trickling response stalled a run ~50 min). A timeout counts like a
+  5xx: retried MAX_5XX_RETRIES times, then ServiceUnavailable stops the run.
+
+## Milestone 10: performance tracking (2026-10-08)
+- SPY close captured in the daily bulk IEX request (`update_prices.BENCHMARKS`).
+- `flag_episodes` rebuilt from screen_history each day (`scripts/update_performance.py`), so the
+  backfill is the same code; entry/exit at the screen close on the status-change date; tier =
+  top/bottom half of that day's flags by composite. Backfill: 35 episodes (24 open, 11 closed)
+  over 2026-10-02 .. 10-07.
+- Total returns from Tiingo EOD adjClose (dividends) for SPY + episode tickers, re-fetched over the
+  full range daily (~1 request per open episode, capped at 40/run; 500 unique symbols/month);
+  `flag_performance.return_basis` falls back to price_only when adjusted data is missing.
+- History starts 2026-10-02 and has gaps on days the daily job didn't run (2026-10-05), so an
+  entry/exit can land one session late; returns are paper (no costs, close-to-close).
+
 ## Milestone 9: Supabase notes
 - Database ~195 MB of the 500 MB free tier after the initial load (facts ~970k rows dominate).
   Daily history is kept slim (screen_history); full detail only in *_latest tables.

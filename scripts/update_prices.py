@@ -1,4 +1,5 @@
-"""Milestone 4: daily closing prices for the universe from one Tiingo bulk IEX request.
+"""Milestone 4: daily closing prices for the universe (and SPY, the Milestone 10 benchmark) from
+one Tiingo bulk IEX request.
 
 Run after the US close (the GitHub Actions schedule will do this on weekdays). A row is stored
 only when the snapshot timestamp is at or after 16:00 New York time, i.e. the session closed
@@ -27,6 +28,7 @@ PRICES_PATH = DATA_DIR / "prices.parquet"
 NEW_YORK = ZoneInfo("America/New_York")
 MARKET_CLOSE = time(16, 0)
 KEY = ["ticker", "date"]
+BENCHMARKS = {"SPY"}  # stored alongside the universe (performance tracking benchmark)
 
 
 def snapshot_rows(snapshot: list[dict], tickers: set[str]) -> tuple[pd.DataFrame, list[dict]]:
@@ -77,7 +79,7 @@ def main() -> None:
     args = parser.parse_args()
 
     universe = pd.read_csv(DATA_DIR / "universe.csv")
-    tickers = set(universe["ticker"])
+    tickers = set(universe["ticker"]) | BENCHMARKS
     client = TiingoClient()
 
     print("Fetching Tiingo IEX snapshot (all tickers, 1 request)...")

@@ -27,7 +27,8 @@ from screener.db import connect  # noqa: E402
 RELATIONS = ["latest_screen", "llm_latest", "valuations_latest", "scores_latest", "screen_history", "filing_flags",
              "runs", "metrics_latest", "llm_scores", "universe", "facts", "fundamentals_summary", "prices",
              "pipeline_status", "holdings", "sales", "alerts", "holdings_live", "sales_realized",
-             "portfolio_summary", "schema_migrations"]
+             "portfolio_summary", "flag_episodes", "eod_adjusted", "flag_performance", "flag_performance_summary",
+             "schema_migrations"]
 # Relations the signed-in user may write (own rows only, enforced by RLS; tested in test_holdings.py).
 USER_WRITABLE = {"holdings", "sales"}
 

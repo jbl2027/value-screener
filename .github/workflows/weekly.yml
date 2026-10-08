@@ -49,6 +49,8 @@ jobs:
         run: python -u scripts/load_supabase.py results
       - name: Holdings alerts (rows in Supabase only; nothing is sent)
         run: python -u scripts/check_alerts.py
+      - name: Flag episodes (rebuild only; the daily job fetches adjusted prices)
+        run: python -u scripts/update_performance.py --no-fetch
       - name: Keep mapping report for review
         uses: actions/upload-artifact@v4
         with:

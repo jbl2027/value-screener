@@ -45,6 +45,13 @@ Types: moat, management_candor, risk_change_score, cam_score and llm_score are f
 
 **`runs`** (table, job log): id, job, as_of, started_at, finished_at, status, summary (jsonb).
 
+**Performance tracking (Milestone 10; read-only; see `docs/lovable_prompt_performance.md`):**
+- **`flag_episodes`** (table; one row each time a company enters flag status): cik int4, ticker text, entry_date date, entry_price float8, entry_fair_value float8, entry_mos float8, entry_composite float8, entry_composite_tier text (top_half / bottom_half / null), entry_flag_count int4, exit_date date (null = still flagged), exit_price float8, exit_status text (the new status, or not_in_screen), exit_reason text (nullable), updated_at timestamptz.
+- **`eod_adjusted`** (table; Tiingo end-of-day closes for SPY and episode tickers): ticker text, date date, close float8, adj_close float8 (dividend- and split-adjusted), div_cash float8, split_factor float8, fetched_at timestamptz.
+- **`flag_performance`** (view; one row per episode): all `flag_episodes` columns except updated_at, plus is_open boolean, end_date date (exit date, or the latest close), end_price float8, days_held int4, price_return float8, spy_price_return float8, total_return float8 (nullable), spy_total_return float8 (nullable), return_basis text (`total_return` = dividends included, or `price_only`), stock_return float8, spy_return float8, excess_return float8 (= stock_return − spy_return, on the same basis), beat_spy boolean. Returns are fractions (0.03 = 3%).
+- **`flag_performance_summary`** (view): group_state text (all / open / closed), group_tier text (all / top_half / bottom_half / unranked), episodes int8, avg_excess_return float8, median_excess_return float8, hit_rate numeric (fraction beating SPY), avg_return float8, avg_spy_return float8, avg_days_held numeric, total_return_episodes int8, price_only_episodes int8. It only includes episodes held at least one day.
+- `prices` now also has `SPY` rows (the benchmark). SPY is not a screened company and has no `latest_screen` row.
+
 **`pipeline_status`** (view, exactly one row, computed when read): checked_at, last_daily_run_at, last_daily_as_of, daily_age_hours, daily_weekday_age_hours, daily_stale (boolean), last_llm_run_at, last_llm_stop_reason. `daily_stale` is true on a weekday when the latest successful results load is more than 30 weekday hours old (weekend hours not counted).
 
 ## Formatting

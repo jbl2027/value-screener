@@ -32,6 +32,8 @@ import math
 import re
 import time
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
 
 import requests
 
@@ -242,6 +244,11 @@ class ServiceUnavailable(RuntimeError):
 
 MAX_5XX_RETRIES = 2
 RETRY_5XX_DELAYS = (60, 180)  # seconds
+# Wall-clock limit for one request. requests' own timeout applies per socket operation, so a
+# response that trickles in never trips it (one request hung a run for ~50 minutes). A request
+# over the limit counts like a 5xx: retried under MAX_5XX_RETRIES, then ServiceUnavailable.
+REQUEST_TIMEOUT = 300
+SOCKET_TIMEOUT = (30, 120)  # connect, per-read
 
 
 class Gemini:
@@ -258,6 +265,17 @@ class Gemini:
         if wait > 0:
             time.sleep(wait)
 
+    def _post(self, body: dict) -> requests.Response:
+        """POST with a wall-clock limit (REQUEST_TIMEOUT). The request runs in a worker thread so a
+        stalled response can be abandoned; the thread is left to finish or fail on its own."""
+        pool = ThreadPoolExecutor(max_workers=1)
+        future = pool.submit(self.session.post, API.format(model=self.model), json=body, timeout=SOCKET_TIMEOUT)
+        pool.shutdown(wait=False)
+        try:
+            return future.result(timeout=REQUEST_TIMEOUT)
+        except FutureTimeout:
+            raise requests.Timeout(f"no complete response within {REQUEST_TIMEOUT}s") from None
+
     def generate(self, prompt: str, temperature: float = 0) -> tuple[dict, dict]:
         body = {"systemInstruction": {"parts": [{"text": SYSTEM}]},
                 "contents": [{"role": "user", "parts": [{"text": prompt}]}],
@@ -268,9 +286,18 @@ class Gemini:
             self._pace()
             self.last_call = time.monotonic()
             try:
-                resp = self.session.post(API.format(model=self.model), json=body, timeout=300)
-            except (requests.ConnectionError, requests.Timeout):
-                time.sleep(2 ** attempt * 15)  # transient network failure: back off and retry
+                resp = self._post(body)
+            except requests.Timeout as exc:
+                # Hung or too slow: may have been processed (and counted against the quota), so it
+                # is treated like a 5xx: retried sparingly, then the run stops.
+                if server_errors >= MAX_5XX_RETRIES:
+                    raise ServiceUnavailable(f"Gemini request timed out {server_errors + 1} times ({exc}); "
+                                             f"stopping to preserve quota") from None
+                time.sleep(RETRY_5XX_DELAYS[server_errors])
+                server_errors += 1
+                continue
+            except requests.ConnectionError:
+                time.sleep(2 ** attempt * 15)  # transient network failure (no request sent): retry
                 continue
             if resp.status_code == 429 and "PerDay" in resp.text:
                 # Retrying is pointless until midnight Pacific; stop so the run can resume later.

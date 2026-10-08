@@ -44,3 +44,5 @@ jobs:
         run: python -u scripts/load_supabase.py prices results
       - name: Holdings alerts (rows in Supabase only; nothing is sent)
         run: python -u scripts/check_alerts.py
+      - name: Flag episodes and performance vs SPY (adjusted closes, ~1 Tiingo request per open flag)
+        run: python -u scripts/update_performance.py
