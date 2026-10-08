@@ -30,6 +30,8 @@ Select JSON keys with PostgREST paths, e.g. `.from('valuations_latest').select('
 
 **`runs`** (table, job log): id, job, as_of, started_at, finished_at, status, summary (jsonb).
 
+**`pipeline_status`** (view, exactly one row, computed when read): checked_at, last_daily_run_at, last_daily_as_of, daily_age_hours, daily_weekday_age_hours, daily_stale (boolean), last_llm_run_at, last_llm_stop_reason. `daily_stale` is true on a weekday when the latest successful results load is more than 30 weekday hours old (weekend hours not counted).
+
 ## Formatting
 - mos and earnings_yield/treasury_yield: percent, 0 decimals (mos can be very negative; show it, color negative red). price, fair_value: $ with 2 decimals. composite and component scores: 0–100, 0 decimals. Multiples: "12.3x". Large dollar values (EBIT): $1.2B / $340M.
 - Status badges: flag (green), watch (amber), no_flag (gray), disqualified (red), insufficient_data / not_applicable / corporate_action_pending (light gray, show the label in words).

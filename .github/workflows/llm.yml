@@ -6,6 +6,7 @@ name: llm-scoring
 on:
   schedule:
     - cron: "40 8 * * *"      # 08:40 UTC daily: after the quota reset (midnight Pacific = 07:00/08:00 UTC)
+    - cron: "0 14 * * *"      # backup, 14:00 UTC; companies already scored for their latest 10-K are skipped
   workflow_dispatch:
 
 concurrency:

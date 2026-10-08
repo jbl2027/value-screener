@@ -25,7 +25,7 @@ from screener.db import connect  # noqa: E402
 
 RELATIONS = ["latest_screen", "llm_latest", "valuations_latest", "scores_latest", "screen_history", "filing_flags",
              "runs", "metrics_latest", "llm_scores", "universe", "facts", "fundamentals_summary", "prices",
-             "schema_migrations"]
+             "pipeline_status", "schema_migrations"]
 
 
 def as_role(conn, role: str, sql: str):

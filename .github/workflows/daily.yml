@@ -5,6 +5,8 @@ name: daily-screen
 on:
   schedule:
     - cron: "20 22 * * 1-5"   # 22:20 UTC, Monday-Friday
+    - cron: "30 2 * * 2-6"    # backup, 02:30 UTC Tue-Sat (GitHub can delay or drop scheduled runs);
+                              # re-running a session is idempotent (closes are upserted)
   workflow_dispatch:
 
 concurrency:
