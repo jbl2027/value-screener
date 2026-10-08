@@ -46,6 +46,7 @@ from screener.series import CompanyData
 
 # Goodwill/intangible impairment add-back for valuation EBIT, in the order _impairment() expects.
 IMPAIRMENT_CONCEPTS = ["impairment_combined", "impairment_goodwill", "impairment_intangibles"]
+IMPAIRMENT_DISC_OPS_RATIO = 0.5  # discontinued-ops loss >= 50% of the charge: skip that period's add-back
 
 DEFAULT_TAX_RATE = 0.21
 MAX_TAX_RATE = 0.35
@@ -71,6 +72,7 @@ class Calc:
         self.price, self.price_date = price, price_date
         self.notes: list[str] = []
         self.m: dict = {}
+        self.impairment_excluded: list[str] = []
 
     # ---- input helpers ----
     def fy(self, concept: str, back: int = 0) -> float | None:
@@ -114,25 +116,36 @@ class Calc:
         return None, None, "missing"
 
     # ---- goodwill / intangible impairment (valuation EBIT add-back) ----
-    @staticmethod
-    def _impairment(combined, goodwill, intangibles) -> float:
-        """One period's charge: the combined tag if reported, else goodwill + intangibles (absent = 0)."""
-        if combined is not None:
-            return max(combined, 0.0)
-        return max((goodwill or 0.0) + (intangibles or 0.0), 0.0)
+    def _impairment(self, combined, goodwill, intangibles, disc_ops, period: str | None) -> float:
+        """One period's charge: the combined tag if reported, else goodwill + intangibles (absent = 0).
+        Safeguard: if the same period has a discontinued-operations loss of at least
+        IMPAIRMENT_DISC_OPS_RATIO x the charge, the charge may sit in discontinued operations
+        (consolidated cash-flow statements often include them): no add-back for that period.
+        period=None returns the raw charge without the safeguard."""
+        charge = max(combined if combined is not None else (goodwill or 0.0) + (intangibles or 0.0), 0.0)
+        if period and charge > 0 and disc_ops is not None and -disc_ops >= IMPAIRMENT_DISC_OPS_RATIO * charge:
+            note = (f"{period}: ${charge / 1e6:,.0f}M impairment not added back "
+                    f"(discontinued-operations loss ${-disc_ops / 1e6:,.0f}M in the same period)")
+            if note not in self.impairment_excluded:
+                self.impairment_excluded.append(note)
+            return 0.0
+        return charge
 
     def impairment_fy(self, back: int = 0) -> float | None:
         if len(self.cd.annual) <= back:
             return None
-        return self._impairment(*(self.cd.fy(c, back) for c in IMPAIRMENT_CONCEPTS))
+        return self._impairment(*(self.cd.fy(c, back) for c in IMPAIRMENT_CONCEPTS),
+                                self.cd.fy("discontinued_ops_income", back), f"FY {self.cd.fy_end(back)}")
 
-    def _impairment_period(self, start: date, end: date, days: int) -> float:
-        f = self.cd.facts[self.cd.facts["concept"].isin(IMPAIRMENT_CONCEPTS)
+    def _impairment_period(self, start: date, end: date, days: int, safeguard: bool = True) -> float:
+        f = self.cd.facts[self.cd.facts["concept"].isin(IMPAIRMENT_CONCEPTS + ["discontinued_ops_income"])
                           & (self.cd.facts["duration_days"] - days).abs().le(10)]
         starts, ends = pd.to_datetime(f["period_start"]).dt.date, pd.to_datetime(f["period_end"]).dt.date
         f = f[((starts - start).map(abs) <= SERIES_TOLERANCE) & ((ends - end).map(abs) <= SERIES_TOLERANCE)]
         vals = f.sort_values("filed").groupby("concept")["value"].last()
-        return self._impairment(*(float(vals[c]) if c in vals else None for c in IMPAIRMENT_CONCEPTS))
+        get = lambda c: float(vals[c]) if c in vals else None  # noqa: E731
+        return self._impairment(*(get(c) for c in IMPAIRMENT_CONCEPTS), get("discontinued_ops_income"),
+                                f"YTD {start}..{end}" if safeguard else None)
 
     def impairment_ttm(self, period_end: str | None, period_basis: str) -> float | None:
         """Charge over the same trailing period as TTM EBIT: last FY + current YTD - prior-year YTD."""
@@ -143,7 +156,10 @@ class Calc:
         end = date.fromisoformat(period_end)
         days = (end - start).days + 1
         cur = self._impairment_period(start, end, days)
-        prior = self._impairment_period(start - timedelta(days=365), end - timedelta(days=365), days)
+        # The prior-year YTD is the part of the FY charge that rolls out of the window: subtract it
+        # at its raw amount when the FY charge was added back, and not at all when it was skipped.
+        prior = (self._impairment_period(start - timedelta(days=365), end - timedelta(days=365), days,
+                                         safeguard=False) if fy > 0 else 0.0)
         return max(fy + cur - prior, 0.0)
 
     def gross_profit(self, back: int = 0) -> float | None:
@@ -243,6 +259,7 @@ class Calc:
         imp3 = [self.impairment_fy(b) for b in range(3)]
         m["impairment_addback_3y_avg"] = (sum(imp3) / 3 if m["ebit_3y_avg"] is not None
                                           and all(v is not None for v in imp3) else None)
+        m["impairment_addback_excluded"] = "; ".join(self.impairment_excluded) or None
         if ebit is not None and ebit <= 0:
             self.notes.append("ev_ebit: EBIT <= 0")
 

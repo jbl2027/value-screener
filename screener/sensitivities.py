@@ -4,7 +4,9 @@
    non-recurring write-downs of past acquisition prices; left in, they depress TTM, fiscal-year,
    and especially 3-yr average EBIT for years (e.g. SJM after Hostess). The charges come from
    metrics (impairment_addback_*, same periods as each EBIT figure). The major-impairment gate
-   detector is separate and unchanged.
+   detector is separate and unchanged. Safeguard: a period's charge is not added back when the
+   same period shows a discontinued-operations loss of at least half the charge
+   (impairment_addback_excluded; listed in ebit_adjustment as impairment_addback_skipped).
 2. Manual adjustments (EBIT_ADJUSTMENTS) from filing text that XBRL companyfacts doesn't expose.
    Each replaces TTM and 3-yr average EBIT (USD deltas); the as-reported values are valued as a
    sensitivity. Values must cite their source and be refreshed with each filing.
@@ -65,6 +67,9 @@ def apply_ebit_adjustments(metrics: pd.DataFrame) -> pd.DataFrame:
             notes[i].append("impairment_addback: goodwill/intangible impairment charges added back to EBIT ("
                             + ", ".join(parts) + "; XBRL GoodwillImpairmentLoss / ImpairmentOfIntangibleAssets*)")
         adjusted |= has
+        if "impairment_addback_excluded" in df:
+            for i in df.index[df["impairment_addback_excluded"].notna()]:
+                notes[i].append(f"impairment_addback_skipped: {df.at[i, 'impairment_addback_excluded']}")
 
     df["ebit_adjustment_manual"] = None
     for ticker, adj in EBIT_ADJUSTMENTS.items():

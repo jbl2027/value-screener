@@ -35,6 +35,7 @@ OUTPUT_COLUMNS = [
     "fair_multiple", "company_multiple", "base_value", "base_basis", "ebit_adjustment",
     "ebit_ttm_reported", "ebit_3y_avg_reported", "ebit_fy_reported", "ebit_fy_prior_reported",
     "impairment_addback_ttm", "impairment_addback_fy", "impairment_addback_fy_prior", "impairment_addback_3y_avg",
+    "impairment_addback_excluded",
     "shares", "earnings_yield", "treasury_yield", "treasury_guard_pass", "m_score",
     "m_score_imputed", "acquisitions_to_assets", "f_points", "f_tests", "f_score_scaled",
     "status_without_dq", "beneish_top_index", "captive_finance", "corporate_action_pending",

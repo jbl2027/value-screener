@@ -56,8 +56,14 @@ Items deferred to after the milestone noted.
   `ebit_adjustment` (not warnings). Metrics (operating profitability, F-Score, Beneish, ROIC)
   keep reported EBIT; the major-impairment gate detector is unchanged. Effect on 2026-10-07:
   148 of 431 standard companies adjusted; SJM fair value $1.78 -> $155.96; watch +3,
-  not_applicable -7. Assumes the charge sits inside operating income (true for SJM; a filer
-  that reports it below operating income would be overstated).
+  not_applicable -7. Continuing-operations goodwill impairment sits inside operating income
+  (ASC 350-20-45-2). Discontinued-operations safeguard (2026-10-08): companyfacts carries no
+  non-dimensional discontinued-ops impairment tags (none in the universe since 2022), so a
+  period's charge is skipped when the same period shows a discontinued-operations loss >= 50%
+  of it (`metrics.IMPAIRMENT_DISC_OPS_RATIO`; listed as impairment_addback_skipped). TTM
+  subtracts the prior-year YTD at its raw amount only when the FY charge was added back.
+  Changed 6 companies: DLTR (Family Dollar goodwill, restated into discontinued ops; watch ->
+  no_flag), BAX, APP, QCOM, NWS, PPG.
 - Post-corporate-action regime: event (8-K Item 2.01, or rules.MANUAL_CORPORATE_ACTIONS) after
   the latest 10-K's fiscal year end and already followed by a 10-Q -> TTM only, low confidence,
   until a 10-K covering a fiscal year that ends after the event. (Interpretation: "next 10-K"

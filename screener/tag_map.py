@@ -98,6 +98,15 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "ImpairmentOfIntangibleAssetsIndefinitelivedExcludingGoodwill+ImpairmentOfIntangibleAssetsFinitelived",
         "ImpairmentOfIntangibleAssetsFinitelived",
     )),
+    # Discontinued-operations result, for the impairment add-back safeguard: companyfacts has no
+    # non-dimensional discontinued-ops impairment tags, so a same-period discontinued-ops loss at
+    # least half the impairment makes the charge ambiguous and its add-back is skipped.
+    "discontinued_ops_income": ("USD", "duration", _g(
+        "DiscontinuedOperationIncomeLossFromDiscontinuedOperationBeforeIncomeTax",
+        "IncomeLossFromDiscontinuedOperationsNetOfTax",
+        "IncomeLossFromDiscontinuedOperationsNetOfTaxAttributableToReportingEntity",
+        "IncomeLossFromDiscontinuedOperationsNetOfTaxIncludingPortionAttributableToNoncontrollingInterest",
+    )),
     "gain_on_property_sales": ("USD", "duration", _g(
         "GainsLossesOnSalesOfInvestmentRealEstate",
         "GainLossOnSaleOfRealEstateInvestmentProperty",
