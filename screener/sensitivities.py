@@ -1,10 +1,19 @@
-"""Manual EBIT adjustments from filing text that XBRL companyfacts doesn't expose.
+"""EBIT adjustments for valuation, applied before peer medians are computed.
 
-Each adjustment replaces TTM and 3-yr average EBIT (USD deltas) for valuation, before peer
-medians are computed. The as-reported values are kept and valued as a sensitivity. Values must
-cite their source and be refreshed with each filing.
+1. Impairment add-back (all companies): goodwill and intangible impairment charges are non-cash,
+   non-recurring write-downs of past acquisition prices; left in, they depress TTM, fiscal-year,
+   and especially 3-yr average EBIT for years (e.g. SJM after Hostess). The charges come from
+   metrics (impairment_addback_*, same periods as each EBIT figure). The major-impairment gate
+   detector is separate and unchanged.
+2. Manual adjustments (EBIT_ADJUSTMENTS) from filing text that XBRL companyfacts doesn't expose.
+   Each replaces TTM and 3-yr average EBIT (USD deltas); the as-reported values are valued as a
+   sensitivity. Values must cite their source and be refreshed with each filing.
+
+As-reported EBIT is kept in *_reported columns; ebit_adjustment describes what was changed.
 """
 import pandas as pd
+
+ADD_BACK_IMPAIRMENTS = True
 
 EBIT_ADJUSTMENTS = {
     "FSLR": {
@@ -20,24 +29,64 @@ EBIT_ADJUSTMENTS = {
     },
 }
 
+# EBIT column -> impairment add-back column (same period)
+IMPAIRMENT_ADDBACK = {
+    "ebit_ttm": "impairment_addback_ttm",
+    "ebit_fy": "impairment_addback_fy",
+    "ebit_fy_prior": "impairment_addback_fy_prior",
+    "ebit_3y_avg": "impairment_addback_3y_avg",
+}
+
+
+def _money(x: float) -> str:
+    return f"${x / 1e9:,.2f}B" if abs(x) >= 1e9 else f"${x / 1e6:,.0f}M"
+
 
 def apply_ebit_adjustments(metrics: pd.DataFrame) -> pd.DataFrame:
-    """Return metrics with adjusted EBIT, EV/EBIT, and earnings yield; reported values kept."""
+    """Return metrics with adjusted EBIT, EV/EBIT, and earnings yield; reported values kept.
+    ebit_adjustment: text of every adjustment (shown on the company page);
+    ebit_adjustment_manual: the manual one only (also listed under warnings)."""
     df = metrics.copy()
-    for col in ("ebit_ttm", "ebit_3y_avg", "ev_ebit", "earnings_yield"):
-        df[f"{col}_reported"] = df[col]
-    df["ebit_adjustment"] = None
+    for col in ("ebit_ttm", "ebit_3y_avg", "ebit_fy", "ebit_fy_prior", "ev_ebit", "earnings_yield"):
+        df[f"{col}_reported"] = df[col] if col in df else None
+    notes = pd.Series([[] for _ in range(len(df))], index=df.index)
+    adjusted = pd.Series(False, index=df.index)
+
+    if ADD_BACK_IMPAIRMENTS and all(c in df for c in IMPAIRMENT_ADDBACK.values()):
+        for ebit_col, add_col in IMPAIRMENT_ADDBACK.items():
+            add = df[add_col].fillna(0).clip(lower=0)
+            df[ebit_col] = df[ebit_col] + add.where(df[ebit_col].notna(), 0)
+        has = df[list(IMPAIRMENT_ADDBACK.values())].fillna(0).gt(0).any(axis=1)
+        for i in df.index[has]:
+            parts = [f"{label} +{_money(df.at[i, col])}" for label, col in
+                     (("TTM", "impairment_addback_ttm"), ("FY", "impairment_addback_fy"),
+                      ("prior FY", "impairment_addback_fy_prior"), ("3-yr avg", "impairment_addback_3y_avg"))
+                     if pd.notna(df.at[i, col]) and df.at[i, col] > 0]
+            notes[i].append("impairment_addback: goodwill/intangible impairment charges added back to EBIT ("
+                            + ", ".join(parts) + "; XBRL GoodwillImpairmentLoss / ImpairmentOfIntangibleAssets*)")
+        adjusted |= has
+
+    df["ebit_adjustment_manual"] = None
     for ticker, adj in EBIT_ADJUSTMENTS.items():
         m = df["ticker"] == ticker
         if not m.any():
             continue
         df.loc[m, "ebit_ttm"] = df.loc[m, "ebit_ttm"] + adj["ttm_adjust"]
         df.loc[m, "ebit_3y_avg"] = df.loc[m, "ebit_3y_avg"] + adj["avg3_adjust"]
-        ev, ebit = df.loc[m, "enterprise_value"], df.loc[m, "ebit_ttm"]
-        df.loc[m, "ev_ebit"] = (ev / ebit).where(ebit > 0)
-        df.loc[m, "earnings_yield"] = ebit / ev
         if "operating_profitability" in df and "fy_adjust" in adj:
             df.loc[m, "operating_profitability"] = (df.loc[m, "operating_profitability"]
                                                     + adj["fy_adjust"] / df.loc[m, "total_assets_fy"])
-        df.loc[m, "ebit_adjustment"] = f"{adj['note']}: EBIT {adj['label']} ({adj['source']})"
+        text = f"{adj['note']}: EBIT {adj['label']} ({adj['source']})"
+        df.loc[m, "ebit_adjustment_manual"] = text
+        for i in df.index[m]:
+            notes[i].append(text)
+        adjusted |= m
+
+    ev, ebit = df["enterprise_value"], df["ebit_ttm"]
+    df.loc[adjusted, "ev_ebit"] = (ev / ebit).where(ebit > 0)[adjusted]
+    df.loc[adjusted, "earnings_yield"] = (ebit / ev)[adjusted]
+    if "ebit_fy_change" in df:
+        e0, e1 = df["ebit_fy"], df["ebit_fy_prior"]
+        df.loc[adjusted, "ebit_fy_change"] = ((e0 - e1) / e1.abs()).where(e1.notna() & (e1 != 0))[adjusted]
+    df["ebit_adjustment"] = notes.map(lambda n: " | ".join(n) or None)
     return df

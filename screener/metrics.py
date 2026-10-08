@@ -30,13 +30,22 @@ Definitions
   Insurers           book value = equity - preferred; P/B; ROE = TTM NI / average equity
   REITs              FFO = TTM (NI + D&A - gains on property sales); P/FFO = market cap / FFO;
                      ffo_3y_avg = average of the last 3 fiscal-year FFOs
+  Impairment add-back  goodwill + intangible impairment charges over the same periods as TTM, FY,
+                     prior FY and 3-yr EBIT (impairment_addback_*). Metrics keep EBIT as reported;
+                     sensitivities.apply_ebit_adjustments adds them back for valuation.
 """
 import math
-from datetime import date
+from datetime import date, timedelta
+
+import pandas as pd
 
 from screener.debt import resolve_debt
 from screener.rules import ABSENT_MEANS_ZERO, MODEL_RULES, PIOTROSKI_MIN_TESTS
+from screener.series import TOLERANCE as SERIES_TOLERANCE
 from screener.series import CompanyData
+
+# Goodwill/intangible impairment add-back for valuation EBIT, in the order _impairment() expects.
+IMPAIRMENT_CONCEPTS = ["impairment_combined", "impairment_goodwill", "impairment_intangibles"]
 
 DEFAULT_TAX_RATE = 0.21
 MAX_TAX_RATE = 0.35
@@ -93,14 +102,49 @@ class Calc:
 
     def ebit_ttm(self) -> tuple[float | None, str | None, str]:
         op = self.cd.ttm("operating_income")
+        self.ebit_ttm_period_end = op.period_end
         if op.value is not None:
             return op.value, "operating_income", op.basis
         pretax, interest = self.cd.ttm("pretax_income"), self.cd.ttm("interest_expense")
+        self.ebit_ttm_period_end = pretax.period_end
         if pretax.value is not None and interest.value is not None:
             return pretax.value + interest.value, "pretax_income+interest_expense", pretax.basis
         if pretax.value is not None:
             return pretax.value, "pretax_income", pretax.basis
         return None, None, "missing"
+
+    # ---- goodwill / intangible impairment (valuation EBIT add-back) ----
+    @staticmethod
+    def _impairment(combined, goodwill, intangibles) -> float:
+        """One period's charge: the combined tag if reported, else goodwill + intangibles (absent = 0)."""
+        if combined is not None:
+            return max(combined, 0.0)
+        return max((goodwill or 0.0) + (intangibles or 0.0), 0.0)
+
+    def impairment_fy(self, back: int = 0) -> float | None:
+        if len(self.cd.annual) <= back:
+            return None
+        return self._impairment(*(self.cd.fy(c, back) for c in IMPAIRMENT_CONCEPTS))
+
+    def _impairment_period(self, start: date, end: date, days: int) -> float:
+        f = self.cd.facts[self.cd.facts["concept"].isin(IMPAIRMENT_CONCEPTS)
+                          & (self.cd.facts["duration_days"] - days).abs().le(10)]
+        starts, ends = pd.to_datetime(f["period_start"]).dt.date, pd.to_datetime(f["period_end"]).dt.date
+        f = f[((starts - start).map(abs) <= SERIES_TOLERANCE) & ((ends - end).map(abs) <= SERIES_TOLERANCE)]
+        vals = f.sort_values("filed").groupby("concept")["value"].last()
+        return self._impairment(*(float(vals[c]) if c in vals else None for c in IMPAIRMENT_CONCEPTS))
+
+    def impairment_ttm(self, period_end: str | None, period_basis: str) -> float | None:
+        """Charge over the same trailing period as TTM EBIT: last FY + current YTD - prior-year YTD."""
+        fy = self.impairment_fy(0)
+        if fy is None or period_basis not in ("ttm", "ttm_restated") or not period_end:
+            return fy
+        start = date.fromisoformat(self.cd.fy_end()) + timedelta(days=1)
+        end = date.fromisoformat(period_end)
+        days = (end - start).days + 1
+        cur = self._impairment_period(start, end, days)
+        prior = self._impairment_period(start - timedelta(days=365), end - timedelta(days=365), days)
+        return max(fy + cur - prior, 0.0)
 
     def gross_profit(self, back: int = 0) -> float | None:
         gp = self.cd.fy("gross_profit", back)
@@ -191,6 +235,14 @@ class Calc:
         years = [y for y in years if y is not None]
         m["ebit_3y_n"] = len(years)
         m["ebit_3y_avg"] = sum(years) / 3 if len(years) == 3 else None
+        # Impairment charges over the same periods (added back for valuation, not here).
+        m["impairment_addback_ttm"] = (self.impairment_ttm(self.ebit_ttm_period_end, period_basis)
+                                       if ebit is not None else None)
+        m["impairment_addback_fy"] = self.impairment_fy(0) if e0 is not None else None
+        m["impairment_addback_fy_prior"] = self.impairment_fy(1) if e1 is not None else None
+        imp3 = [self.impairment_fy(b) for b in range(3)]
+        m["impairment_addback_3y_avg"] = (sum(imp3) / 3 if m["ebit_3y_avg"] is not None
+                                          and all(v is not None for v in imp3) else None)
         if ebit is not None and ebit <= 0:
             self.notes.append("ev_ebit: EBIT <= 0")
 

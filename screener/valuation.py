@@ -260,8 +260,8 @@ def _evaluate(row: pd.Series, treasury: float, fits: dict) -> dict:
             warnings.append(f"f-score low confidence ({int(tests or 0)} tests)")
             low.append("f-score low confidence")
 
-    if isinstance(row.get("ebit_adjustment"), str):
-        warnings.append(row["ebit_adjustment"])
+    if isinstance(row.get("ebit_adjustment_manual"), str):  # impairment add-backs: ebit_adjustment only
+        warnings.append(row["ebit_adjustment_manual"])
 
     # ---- confidence ----
     if _truthy(row.get("captive_finance")):

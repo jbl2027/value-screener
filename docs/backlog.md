@@ -47,6 +47,17 @@ Items deferred to after the milestone noted.
 ## Valuation (Milestone 6): decisions applied
 - AXP, RJF, SYF routed to the bank model.
 - Fair value base = min(TTM, 3-yr average) for EBIT (standard) and FFO (REIT).
+- Valuation EBIT (TTM, FY, prior FY, 3-yr average) adds back goodwill and intangible impairment
+  charges (2026-10-07; `screener/sensitivities.py`, charges from `metrics.Calc.impairment_*`).
+  Per period: GoodwillAndIntangibleAssetImpairment if reported, else GoodwillImpairmentLoss +
+  intangibles (ImpairmentOfIntangibleAssetsExcludingGoodwill, else indefinite- + finite-lived),
+  so nothing is counted twice; AssetImpairmentCharges and *NetOfTax tags excluded. TTM uses the
+  same FY + YTD - prior YTD periods as TTM EBIT. Applied before peer medians; recorded in
+  `ebit_adjustment` (not warnings). Metrics (operating profitability, F-Score, Beneish, ROIC)
+  keep reported EBIT; the major-impairment gate detector is unchanged. Effect on 2026-10-07:
+  148 of 431 standard companies adjusted; SJM fair value $1.78 -> $155.96; watch +3,
+  not_applicable -7. Assumes the charge sits inside operating income (true for SJM; a filer
+  that reports it below operating income would be overstated).
 - Post-corporate-action regime: event (8-K Item 2.01, or rules.MANUAL_CORPORATE_ACTIONS) after
   the latest 10-K's fiscal year end and already followed by a 10-Q -> TTM only, low confidence,
   until a 10-K covering a fiscal year that ends after the event. (Interpretation: "next 10-K"

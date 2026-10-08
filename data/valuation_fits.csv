@@ -1,110 +1,110 @@
 model,y,x,n,intercept,slope,r2,peer_level,sector_model,peer_group,peer_count,peer_multiple,companies,as_of
-bank,p_tbv,rotce,23.0,-0.8942188825469477,17.45733804138568,0.8638472369930619,regression,,,,,,2026-10-02
-insurer,p_b,roe,17.0,1.1638479021207573,3.37517632983343,0.24386311770658764,regression,,,,,,2026-10-02
-,,,,,,,sector_model,reit,reit,14.0,14.035858053018408,28.0,2026-10-02
-,,,,,,,shrinkage,standard,Advertising | Media & Entertainment,14.0,22.547110935015105,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Aerospace & Defense | Capital Goods,57.0,22.107545958803442,13.0,2026-10-02
-,,,,,,,shrinkage,standard,Agricultural & Farm Machinery | Capital Goods,47.0,23.07602506275862,1.0,2026-10-02
-,,,,,,,shrinkage,standard,"Agricultural Products & Services | Food, Beverage & Tobacco",17.0,20.64672211667502,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Air Freight & Logistics | Transportation,18.0,20.14630515578305,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Apparel Retail | Consumer Discretionary Distribution & Retail,15.0,17.528488425743348,2.0,2026-10-02
-,,,,,,,shrinkage,standard,"Apparel, Accessories & Luxury Goods | Consumer Durables & Apparel",14.0,11.757800012109636,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Application Software | Software & Services,33.0,22.608008136906463,14.0,2026-10-02
-,,,,,,,shrinkage,standard,Asset Management & Custody Banks | Financial Services,27.0,15.807929527797029,9.0,2026-10-02
-,,,,,,,shrinkage,standard,Automobile Manufacturers | Consumer Discretionary,42.0,15.096725065115464,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Automotive Parts & Equipment | Consumer Discretionary,42.0,15.096725065115464,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Automotive Retail | Consumer Discretionary Distribution & Retail,16.0,18.120022900219087,3.0,2026-10-02
-,,,,,,,shrinkage,standard,"Biotechnology | Pharmaceuticals, Biotechnology & Life Sciences",25.0,24.53594311978032,8.0,2026-10-02
-,,,,,,,shrinkage,standard,Broadcasting | Media & Entertainment,13.0,20.61091859220611,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Broadline Retail | Consumer Discretionary Distribution & Retail,15.0,18.67005509590275,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Building Products | Capital Goods,53.0,19.528048246283234,7.0,2026-10-02
-,,,,,,,shrinkage,standard,Cable & Satellite | Media & Entertainment,13.0,20.61091859220611,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Cargo Ground Transportation | Transportation,17.0,22.554274791897946,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Casinos & Gaming | Consumer Services,19.0,14.466927817886136,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Commodity Chemicals | Materials,19.0,17.837972416383415,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Communications Equipment | Technology Hardware & Equipment,30.0,25.0,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Computer & Electronics Retail | Consumer Discretionary Distribution & Retail,14.0,17.126707887693318,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Construction & Engineering | Capital Goods,51.0,25.0,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Construction Machinery & Heavy Transportation Equipment | Capital Goods,50.0,24.350554715593567,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Construction Materials | Materials,21.0,17.707547600531047,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Consumer Electronics | Consumer Durables & Apparel,11.0,11.36552814954452,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Consumer Staples Merchandise Retail | Consumer Staples Distribution & Retail,13.0,17.1889444286068,5.0,2026-10-02
-,,,,,,,shrinkage,standard,Copper | Materials,20.0,17.837972416383415,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Data Processing & Outsourced Services | Commercial & Professional Services,13.0,18.772746058909703,1.0,2026-10-02
-,,,,,,,shrinkage,standard,"Distillers & Vintners | Food, Beverage & Tobacco",16.0,20.478170246618934,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Distributors | Consumer Discretionary Distribution & Retail,13.0,17.126707887693318,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Diversified Support Services | Commercial & Professional Services,15.0,17.49923458913632,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Electric Utilities | Utilities,44.0,21.64614321699529,15.0,2026-10-02
-,,,,,,,shrinkage,standard,Electrical Components & Equipment | Capital Goods,52.0,25.0,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Electronic Components | Technology Hardware & Equipment,28.0,25.0,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Electronic Equipment & Instruments | Technology Hardware & Equipment,29.0,25.0,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Electronic Manufacturing Services | Technology Hardware & Equipment,28.0,25.0,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Environmental & Facilities Services | Commercial & Professional Services,16.0,19.817349295848175,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Fertilizers & Agricultural Chemicals | Materials,20.0,17.837972416383415,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Financial Exchanges & Data | Financial Services,30.0,20.48536824021233,9.0,2026-10-02
-,,,,,,,shrinkage,standard,Food Distributors | Consumer Staples Distribution & Retail,9.0,19.54581823292968,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Food Retail | Consumer Staples Distribution & Retail,10.0,20.576929355172048,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Footwear | Consumer Durables & Apparel,11.0,11.36552814954452,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Gas Utilities | Utilities,30.0,21.653684795060244,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Gold | Materials,20.0,17.837972416383415,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Distributors | Health Care Equipment & Services,38.0,19.715523540073292,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Equipment | Health Care Equipment & Services,49.0,20.464932285065085,16.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Facilities | Health Care Equipment & Services,36.0,17.280212604849456,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Services | Health Care Equipment & Services,39.0,19.120725173644068,5.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Supplies | Health Care Equipment & Services,37.0,20.55324411228129,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Health Care Technology | Health Care Equipment & Services,36.0,19.847589727119647,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Heavy Electrical Equipment | Capital Goods,48.0,23.07602506275862,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Home Improvement Retail | Consumer Discretionary Distribution & Retail,15.0,16.60286420887973,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Homebuilding | Consumer Durables & Apparel,13.0,10.821644825158526,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Homefurnishing Retail | Consumer Discretionary Distribution & Retail,14.0,17.126707887693318,1.0,2026-10-02
-,,,,,,,shrinkage,standard,"Hotels, Resorts & Cruise Lines | Consumer Services",24.0,16.024701514354216,8.0,2026-10-02
-,,,,,,,shrinkage,standard,Household Products | Consumer Staples,34.0,19.11470264039697,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Human Resource & Employment Services | Commercial & Professional Services,14.0,18.184983986261503,2.0,2026-10-02
-,,,,,,,shrinkage,standard,IT Consulting & Other Services | Software & Services,26.0,18.74048374176906,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Independent Power Producers & Energy Traders | Utilities,30.0,21.653684795060244,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Industrial Conglomerates | Capital Goods,49.0,25.0,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Industrial Gases | Materials,20.0,17.837972416383415,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Industrial Machinery & Supplies & Components | Capital Goods,60.0,20.879886716086084,14.0,2026-10-02
-,,,,,,,shrinkage,standard,Insurance Brokers | Financials,32.0,17.064338590512353,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Integrated Oil & Gas | Energy,19.0,12.323211375436113,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Integrated Telecommunication Services | Communication Services,17.0,16.126731295198937,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Interactive Home Entertainment | Media & Entertainment,12.0,20.61091859220611,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Interactive Media & Services | Media & Entertainment,15.0,22.418304497201586,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Internet Services & Infrastructure | Software & Services,25.0,22.676622965759492,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Investment Banking & Brokerage | Financial Services,23.0,18.808763593257233,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Leisure Products | Consumer Durables & Apparel,11.0,11.36552814954452,1.0,2026-10-02
-,,,,,,,shrinkage,standard,"Life Sciences Tools & Services | Pharmaceuticals, Biotechnology & Life Sciences",26.0,25.0,9.0,2026-10-02
-,,,,,,,shrinkage,standard,Managed Health Care | Health Care Equipment & Services,37.0,18.253203620398786,4.0,2026-10-02
-,,,,,,,shrinkage,standard,"Metal, Glass & Plastic Containers | Materials",20.0,17.837972416383415,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Movies & Entertainment | Media & Entertainment,16.0,23.387993140925005,5.0,2026-10-02
-,,,,,,,shrinkage,standard,Multi-Utilities | Utilities,40.0,22.85656167655357,12.0,2026-10-02
-,,,,,,,shrinkage,standard,Oil & Gas Equipment & Services | Energy,20.0,12.912124078250638,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Oil & Gas Exploration & Production | Energy,27.0,11.44676184073934,9.0,2026-10-02
-,,,,,,,shrinkage,standard,Oil & Gas Refining & Marketing | Energy,21.0,12.271756838830264,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Oil & Gas Storage & Transportation | Energy,21.0,14.650430585188966,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Other Specialty Retail | Consumer Discretionary Distribution & Retail,15.0,16.50061931701417,2.0,2026-10-02
-,,,,,,,shrinkage,standard,"Packaged Foods & Meats | Food, Beverage & Tobacco",21.0,21.00332542546562,8.0,2026-10-02
-,,,,,,,shrinkage,standard,Paper & Plastic Packaging Products & Materials | Materials,23.0,18.544091708211127,5.0,2026-10-02
-,,,,,,,shrinkage,standard,Passenger Airlines | Transportation,17.0,18.695629969420942,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Passenger Ground Transportation | Transportation,15.0,21.38681749108242,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Personal Care Products | Consumer Staples,33.0,19.087846811613247,3.0,2026-10-02
-,,,,,,,shrinkage,standard,"Pharmaceuticals | Pharmaceuticals, Biotechnology & Life Sciences",25.0,25.0,7.0,2026-10-02
-,,,,,,,shrinkage,standard,Publishing | Media & Entertainment,13.0,20.61091859220611,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Rail Transportation | Transportation,17.0,21.351038150751446,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Real Estate Services | standard,370.0,20.536709207537083,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Research & Consulting Services | Commercial & Professional Services,14.0,18.772746058909703,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Restaurants | Consumer Services,21.0,15.61649349027494,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Semiconductor Materials & Equipment | Semiconductors & Semiconductor Equipment,21.0,25.0,5.0,2026-10-02
-,,,,,,,shrinkage,standard,Semiconductors | Semiconductors & Semiconductor Equipment,27.0,25.0,15.0,2026-10-02
-,,,,,,,shrinkage,standard,"Soft Drinks & Non-alcoholic Beverages | Food, Beverage & Tobacco",19.0,19.67846859501479,4.0,2026-10-02
-,,,,,,,shrinkage,standard,Specialized Consumer Services | Consumer Services,16.0,15.35485471461379,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Specialty Chemicals | Materials,25.0,22.744902184839766,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Steel | Materials,21.0,17.4683550277719,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Systems Software | Software & Services,26.0,25.0,6.0,2026-10-02
-,,,,,,,shrinkage,standard,Technology Distributors | Technology Hardware & Equipment,26.0,25.0,1.0,2026-10-02
-,,,,,,,shrinkage,standard,"Technology Hardware, Storage & Peripherals | Technology Hardware & Equipment",34.0,25.0,10.0,2026-10-02
-,,,,,,,shrinkage,standard,"Tobacco | Food, Beverage & Tobacco",17.0,19.71011919541578,2.0,2026-10-02
-,,,,,,,shrinkage,standard,Trading Companies & Distributors | Capital Goods,50.0,22.283943796775958,3.0,2026-10-02
-,,,,,,,shrinkage,standard,Transaction & Payment Processing Services | Financial Services,30.0,18.201266699067965,9.0,2026-10-02
-,,,,,,,shrinkage,standard,Water Utilities | Utilities,30.0,21.653684795060244,1.0,2026-10-02
-,,,,,,,shrinkage,standard,Wireless Telecommunication Services | Communication Services,16.0,17.092597470719266,2.0,2026-10-02
+bank,p_tbv,rotce,23.0,-0.8981608659965201,17.353373297671602,0.8637285606317899,regression,,,,,,2026-10-07
+insurer,p_b,roe,17.0,1.1534694036955073,3.452879014897022,0.24572760996073195,regression,,,,,,2026-10-07
+,,,,,,,sector_model,reit,reit,14.0,13.946240600467643,28.0,2026-10-07
+,,,,,,,shrinkage,standard,Advertising | Media & Entertainment,14.0,22.888539811321692,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Aerospace & Defense | Capital Goods,57.0,21.661132951009044,13.0,2026-10-07
+,,,,,,,shrinkage,standard,Agricultural & Farm Machinery | Capital Goods,47.0,22.681347613848704,1.0,2026-10-07
+,,,,,,,shrinkage,standard,"Agricultural Products & Services | Food, Beverage & Tobacco",19.0,17.927478445192623,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Air Freight & Logistics | Transportation,18.0,19.539991840978736,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Apparel Retail | Consumer Discretionary Distribution & Retail,15.0,18.082916400741844,2.0,2026-10-07
+,,,,,,,shrinkage,standard,"Apparel, Accessories & Luxury Goods | Consumer Durables & Apparel",14.0,11.723193135106884,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Application Software | Software & Services,33.0,22.78244037503229,14.0,2026-10-07
+,,,,,,,shrinkage,standard,Asset Management & Custody Banks | Financial Services,29.0,16.01848984624401,9.0,2026-10-07
+,,,,,,,shrinkage,standard,Automobile Manufacturers | Consumer Discretionary,42.0,15.027941308927256,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Automotive Parts & Equipment | Consumer Discretionary,42.0,15.027941308927256,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Automotive Retail | Consumer Discretionary Distribution & Retail,16.0,18.557038759560427,3.0,2026-10-07
+,,,,,,,shrinkage,standard,"Biotechnology | Pharmaceuticals, Biotechnology & Life Sciences",26.0,24.348948705382057,8.0,2026-10-07
+,,,,,,,shrinkage,standard,Broadcasting | Media & Entertainment,13.0,20.893938383573285,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Broadline Retail | Consumer Discretionary Distribution & Retail,15.0,19.288419058895624,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Building Products | Capital Goods,53.0,19.18034655648621,7.0,2026-10-07
+,,,,,,,shrinkage,standard,Cable & Satellite | Media & Entertainment,13.0,20.893938383573285,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Cargo Ground Transportation | Transportation,17.0,21.76818009870209,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Casinos & Gaming | Consumer Services,19.0,14.488709777042775,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Commodity Chemicals | Materials,19.0,17.42181412722519,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Communications Equipment | Technology Hardware & Equipment,30.0,25.0,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Computer & Electronics Retail | Consumer Discretionary Distribution & Retail,14.0,17.751826544363237,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Construction & Engineering | Capital Goods,51.0,25.0,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Construction Machinery & Heavy Transportation Equipment | Capital Goods,50.0,23.94389353722046,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Construction Materials | Materials,21.0,17.366289557633237,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Consumer Electronics | Consumer Durables & Apparel,11.0,11.392934734644207,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Consumer Staples Merchandise Retail | Consumer Staples Distribution & Retail,13.0,17.02742351925665,5.0,2026-10-07
+,,,,,,,shrinkage,standard,Copper | Materials,20.0,17.42181412722519,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Data Processing & Outsourced Services | Commercial & Professional Services,13.0,19.104257166829015,1.0,2026-10-07
+,,,,,,,shrinkage,standard,"Distillers & Vintners | Food, Beverage & Tobacco",18.0,17.214737855749014,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Distributors | Consumer Discretionary Distribution & Retail,13.0,17.751826544363237,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Diversified Support Services | Commercial & Professional Services,15.0,17.64861007197846,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Electric Utilities | Utilities,44.0,21.843109908505816,15.0,2026-10-07
+,,,,,,,shrinkage,standard,Electrical Components & Equipment | Capital Goods,52.0,25.0,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Electronic Components | Technology Hardware & Equipment,28.0,25.0,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Electronic Equipment & Instruments | Technology Hardware & Equipment,29.0,25.0,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Electronic Manufacturing Services | Technology Hardware & Equipment,28.0,25.0,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Environmental & Facilities Services | Commercial & Professional Services,16.0,20.168579254181072,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Fertilizers & Agricultural Chemicals | Materials,20.0,17.42181412722519,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Financial Exchanges & Data | Financial Services,31.0,20.788246112230013,9.0,2026-10-07
+,,,,,,,shrinkage,standard,Food Distributors | Consumer Staples Distribution & Retail,9.0,19.522827435428283,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Food Retail | Consumer Staples Distribution & Retail,10.0,20.625153301847934,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Footwear | Consumer Durables & Apparel,11.0,11.392934734644207,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Gas Utilities | Utilities,30.0,21.906827230101943,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Gold | Materials,20.0,17.42181412722519,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Distributors | Health Care Equipment & Services,39.0,18.84459125362029,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Equipment | Health Care Equipment & Services,51.0,22.03107873274891,16.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Facilities | Health Care Equipment & Services,37.0,17.22117343425141,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Services | Health Care Equipment & Services,40.0,16.123533396604092,5.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Supplies | Health Care Equipment & Services,38.0,20.275843904040943,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Health Care Technology | Health Care Equipment & Services,37.0,19.896190772156437,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Heavy Electrical Equipment | Capital Goods,48.0,22.681347613848704,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Home Improvement Retail | Consumer Discretionary Distribution & Retail,15.0,17.120851259634644,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Homebuilding | Consumer Durables & Apparel,13.0,10.709834023875114,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Homefurnishing Retail | Consumer Discretionary Distribution & Retail,14.0,17.751826544363237,1.0,2026-10-07
+,,,,,,,shrinkage,standard,"Hotels, Resorts & Cruise Lines | Consumer Services",24.0,16.110234864488497,8.0,2026-10-07
+,,,,,,,shrinkage,standard,Household Products | Consumer Staples,36.0,17.595212941847457,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Human Resource & Employment Services | Commercial & Professional Services,14.0,18.526659516252444,2.0,2026-10-07
+,,,,,,,shrinkage,standard,IT Consulting & Other Services | Software & Services,26.0,18.527258087331305,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Independent Power Producers & Energy Traders | Utilities,30.0,21.906827230101943,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Industrial Conglomerates | Capital Goods,49.0,25.0,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Industrial Gases | Materials,20.0,17.42181412722519,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Industrial Machinery & Supplies & Components | Capital Goods,60.0,20.64734294383011,14.0,2026-10-07
+,,,,,,,shrinkage,standard,Insurance Brokers | Financials,33.0,16.04829586839132,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Integrated Oil & Gas | Energy,19.0,12.612292303104123,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Integrated Telecommunication Services | Communication Services,17.0,16.792012361687433,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Interactive Home Entertainment | Media & Entertainment,12.0,20.893938383573285,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Interactive Media & Services | Media & Entertainment,15.0,22.782744456903504,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Internet Services & Infrastructure | Software & Services,25.0,22.839067500216977,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Investment Banking & Brokerage | Financial Services,24.0,18.925681551165223,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Leisure Products | Consumer Durables & Apparel,11.0,11.392934734644207,1.0,2026-10-07
+,,,,,,,shrinkage,standard,"Life Sciences Tools & Services | Pharmaceuticals, Biotechnology & Life Sciences",28.0,25.0,9.0,2026-10-07
+,,,,,,,shrinkage,standard,Managed Health Care | Health Care Equipment & Services,38.0,18.07036459876848,4.0,2026-10-07
+,,,,,,,shrinkage,standard,"Metal, Glass & Plastic Containers | Materials",20.0,17.42181412722519,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Movies & Entertainment | Media & Entertainment,16.0,23.80313667798326,5.0,2026-10-07
+,,,,,,,shrinkage,standard,Multi-Utilities | Utilities,40.0,23.107731434884396,12.0,2026-10-07
+,,,,,,,shrinkage,standard,Oil & Gas Equipment & Services | Energy,20.0,13.032895897356187,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Oil & Gas Exploration & Production | Energy,27.0,11.707680573888577,9.0,2026-10-07
+,,,,,,,shrinkage,standard,Oil & Gas Refining & Marketing | Energy,21.0,12.602964982328123,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Oil & Gas Storage & Transportation | Energy,21.0,14.894518598373935,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Other Specialty Retail | Consumer Discretionary Distribution & Retail,15.0,17.027066503320615,2.0,2026-10-07
+,,,,,,,shrinkage,standard,"Packaged Foods & Meats | Food, Beverage & Tobacco",25.0,17.79944911688302,8.0,2026-10-07
+,,,,,,,shrinkage,standard,Paper & Plastic Packaging Products & Materials | Materials,23.0,18.22380664559047,5.0,2026-10-07
+,,,,,,,shrinkage,standard,Passenger Airlines | Transportation,17.0,18.063351640475855,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Passenger Ground Transportation | Transportation,15.0,20.567507608326075,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Personal Care Products | Consumer Staples,35.0,18.119111887996603,3.0,2026-10-07
+,,,,,,,shrinkage,standard,"Pharmaceuticals | Pharmaceuticals, Biotechnology & Life Sciences",26.0,23.6589374364274,7.0,2026-10-07
+,,,,,,,shrinkage,standard,Publishing | Media & Entertainment,13.0,20.893938383573285,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Rail Transportation | Transportation,17.0,20.508312575130432,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Real Estate Services | standard,374.0,20.168234914368515,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Research & Consulting Services | Commercial & Professional Services,14.0,19.108811267981793,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Restaurants | Consumer Services,21.0,15.688517693637046,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Semiconductor Materials & Equipment | Semiconductors & Semiconductor Equipment,20.0,25.0,5.0,2026-10-07
+,,,,,,,shrinkage,standard,Semiconductors | Semiconductors & Semiconductor Equipment,25.0,25.0,15.0,2026-10-07
+,,,,,,,shrinkage,standard,"Soft Drinks & Non-alcoholic Beverages | Food, Beverage & Tobacco",21.0,17.37526862387846,4.0,2026-10-07
+,,,,,,,shrinkage,standard,Specialized Consumer Services | Consumer Services,16.0,15.419409025306269,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Specialty Chemicals | Materials,25.0,18.805031979240496,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Steel | Materials,21.0,17.182361012444503,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Systems Software | Software & Services,26.0,25.0,6.0,2026-10-07
+,,,,,,,shrinkage,standard,Technology Distributors | Technology Hardware & Equipment,26.0,25.0,1.0,2026-10-07
+,,,,,,,shrinkage,standard,"Technology Hardware, Storage & Peripherals | Technology Hardware & Equipment",34.0,25.0,10.0,2026-10-07
+,,,,,,,shrinkage,standard,"Tobacco | Food, Beverage & Tobacco",19.0,17.14916144130991,2.0,2026-10-07
+,,,,,,,shrinkage,standard,Trading Companies & Distributors | Capital Goods,50.0,21.812427070106907,3.0,2026-10-07
+,,,,,,,shrinkage,standard,Transaction & Payment Processing Services | Financial Services,31.0,18.398610996196275,9.0,2026-10-07
+,,,,,,,shrinkage,standard,Water Utilities | Utilities,30.0,21.906827230101943,1.0,2026-10-07
+,,,,,,,shrinkage,standard,Wireless Telecommunication Services | Communication Services,16.0,17.92124198537949,2.0,2026-10-07

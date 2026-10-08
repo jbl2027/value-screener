@@ -50,7 +50,7 @@ MANUAL_EXCLUSIONS: dict[str, str] = {}
 # Not reporting these is normal and means zero (e.g. AAPL reports no goodwill line).
 ABSENT_MEANS_ZERO = {
     "rd_expense", "dividends_paid", "buybacks", "stock_issuance", "goodwill", "acquisitions",
-    "impairment_goodwill_intangibles",
+    "impairment_goodwill_intangibles", "impairment_combined", "impairment_goodwill", "impairment_intangibles",
     "intangibles_ex_goodwill", "preferred_stock", "minority_interest",
     "short_term_investments", "long_term_investments", "short_term_borrowings",
 }

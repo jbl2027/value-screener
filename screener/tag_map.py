@@ -86,6 +86,18 @@ TAG_MAP: dict[str, tuple[str, str, list[tuple[str, str]]]] = {
         "ImpairmentOfIntangibleAssetsIndefinitelivedExcludingGoodwill+ImpairmentOfIntangibleAssetsFinitelived",
         "ImpairmentOfIntangibleAssetsFinitelived",
     )),
+    # Valuation add-back (metrics.Calc.impairment_*): goodwill and intangible impairment charges are
+    # added back to EBIT. Kept separate from the gate concept above, which stays unchanged.
+    # Per period: the combined tag if reported, else goodwill + intangibles, so nothing is counted
+    # twice. Within intangibles, the total wins over its indefinite/finite-lived parts. Broader tags
+    # (AssetImpairmentCharges incl. PP&E and leases, *NetOfTax) are deliberately excluded.
+    "impairment_combined": ("USD", "duration", _g("GoodwillAndIntangibleAssetImpairment")),
+    "impairment_goodwill": ("USD", "duration", _g("GoodwillImpairmentLoss")),
+    "impairment_intangibles": ("USD", "duration", _g(
+        "ImpairmentOfIntangibleAssetsExcludingGoodwill",
+        "ImpairmentOfIntangibleAssetsIndefinitelivedExcludingGoodwill+ImpairmentOfIntangibleAssetsFinitelived",
+        "ImpairmentOfIntangibleAssetsFinitelived",
+    )),
     "gain_on_property_sales": ("USD", "duration", _g(
         "GainsLossesOnSalesOfInvestmentRealEstate",
         "GainLossOnSaleOfRealEstateInvestmentProperty",
